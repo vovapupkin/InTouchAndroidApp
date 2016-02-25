@@ -10,12 +10,13 @@
         android:layout_height="match_parent"
         android:src="@drawable/background"
         android:scaleType="centerCrop"/>
+
     <TextView
+        style="@style/InTouchHeader"
+        android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="50sp"
-        android:textColor="#FFFFFF"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"/>
 
@@ -30,26 +31,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButton"
-            android:text="Login"/>
+            android:text="@string/login"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButton"
-            android:text="Register"/>
+            android:text="@string/registration"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButton"
-            android:text="Sign up with Vk"/>
+            android:text="@string/sign_up_with_vk"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButton"
-            android:text="Sign up with Google"/>
-
+            android:text="@string/sign_up_with_google"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -10,8 +10,13 @@
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textColor">@color/intouch_button_text</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="InTouchHeader" parent="InTouch">
+        <item name="android:textSize">50sp</item>
+        <!--<item name="android:fontFamily">fonts/nautilus_pompilius_regular.ttf</item>-->
+        <item name="android:textColor">@color/intouch_white</item>
+    </style>
 </resources>

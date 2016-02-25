@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">InTouch</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="sign_up_with_vk">Sign up with Vk</string>
+    <string name="registration">Registration</string>
+    <string name="login">Login</string>
 </resources>
