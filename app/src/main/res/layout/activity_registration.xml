@@ -25,7 +25,7 @@
         android:id="@+id/editTextName"
         android:layout_below="@+id/tvRegistrationHeader"
         android:layout_alignParentStart="true"
-        android:text="@string/FullName" />
+        android:hint="@string/FullName" />
 
     <EditText
         style="@style/InTouchEditText"
@@ -34,17 +34,17 @@
         android:id="@+id/editTextLogin"
         android:layout_below="@+id/editTextName"
         android:layout_centerHorizontal="true"
-        android:text="@string/Username" />
+        android:hint="@string/Username" />
 
     <EditText
         style="@style/InTouchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextPassword"
-        android:text="@string/registration"
         android:layout_below="@+id/editTextLogin"
         android:layout_centerHorizontal="true"
-        android:password="true" />
+        android:password="true"
+        android:hint="@string/Password" />
 
     <LinearLayout
         android:orientation="horizontal"

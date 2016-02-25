@@ -7,4 +7,5 @@
     <string name="RegistrationHeader">New account</string>
     <string name="FullName">Full Name</string>
     <string name="Username">Username</string>
+    <string name="Password">Password</string>
 </resources>
