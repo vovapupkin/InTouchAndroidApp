@@ -29,25 +29,25 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainActivityButtons"
+            style="@style/InTouchButton"
             android:text="Login"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainActivityButtons"
+            style="@style/InTouchButton"
             android:text="Register"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainActivityButtons"
+            style="@style/InTouchButton"
             android:text="Sign up with Vk"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/MainActivityButtons"
+            style="@style/InTouchButton"
             android:text="Sign up with Google"/>
 
     </LinearLayout>

@@ -5,7 +5,7 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="MainActivityButtons" parent="InTouch">
+    <style name="InTouchButton" parent="InTouch">
         <item name="android:background">@drawable/button_background</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
