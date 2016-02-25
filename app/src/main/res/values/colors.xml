@@ -4,4 +4,6 @@
     <color name="intouch_button_background">#20ffffff</color>
     <color name="intouch_button_background_pressed">#70ffffff</color>
     <color name="intouch_white">#ffffff</color>
+    <color name="accent_material_light">#54a30d</color>
+    <color name="accent_material_dark">#558b2f</color>
 </resources>
