@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="intouch_button_text">#ffffff</color>
-    <color name="intouch_button_background">#20ffffff</color>
-    <color name="intouch_button_background_pressed">#70ffffff</color>
+    <color name="intouch_white_alpha20">#20ffffff</color>
+    <color name="intouch_white_alpha70">#70ffffff</color>
     <color name="intouch_white">#ffffff</color>
-    <color name="accent_material_light">#54a30d</color>
-    <color name="accent_material_dark">#558b2f</color>
+    <color name="intouch_green_light">#5f9736</color>
+    <color name="intouch_green_dark">#436b27</color>
 </resources>

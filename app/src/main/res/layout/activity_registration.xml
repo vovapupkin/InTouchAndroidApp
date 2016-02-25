@@ -15,38 +15,40 @@
         style="@style/InTouchHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/RegistrationHeader"
-        android:id="@+id/tvRegistrationHeader" />
+        android:text="@string/registration_header"
+        android:id="@+id/tvRegistrationHeader"
+        android:layout_marginBottom="20dp"/>
 
-    <EditText
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         style="@style/InTouchEditText"
+        android:inputType="textPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextName"
         android:layout_below="@+id/tvRegistrationHeader"
-        android:layout_alignParentStart="true"
-        android:hint="@string/FullName" />
+        android:hint="@string/full_name"/>
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         style="@style/InTouchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPersonName"
         android:id="@+id/editTextLogin"
         android:layout_below="@+id/editTextName"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/Username" />
+        android:hint="@string/username" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         style="@style/InTouchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextPassword"
         android:layout_below="@+id/editTextLogin"
-        android:layout_centerHorizontal="true"
-        android:password="true"
-        android:hint="@string/Password" />
+        android:inputType="textPassword"
+        android:hint="@string/password" />
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,21 +59,18 @@
             style="@style/InTouchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/ok"
-            android:id="@+id/button"
-            android:layout_below="@+id/editTextPassword"
-            android:layout_alignParentStart="true"
+            android:text="@android:string/cancel"
+            android:id="@+id/cancel_button"
             android:layout_weight="1" />
 
         <Button
             style="@style/InTouchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/cancel"
-            android:id="@+id/button2"
-            android:layout_alignTop="@+id/button"
-            android:layout_toRightOf="@id/button"
+            android:text="@android:string/ok"
+            android:id="@+id/ok_button"
             android:layout_weight="1" />
+
     </LinearLayout>
 
 </RelativeLayout>

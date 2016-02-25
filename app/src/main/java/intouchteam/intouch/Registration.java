@@ -12,5 +12,6 @@ public class Registration extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         ((TextView)findViewById(R.id.tvRegistrationHeader)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
+        ((TextView)findViewById(R.id.editTextLogin)).setError("Invalid Username");
     }
 }

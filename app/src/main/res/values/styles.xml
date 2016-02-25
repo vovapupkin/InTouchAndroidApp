@@ -1,9 +1,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="InTouch" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="InTouch" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:colorAccent">@color/accent_material_light</item>
+        <item name="colorAccent">@color/intouch_green_light</item>
     </style>
 
     <style name="InTouchButtonMenu" parent="InTouch">
@@ -11,7 +11,7 @@
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/intouch_button_text</item>
+        <item name="android:textColor">@color/intouch_white</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -20,7 +20,8 @@
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:textColor">@color/intouch_button_text</item>
+        <item name="android:textColor">@color/intouch_white</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="InTouchHeader" parent="InTouch">
@@ -31,10 +32,23 @@
         <item name="android:layout_marginTop">100dp</item>
     </style>
 
-    <style name="InTouchEditText" parent="InTouch">
-        <item name="android:padding">10dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginBottom">20dp</item>
+    <style name="InTouchEditText" parent="Theme.AppCompat">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="met_baseColor">@color/intouch_white</item>
+        <item name="met_primaryColor">@color/intouch_green_light</item>
+        <item name="met_textColor">@color/intouch_white</item>
+        <item name="met_textColorHint">@color/intouch_white_alpha70</item>
+        <item name="met_floatingLabel">normal</item>
+        <item name="met_floatingLabelTextSize">15sp</item>
+        <item name="met_floatingLabelTextColor">@color/intouch_white</item>
+        <item name="met_floatingLabelPadding">5dp</item>
+        <item name="met_bottomTextSize">10sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:ems">10</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
     </style>
 </resources>
