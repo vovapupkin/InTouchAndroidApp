@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        style="@style/InTouchHeader"
+        android:id="@+id/textView_handler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/authorization"/>
+
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        style="@style/InTouchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/editText_login"
+        android:hint="@string/username" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        style="@style/InTouchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText_password"
+        android:layout_below="@+id/editText_login"
+        android:inputType="textPassword"
+        android:hint="@string/password" />
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/editText_password"
+        style="@style/InTouchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@android:string/ok"
+        android:id="@+id/button_ok" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
