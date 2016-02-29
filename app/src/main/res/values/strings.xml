@@ -5,7 +5,9 @@
     <string name="registration">Registration</string>
     <string name="login">Login</string>
     <string name="registration_header">New account</string>
-    <string name="full_name">Full Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="authorization">Authorization</string>
 </resources>
