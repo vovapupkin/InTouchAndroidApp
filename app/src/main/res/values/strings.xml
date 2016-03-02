@@ -1,4 +1,5 @@
 <resources>
+    <integer name="com_vk_sdk_AppId">5330342</integer>
     <string name="app_name">InTouch</string>
     <string name="sign_up_with_google">Sign up with Google</string>
     <string name="sign_up_with_vk">Sign up with Vk</string>

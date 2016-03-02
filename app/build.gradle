@@ -26,5 +26,6 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.google.code.gson:gson:2.6.1'
-
+    compile 'com.google.android.gms:play-services-auth:8.4.0'
+    compile project(':vksdk_library')
 }

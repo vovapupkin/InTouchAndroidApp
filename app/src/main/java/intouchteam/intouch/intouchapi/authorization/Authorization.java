@@ -2,6 +2,7 @@ package intouchteam.intouch.intouchapi.authorization;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -44,9 +45,14 @@ public class Authorization {
                             String res = result.get("result").getAsString();
                             switch (res) {
                                 case "success":
-                                    setToken(result.get("session_id").getAsInt());
                                     Gson gson = new Gson();
-                                    callback.onSuccess((gson.fromJson(result.get("user"), User.class)));
+                                    User user = new User();
+                                    user.setFirstName("sdfsd");
+                                    user.setId((long) 423423);
+                                    String str = gson.toJson(user, User.class).toString();
+                                    //setToken(result.get("session_id").getAsInt());
+
+                                    //callback.onSuccess((new User()));
                                     break;
                                 case "error":
                                     callback.inError(result.get("error type").toString());

@@ -6,7 +6,7 @@ import intouchteam.intouch.intouchapi.authorization.Authorization;
 
 public class InTouchApi {
 
-    private static final String globalURL = "http://intouch.unicloud.pl/RequestServlet";
+    private static final String globalURL = "http://intouch.mycloud.by/RequestServlet";
     private static final String apiKey = "SHEMODED";
     private Context context;
     private static InTouchApi instance;

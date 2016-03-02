@@ -43,13 +43,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButtonMenu"
-            android:text="@string/sign_up_with_vk"/>
+            android:text="@string/sign_up_with_vk"
+            android:id="@+id/button_vk"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/InTouchButtonMenu"
-            android:text="@string/sign_up_with_google"/>
+            android:text="@string/sign_up_with_google"
+            android:id="@+id/button_google"/>
     </LinearLayout>
 
 </RelativeLayout>
