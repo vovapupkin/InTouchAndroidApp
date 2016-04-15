@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<resources>
+
+<integer name="com_vk_sdk_AppId">5330342</integer>
+
+<string name="app_name">InTouch</string>
+
+<string name="sign_up_with_google">Sign up with Google</string>
+
+<string name="sign_up_with_vk">Sign up with Vk</string>
+
+<string name="registration">Registration</string>
+
+<string name="login">Login</string>
+
+<string name="registration_header">New account</string>
+
+<string name="first_name">First Name</string>
+
+<string name="last_name">Last Name</string>
+
+<string name="username">Username</string>
+
+<string name="password">Password</string>
+
+<string name="authorization">Authorization</string>
+
+<string name="username_error">Invalid username</string>
+
+<string name="password_error">Invalid password. Password must be more then 6 characters, including numbers</string>
+
+</resources>
