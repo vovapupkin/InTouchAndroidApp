@@ -2,14 +2,16 @@ package intouchteam.intouch.intouchapi.authorization;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.Response;
 
-import java.util.Arrays;
+import org.json.JSONObject;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -34,38 +36,44 @@ public class Authorization {
     private void inTouchServerRequest(String method, final Map<String, List<String>> requestParameters, final AuthorizationCallback callback) {
         requestParameters.put("api_key", Collections.singletonList(apiKey));
         requestParameters.put("method", Collections.singletonList(method));
-        Ion.with(context).
-                load(globalURL).
-                setBodyParameters(requestParameters).
-                asJsonObject().
-                setCallback(new FutureCallback<JsonObject>() {
+        Ion.with(context)
+                .load(globalURL)
+                .setBodyParameters(requestParameters)
+                .asJsonObject()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonObject>>() {
                     @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        if(e == null) {
-                            String res = result.get("result").getAsString();
-                            switch (res) {
-                                case "success":
-                                    Gson gson = new Gson();
-                                    User user = new User();
-                                    user.setFirstName("sdfsd");
-                                    user.setId((long) 423423);
-                                    String str = gson.toJson(user, User.class).toString();
-                                    //setToken(result.get("session_id").getAsInt());
-
-                                    //callback.onSuccess((new User()));
-                                    break;
-                                case "error":
-                                    callback.inError(result.get("error type").toString());
-                                    break;
-                                default:
-                                    callback.inError("can't parse JSON");
-                                    break;
-                            }
-                        }
+                    public void onCompleted(Exception exception, final Response<JsonObject> response) {
+                        if (exception == null)
+                            handleResponse(response, callback);
                         else
-                            callback.inError("Ion FutureCallback Exception ");
+                            callback.onError(exception.getLocalizedMessage());
                     }
                 });
+    }
+
+    private void handleResponse(Response<JsonObject> response, AuthorizationCallback callback) {
+        if(response.getHeaders().code() >= 500)
+            callback.onError(response.getHeaders().message());
+        else if(response.getHeaders().code() >= 400) callback.onError(response.getHeaders().message());
+        else catchError(response, callback);
+    }
+
+    private void catchError (Response<JsonObject> response, AuthorizationCallback callback) {
+        if (response.getResult() == null)
+            callback.onError(response.getHeaders().message());
+        else if(response.getResult().has("result")) {
+            switch (response.getResult().get("result").getAsString()) {
+                case "success":
+                    Gson gson = new Gson();
+                    User user = gson.fromJson(response.getResult().get("user").getAsString(), User.class);
+                    callback.onSuccess(user);
+                    break;
+                case "error":
+                    callback.onError(response.getResult().get("error type").getAsString());
+            }
+        }
+        else callback.onError(response.getResult().getAsString());
     }
 
     public void signUp(String username, String password, String firstName, String lastName, final AuthorizationCallback callback) {
@@ -82,6 +90,22 @@ public class Authorization {
         requestParameters.put("login", Collections.singletonList(username));
         requestParameters.put("password", Collections.singletonList(password));
         inTouchServerRequest("login", requestParameters, callback);
+    }
+
+    public void socialSignIn(String id, String social, final AuthorizationCallback callback) {
+        Map<String, List<String>> requestParameters  = new HashMap<>();
+        requestParameters.put("login", Collections.singletonList(id + "_" + social));
+        requestParameters.put("password", Collections.singletonList(id));
+        inTouchServerRequest("login", requestParameters, callback);
+    }
+
+    public void socialSignUp(String id, String firstName, String lastName, String social, final AuthorizationCallback callback) {
+        Map<String, List<String>> requestParameters  = new HashMap<>();
+        requestParameters.put("login", Collections.singletonList(id + "_" + social));
+        requestParameters.put("password", Collections.singletonList(id));
+        requestParameters.put("first_name", Collections.singletonList("social"));
+        requestParameters.put("last_name", Collections.singletonList("social"));
+        inTouchServerRequest("registration", requestParameters, callback);
     }
 
     public void logOut() {
@@ -105,4 +129,6 @@ public class Authorization {
     private void restoreToken() {
         token = PreferenceManager.getDefaultSharedPreferences(context).getInt("token", 0);
     }
+
+
 }

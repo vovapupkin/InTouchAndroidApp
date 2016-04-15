@@ -20,6 +20,9 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
 
 import intouchteam.intouch.R;
+import intouchteam.intouch.intouchapi.InTouchApi;
+import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
+import intouchteam.intouch.intouchapi.model.User;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -85,11 +88,34 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
-            public void onResult(VKAccessToken res) {
-                Toast.makeText(getApplicationContext(), res.userId, Toast.LENGTH_SHORT).show();
-                //TODO: authorize vk user inTouch
-            }
+            public void onResult(final VKAccessToken res) {
+                //Toast.makeText(getApplicationContext(), res.userId, Toast.LENGTH_SHORT).show();
+                InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignIn(res.userId, "vk", new AuthorizationCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
+                        Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
+                        startActivity(registrationActivity);
+                    }
 
+                    @Override
+                    public void onError(String error) {
+                        InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignUp(res.userId, res.secret, res.email, "vk", new AuthorizationCallback() {
+                            @Override
+                            public void onSuccess(User user) {
+                                Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
+                                Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
+                                startActivity(registrationActivity);
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                Toast.makeText(getApplicationContext(), "VK fail", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
             @Override
             public void onError(VKError error) {
                 Toast.makeText(getApplicationContext(), "VK fail", Toast.LENGTH_SHORT).show();
@@ -97,9 +123,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }))
             super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RC_SIGN_IN) {
-            GoogleSignInAccount user = Auth.GoogleSignInApi.getSignInResultFromIntent(data).getSignInAccount();
-            Toast.makeText(getApplicationContext(), user.getId(), Toast.LENGTH_SHORT).show();
-            //TODO: authorize google user inTouch
+            final GoogleSignInAccount user = Auth.GoogleSignInApi.getSignInResultFromIntent(data).getSignInAccount();
+            //Toast.makeText(getApplicationContext(), user.getId(), Toast.LENGTH_SHORT).show();
+            InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignIn(user.getId().substring(0, 10), "google", new AuthorizationCallback() {
+                @Override
+                public void onSuccess(User user) {
+                    Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
+                    Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
+                    startActivity(registrationActivity);
+                }
+
+                @Override
+                public void onError(String error) {
+                    InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignUp(user.getId().substring(0, 10), user.getDisplayName(), user.getDisplayName(), "google", new AuthorizationCallback() {
+                        @Override
+                        public void onSuccess(User user) {
+                            Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
+                            Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
+                            startActivity(registrationActivity);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(getApplicationContext(), "Google fail", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         }
     }
 }
