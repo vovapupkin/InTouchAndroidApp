@@ -10,7 +10,6 @@ public class InTouchApi {
     private static final String apiKey = "SHEMODED";
     private Context context;
     private static InTouchApi instance;
-    private Authorization authorization;
 
     public static InTouchApi getInstance(Context context) {
         if(instance == null)
@@ -20,8 +19,6 @@ public class InTouchApi {
 
     private InTouchApi(Context context) {
         this.context = context;
-        authorization = new Authorization(apiKey, globalURL, this.context);
+        Authorization.getInstance(apiKey, globalURL, this.context);
     }
-
-    public Authorization getAuthorization() { return authorization; }
 }

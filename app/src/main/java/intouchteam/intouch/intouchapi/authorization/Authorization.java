@@ -21,12 +21,23 @@ import intouchteam.intouch.intouchapi.model.User;
 
 public class Authorization {
 
-    private String globalURL;
-    private String apiKey;
-    private Context context;
-    private int token = 0;
+    private static String globalURL;
+    private static String apiKey;
+    private static Context context;
+    private static String token = null;
+    private static Authorization instance = null;
 
-    public Authorization(String apiKey, String globalURL, Context context) {
+    public static Authorization getInstance() {
+        return instance;
+    }
+
+    public static Authorization getInstance(String apiKey, String globalURL, Context context) {
+        if(instance == null)
+            return instance = new Authorization(apiKey, globalURL, context);
+        return instance;
+    }
+
+    private Authorization(String apiKey, String globalURL, Context context) {
         this.globalURL = globalURL;
         this.apiKey = apiKey;
         this.context = context;
@@ -69,6 +80,8 @@ public class Authorization {
             switch (response.getResult().get("result").getAsString()) {
                 case "success":
                     Gson gson = new Gson();
+                    JsonObject jsonObject = gson.fromJson(response.getResult().get("user").getAsString(), JsonObject.class);
+                    setToken(jsonObject.get("token").getAsString());
                     User user = gson.fromJson(response.getResult().get("user").getAsString(), User.class);
                     callback.onSuccess(user);
                     break;
@@ -113,24 +126,24 @@ public class Authorization {
 
     public void logOut() {
         PreferenceManager.getDefaultSharedPreferences(context).edit().remove("token");
-        token = 0;
+        token = null;
     }
 
-    public boolean isAuthorize() {
-        return token != 0;
+    public static boolean isAuthorize() {
+        return token != null;
     }
 
-    public int getToken() {
+    public static String getToken() {
         return token;
     }
 
-    private void setToken(int token) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putInt("token", token);
-        this.token = token;
+    private static void setToken(String token) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("token", token).apply();
+        Authorization.token = token;
     }
 
-    private void restoreToken() {
-        token = PreferenceManager.getDefaultSharedPreferences(context).getInt("token", 0);
+    private static void restoreToken() {
+        token = PreferenceManager.getDefaultSharedPreferences(context).getString("token", null);
     }
 
 

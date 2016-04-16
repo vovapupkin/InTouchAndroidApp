@@ -1,155 +1,103 @@
 package intouchteam.intouch.activities;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKCallback;
-import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKError;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import intouchteam.intouch.R;
-import intouchteam.intouch.intouchapi.InTouchApi;
-import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
-import intouchteam.intouch.intouchapi.model.User;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int RC_SIGN_IN = 892;
-    GoogleApiClient googleApi;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
-        googleApi = initializeGoogleApiClient();
-        setOnClickListeners();
-    }
+        setContentView(R.layout.activity_events);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    void setOnClickListeners() {
-        (findViewById(R.id.button_registration)).setOnClickListener(this);
-        (findViewById(R.id.button_login)).setOnClickListener(this);
-        (findViewById(R.id.button_google)).setOnClickListener(this);
-        (findViewById(R.id.button_vk)).setOnClickListener(this);
-    }
-    
-    private GoogleApiClient initializeGoogleApiClient() {
-        //achtung!!! google hardcode
-        return new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build())
-                .build();
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_registration: {
-                Intent registrationActivity = new Intent(getBaseContext(), RegistrationActivity.class);
-                startActivity(registrationActivity);
-                break;
-            }
-            case R.id.button_login: {
-                Intent registrationActivity = new Intent(getBaseContext(), LoginActivity.class);
-                startActivity(registrationActivity);
-                break;
-            }
-            case R.id.button_google: {
-                startActivityForResult(Auth.GoogleSignInApi.getSignInIntent(googleApi), RC_SIGN_IN);
-                break;
-            }
-            case R.id.button_vk: {
-                VKSdk.login(this);
-                break;
-            }
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Toast.makeText(getApplicationContext(), "Google fail", Toast.LENGTH_SHORT).show();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.events, menu);
+        return true;
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
-            @Override
-            public void onResult(final VKAccessToken res) {
-                //Toast.makeText(getApplicationContext(), res.userId, Toast.LENGTH_SHORT).show();
-                InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignIn(res.userId, "vk", new AuthorizationCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
-                        Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
-                        startActivity(registrationActivity);
-                    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-                    @Override
-                    public void onError(String error) {
-                        InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignUp(res.userId, res.secret, res.email, "vk", new AuthorizationCallback() {
-                            @Override
-                            public void onSuccess(User user) {
-                                Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
-                                Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
-                                startActivity(registrationActivity);
-                            }
-
-                            @Override
-                            public void onError(String error) {
-                                Toast.makeText(getApplicationContext(), "VK fail", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
-            }
-            @Override
-            public void onError(VKError error) {
-                Toast.makeText(getApplicationContext(), "VK fail", Toast.LENGTH_SHORT).show();
-            }
-        }))
-            super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_SIGN_IN) {
-            final GoogleSignInAccount user = Auth.GoogleSignInApi.getSignInResultFromIntent(data).getSignInAccount();
-            //Toast.makeText(getApplicationContext(), user.getId(), Toast.LENGTH_SHORT).show();
-            InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignIn(user.getId().substring(0, 10), "google", new AuthorizationCallback() {
-                @Override
-                public void onSuccess(User user) {
-                    Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
-                    Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
-                    startActivity(registrationActivity);
-                }
-
-                @Override
-                public void onError(String error) {
-                    InTouchApi.getInstance(MainActivity.this).getAuthorization().socialSignUp(user.getId().substring(0, 10), user.getDisplayName(), user.getDisplayName(), "google", new AuthorizationCallback() {
-                        @Override
-                        public void onSuccess(User user) {
-                            Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
-                            Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
-                            startActivity(registrationActivity);
-                        }
-
-                        @Override
-                        public void onError(String error) {
-                            Toast.makeText(getApplicationContext(), "Google fail", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
