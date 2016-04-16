@@ -34,8 +34,11 @@ public class Authorization {
     }
 
     private void inTouchServerRequest(String method, final Map<String, List<String>> requestParameters, final AuthorizationCallback callback) {
+
         requestParameters.put("api_key", Collections.singletonList(apiKey));
         requestParameters.put("method", Collections.singletonList(method));
+        requestParameters.put("applicationId", Collections.singletonList("228"));
+        requestParameters.put("deviceId", Collections.singletonList("322"));
         Ion.with(context)
                 .load(globalURL)
                 .setBodyParameters(requestParameters)
@@ -70,7 +73,7 @@ public class Authorization {
                     callback.onSuccess(user);
                     break;
                 case "error":
-                    callback.onError(response.getResult().get("error type").getAsString());
+                    callback.onError(response.getResult().get("error_type").getAsString());
             }
         }
         else callback.onError(response.getResult().getAsString());

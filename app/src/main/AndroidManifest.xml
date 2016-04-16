@@ -28,7 +28,11 @@
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
-        <activity android:name=".activities.HelloActivity"></activity>
+        <activity android:name=".activities.HelloActivity" />
+        <activity
+            android:name=".activities.EventsActivity"
+            android:label="@string/title_activity_events"
+            android:theme="@style/InTouch"></activity>
     </application>
 
 </manifest>

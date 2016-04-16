@@ -57,7 +57,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             @Override
             public void onSuccess(User user) {
                 Toast.makeText(RegistrationActivity.this, "Registration success", Toast.LENGTH_SHORT).show();
-                Intent registrationActivity = new Intent(getBaseContext(), HelloActivity.class);
+                Intent registrationActivity = new Intent(getBaseContext(), EventsActivity.class);
                 startActivity(registrationActivity);
             }
 
