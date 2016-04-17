@@ -3,24 +3,19 @@ package intouchteam.intouch.intouchapi.authorization;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import intouchteam.intouch.R;
+import intouchteam.intouch.intouchapi.RegistrationIntentService;
 import intouchteam.intouch.intouchapi.model.User;
 
 public class Authorization {
@@ -36,7 +31,7 @@ public class Authorization {
     }
 
     public static Authorization getInstance(String apiKey, String globalURL, Context context) {
-        if(instance == null)
+        if (instance == null)
             return instance = new Authorization(apiKey, globalURL, context);
         return instance;
     }
@@ -51,16 +46,7 @@ public class Authorization {
     private void inTouchServerRequest(String method, final Map<String, List<String>> requestParameters, final AuthorizationCallback callback) {
 
         InstanceID instanceID = InstanceID.getInstance(context);
-        String token = null;
-        try {
-            token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        System.out.println("token: " + token);
-        System.out.println("length:" + token.length());
-
+        token = RegistrationIntentService.TOKEN;
 
         requestParameters.put("api_key", Collections.singletonList(apiKey));
         requestParameters.put("method", Collections.singletonList(method));
@@ -83,16 +69,17 @@ public class Authorization {
     }
 
     private void handleResponse(Response<JsonObject> response, AuthorizationCallback callback) {
-        if(response.getHeaders().code() >= 500)
+        if (response.getHeaders().code() >= 500)
             callback.onError(response.getHeaders().message());
-        else if(response.getHeaders().code() >= 400) callback.onError(response.getHeaders().message());
+        else if (response.getHeaders().code() >= 400)
+            callback.onError(response.getHeaders().message());
         else catchError(response, callback);
     }
 
-    private void catchError (Response<JsonObject> response, AuthorizationCallback callback) {
+    private void catchError(Response<JsonObject> response, AuthorizationCallback callback) {
         if (response.getResult() == null)
             callback.onError(response.getHeaders().message());
-        else if(response.getResult().has("result")) {
+        else if (response.getResult().has("result")) {
             switch (response.getResult().get("result").getAsString()) {
                 case "success":
                     Gson gson = new Gson();
@@ -104,12 +91,11 @@ public class Authorization {
                 case "error":
                     callback.onError(response.getResult().get("error_type").getAsString());
             }
-        }
-        else callback.onError(response.getResult().getAsString());
+        } else callback.onError(response.getResult().getAsString());
     }
 
     public void signUp(String username, String password, String firstName, String lastName, final AuthorizationCallback callback) {
-        Map<String, List<String>> requestParameters  = new HashMap<>();
+        Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(username));
         requestParameters.put("password", Collections.singletonList(password));
         requestParameters.put("first_name", Collections.singletonList(firstName));
@@ -118,21 +104,21 @@ public class Authorization {
     }
 
     public void signIn(String username, String password, final AuthorizationCallback callback) {
-        Map<String, List<String>> requestParameters  = new HashMap<>();
+        Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(username));
         requestParameters.put("password", Collections.singletonList(password));
         inTouchServerRequest("login", requestParameters, callback);
     }
 
     public void socialSignIn(String id, String social, final AuthorizationCallback callback) {
-        Map<String, List<String>> requestParameters  = new HashMap<>();
+        Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(id + "_" + social));
         requestParameters.put("password", Collections.singletonList(id));
         inTouchServerRequest("login", requestParameters, callback);
     }
 
     public void socialSignUp(String id, String firstName, String lastName, String social, final AuthorizationCallback callback) {
-        Map<String, List<String>> requestParameters  = new HashMap<>();
+        Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(id + "_" + social));
         requestParameters.put("password", Collections.singletonList(id));
         requestParameters.put("first_name", Collections.singletonList("social"));

@@ -20,6 +20,7 @@ import com.vk.sdk.api.VKError;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
+import intouchteam.intouch.intouchapi.RegistrationIntentService;
 import intouchteam.intouch.intouchapi.authorization.Authorization;
 import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
 import intouchteam.intouch.intouchapi.model.User;
@@ -42,6 +43,8 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
         ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
         googleApi = initializeGoogleApiClient();
         setOnClickListeners();
+
+        startService(new Intent(this, RegistrationIntentService.class));
     }
 
     void setOnClickListeners() {

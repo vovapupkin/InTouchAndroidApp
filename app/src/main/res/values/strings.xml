@@ -14,7 +14,8 @@
     <string name="username_error">Invalid username</string>
     <string name="password_error">Invalid password. Password must be more then 6 characters, including numbers</string>
     <string name="title_activity_events">EventsActivity</string>
-    <string name="gcm_defaultSenderId">619957916380</string>
+    <string name="pref_key_SENT_TOKEN_TO_SERVER">key_sent</string>
+    <string name="intent_name_REGISTRATION_COMPLETE">registration_complete</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

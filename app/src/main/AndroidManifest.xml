@@ -11,38 +11,6 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="intouchteam.intouch.permission.C2D_MESSAGE" />
 
-    <receiver
-        android:name="com.google.android.gms.gcm.GcmReceiver"
-        android:exported="true"
-        android:permission="com.google.android.c2dm.permission.SEND">
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-            <category android:name="com.something.app" />
-        </intent-filter>
-    </receiver>
-
-    <service
-        android:name="com.something.app.MyIntentService"
-        android:exported="false">
-        <intent-filter>
-            <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        </intent-filter>
-    </service>
-    <service
-        android:name="com.something.app.MyIDListenerService"
-        android:exported="false">
-        <intent-filter>
-            <action android:name="com.google.android.gms.iid.InstanceID" />
-        </intent-filter>
-    </service>
-
-
-    Read more:
-    http://www.intertech.com/Blog/push-notifications-tutorial-for-android-using-google-cloud-messaging-gcm/#ixzz45zKLIQFNFollow
-    us: @IntertechInc on Twitter | Intertech on Facebook
-
     <application
         android:name=".Application"
         android:allowBackup="true"
@@ -67,11 +35,30 @@
             android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
-        <activity android:name=".activities.HelloActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_events"
             android:theme="@style/InTouch"></activity>
+
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <category android:name="intouchteam.intouch"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="intouchteam.intouch.intouchapi.MyGcmListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+            </intent-filter>
+        </service>
+        <service android:name="intouchteam.intouch.intouchapi.MyInstanceIDListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID"/>
+            </intent-filter>
+        </service>
+        <service android:name="intouchteam.intouch.intouchapi.RegistrationIntentService" android:exported="false">
+        </service>
     </application>
 
 </manifest>
