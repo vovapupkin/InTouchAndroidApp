@@ -3,6 +3,8 @@ package intouchteam.intouch.intouchapi.authorization;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,11 +14,13 @@ import com.koushikdutta.ion.Response;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.model.User;
 
 public class Authorization {
@@ -46,10 +50,22 @@ public class Authorization {
 
     private void inTouchServerRequest(String method, final Map<String, List<String>> requestParameters, final AuthorizationCallback callback) {
 
+        InstanceID instanceID = InstanceID.getInstance(context);
+        String token = null;
+        try {
+            token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        System.out.println("token: " + token);
+        System.out.println("length:" + token.length());
+
+
         requestParameters.put("api_key", Collections.singletonList(apiKey));
         requestParameters.put("method", Collections.singletonList(method));
         requestParameters.put("applicationId", Collections.singletonList("228"));
-        requestParameters.put("deviceId", Collections.singletonList("322"));
+        requestParameters.put("deviceId", Collections.singletonList(token));
         Ion.with(context)
                 .load(globalURL)
                 .setBodyParameters(requestParameters)
