@@ -13,12 +13,12 @@
     <string name="authorization">Authorization</string>
     <string name="username_error">Invalid username</string>
     <string name="password_error">Invalid password. Password must be more then 6 characters, including numbers</string>
-    <string name="title_activity_events">EventsActivity</string>
+    <string name="title_activity_main">EventsActivity</string>
     <string name="pref_key_SENT_TOKEN_TO_SERVER">key_sent</string>
     <string name="intent_name_REGISTRATION_COMPLETE">registration_complete</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_filters">Filters</string>
 </resources>

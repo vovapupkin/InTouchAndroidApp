@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.JsonElement;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -21,9 +22,8 @@ import com.vk.sdk.api.VKError;
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.RegistrationIntentService;
-import intouchteam.intouch.intouchapi.authorization.Authorization;
-import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
-import intouchteam.intouch.intouchapi.model.User;
+import intouchteam.intouch.intouchapi.InTouchAuthorization;
+import intouchteam.intouch.intouchapi.InTouchCallback;
 
 public class FirstActivity extends FragmentActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -34,12 +34,12 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         InTouchApi.getInstance(getApplicationContext());
-        if(Authorization.isAuthorize()) {
+        if(InTouchAuthorization.isAuthorize()) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_first);
         ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
         googleApi = initializeGoogleApiClient();
         setOnClickListeners();
@@ -98,9 +98,9 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
             @Override
             public void onResult(final VKAccessToken res) {
                 //Toast.makeText(getApplicationContext(), res.userId, Toast.LENGTH_SHORT).show();
-                Authorization.getInstance().socialSignIn(res.userId, "vk", new AuthorizationCallback() {
+                InTouchAuthorization.getInstance().socialSignIn(res.userId, "vk", new InTouchCallback() {
                     @Override
-                    public void onSuccess(User user) {
+                    public void onSuccess(JsonElement user) {
                         Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
                         Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                         startActivity(registrationActivity);
@@ -109,9 +109,9 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
 
                     @Override
                     public void onError(String error) {
-                        Authorization.getInstance().socialSignUp(res.userId, res.secret, res.email, "vk", new AuthorizationCallback() {
+                        InTouchAuthorization.getInstance().socialSignUp(res.userId, res.secret, res.email, "vk", new InTouchCallback() {
                             @Override
-                            public void onSuccess(User user) {
+                            public void onSuccess(JsonElement user) {
                                 Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
                                 Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                                 startActivity(registrationActivity);
@@ -135,9 +135,9 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
         if(requestCode == RC_SIGN_IN) {
             final GoogleSignInAccount user = Auth.GoogleSignInApi.getSignInResultFromIntent(data).getSignInAccount();
             //Toast.makeText(getApplicationContext(), user.getId(), Toast.LENGTH_SHORT).show();
-            Authorization.getInstance().socialSignIn(user.getId().substring(0, 10), "google", new AuthorizationCallback() {
+            InTouchAuthorization.getInstance().socialSignIn(user.getId().substring(0, 10), "google", new InTouchCallback() {
                 @Override
-                public void onSuccess(User user) {
+                public void onSuccess(JsonElement user) {
                     Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
                     Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                     startActivity(registrationActivity);
@@ -146,9 +146,9 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
 
                 @Override
                 public void onError(String error) {
-                    Authorization.getInstance().socialSignUp(user.getId().substring(0, 10), user.getDisplayName(), user.getDisplayName(), "google", new AuthorizationCallback() {
+                    InTouchAuthorization.getInstance().socialSignUp(user.getId().substring(0, 10), user.getDisplayName(), user.getDisplayName(), "google", new InTouchCallback() {
                         @Override
-                        public void onSuccess(User user) {
+                        public void onSuccess(JsonElement user) {
                             Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
                             Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                             startActivity(registrationActivity);

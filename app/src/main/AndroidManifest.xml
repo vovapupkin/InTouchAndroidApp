@@ -21,7 +21,6 @@
         <activity android:name=".activities.FirstActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +36,7 @@
             android:theme="@style/VK.Transparent" />
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/title_activity_events"
+            android:label="@string/title_activity_main"
             android:theme="@style/InTouch"></activity>
 
         <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">

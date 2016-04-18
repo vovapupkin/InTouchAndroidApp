@@ -1,5 +1,8 @@
 package intouchteam.intouch.intouchapi.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import java.util.Date;
 
 public class User  implements java.io.Serializable {
@@ -9,27 +12,24 @@ public class User  implements java.io.Serializable {
     private String lastName;
     private byte[] userImage;
     private String login;
-    private String password;
     private Date registrationDate;
     private Date lastVisit;
 
     public User() {}
 
-    public User(String firstName, String lastName, String login, String password, Date registrationDate, Date lastVisit) {
+    public User(String firstName, String lastName, String login, Date registrationDate, Date lastVisit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
-        this.password = password;
         this.registrationDate = registrationDate;
         this.lastVisit = lastVisit;
     }
 
-    public User(String firstName, String lastName, byte[] userImage, String login, String password, Date registrationDate, Date lastVisit) {
+    public User(String firstName, String lastName, byte[] userImage, String login, Date registrationDate, Date lastVisit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userImage = userImage;
         this.login = login;
-        this.password = password;
         this.registrationDate = registrationDate;
         this.lastVisit = lastVisit;
     }
@@ -74,14 +74,6 @@ public class User  implements java.io.Serializable {
         this.login = login;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Date getRegistrationDate() {
         return this.registrationDate;
     }
@@ -96,5 +88,11 @@ public class User  implements java.io.Serializable {
 
     public void setLastVisit(Date lastVisit) {
         this.lastVisit = lastVisit;
+    }
+
+    public static User fromJsonObject(JsonObject jsonObject) {
+        Gson gson = new Gson();
+        User user = gson.fromJson(jsonObject, User.class);
+        return user;
     }
 }

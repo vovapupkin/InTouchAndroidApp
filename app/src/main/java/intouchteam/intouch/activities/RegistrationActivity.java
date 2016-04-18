@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.Validation;
-import intouchteam.intouch.intouchapi.InTouchApi;
-import intouchteam.intouch.intouchapi.authorization.Authorization;
-import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
+import intouchteam.intouch.intouchapi.InTouchAuthorization;
+import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.model.User;
 
 public class RegistrationActivity extends Activity implements View.OnClickListener {
@@ -35,7 +35,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                 final String username = ((EditText) findViewById(R.id.editText_login)).getText().toString();
                 final String pass = ((EditText) findViewById(R.id.editText_password)).getText().toString();
                 if(Validation.isValidUsername(username) && Validation.isValidPassword(pass)) {
-                    Authorization.getInstance().signUp(
+                    InTouchAuthorization.getInstance().signUp(
                             ((EditText) findViewById(R.id.editText_login)).getText().toString(),
                             ((EditText) findViewById(R.id.editText_password)).getText().toString(),
                             ((EditText) findViewById(R.id.editText_first_name)).getText().toString(),
@@ -53,10 +53,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         }
     }
 
-    private AuthorizationCallback signUpCallback() {
-        return new AuthorizationCallback() {
+    private InTouchCallback signUpCallback() {
+        return new InTouchCallback() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(JsonElement user) {
                 Toast.makeText(RegistrationActivity.this, "Registration success", Toast.LENGTH_SHORT).show();
                 Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(registrationActivity);

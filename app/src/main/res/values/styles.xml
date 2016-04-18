@@ -52,7 +52,10 @@
         <item name="android:layout_marginLeft">15dp</item>
     </style>
 
-    <style name="InTouch.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="InTouch.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:backgroundTint">@color/intouch_green_light</item>
+    </style>
 
-    <style name="InTouch.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="InTouch.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
+    </style>
 </resources>

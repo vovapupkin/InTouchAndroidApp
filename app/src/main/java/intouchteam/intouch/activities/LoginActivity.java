@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonElement;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.Validation;
-import intouchteam.intouch.intouchapi.InTouchApi;
-import intouchteam.intouch.intouchapi.authorization.Authorization;
-import intouchteam.intouch.intouchapi.authorization.AuthorizationCallback;
+import intouchteam.intouch.intouchapi.InTouchAuthorization;
+import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final String username = ((EditText) findViewById(R.id.editText_login)).getText().toString();
                 final String pass = ((EditText) findViewById(R.id.editText_password)).getText().toString();
                 if (Validation.isValidUsername(username) && Validation.isValidPassword(pass)) {
-                    Authorization.getInstance().signIn(
+                    InTouchAuthorization.getInstance().signIn(
                             ((EditText) findViewById(R.id.editText_login)).getText().toString(),
                             ((EditText) findViewById(R.id.editText_password)).getText().toString(),
                             signInCallback());
@@ -49,10 +49,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private AuthorizationCallback signInCallback() {
-        return new AuthorizationCallback() {
+    private InTouchCallback signInCallback() {
+        return new InTouchCallback() {
             @Override
-            public void onSuccess(User user) {
+            public void onSuccess(JsonElement user) {
                 Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                 Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(registrationActivity);

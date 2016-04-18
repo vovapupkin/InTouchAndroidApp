@@ -1,24 +1,43 @@
 package intouchteam.intouch.intouchapi;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
 
-import intouchteam.intouch.intouchapi.authorization.Authorization;
+import com.google.gson.Gson;
+
+import intouchteam.intouch.intouchapi.model.User;
 
 public class InTouchApi {
 
     private static final String globalURL = "http://intouch.mycloud.by/RequestServlet";
     private static final String apiKey = "SHEMODED";
-    private Context context;
-    private static InTouchApi instance;
+    private static Context context;
+    private static InTouchApi instance = new InTouchApi();
+    private static User profile = null;
 
     public static InTouchApi getInstance(Context context) {
-        if(instance == null)
-            return instance = new InTouchApi(context);
+        InTouchApi.context = context;
         return instance;
     }
 
-    private InTouchApi(Context context) {
-        this.context = context;
-        Authorization.getInstance(apiKey, globalURL, this.context);
+    private InTouchApi() {
+        if(InTouchAuthorization.isAuthorize()) {
+            Gson gson = new Gson();
+            profile = gson.fromJson(PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).getString("profile", null), User.class);
+        }
+    }
+
+    public static User getProfile() { return profile; }
+
+    public static String getGlobalURL() {
+        return globalURL;
+    }
+
+    public static String getApiKey() {
+        return apiKey;
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

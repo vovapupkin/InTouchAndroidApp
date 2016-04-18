@@ -14,7 +14,7 @@ import intouchteam.intouch.R;
 
 public class RegistrationIntentService extends IntentService {
     private static final String TAG = "MyTag";
-    public static String TOKEN;
+    public static String TOKEN = "0";
 
     public RegistrationIntentService() {
         super(TAG);
@@ -28,14 +28,15 @@ public class RegistrationIntentService extends IntentService {
             synchronized (TAG) {
                 // Initially a network call, to retrieve the token, subsequent calls are local.
                 InstanceID instanceID = InstanceID.getInstance(this);
-                String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-                Log.i(TAG, "GCM Registration Token: " + token);
-                TOKEN = token;
+//                String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+//                Log.i(TAG, "GCM Registration Token: " + token);
+//                TOKEN = token;
 
                 // TODO: send any registration to my app's servers, if applicable.
                 // e.g. sendRegistrationToServer(token);
 
                 // TODO: Subscribe to topic channels, if applicable.
+
                 // e.g. for (String topic : TOPICS) {
                 //          GcmPubSub pubSub = GcmPubSub.getInstance(this);
                 //          pubSub.subscribe(token, "/topics/" + topic, null);

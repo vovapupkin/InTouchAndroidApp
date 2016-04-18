@@ -1,57 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FirstActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <ImageView
+    <include
+        layout="@layout/app_bar_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/background"
-        android:scaleType="centerCrop"/>
+        android:layout_height="match_parent" />
 
-    <TextView
-        style="@style/InTouchHeader"
-        android:id="@+id/textView_handler"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_events_drawer" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <Button
-            android:id="@+id/button_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
-            android:text="@string/login"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
-            android:text="@string/registration"
-            android:id="@+id/button_registration" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
-            android:text="@string/sign_up_with_vk"
-            android:id="@+id/button_vk"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
-            android:text="@string/sign_up_with_google"
-            android:id="@+id/button_google"/>
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
