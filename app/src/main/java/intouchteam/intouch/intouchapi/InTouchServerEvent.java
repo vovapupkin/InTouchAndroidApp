@@ -7,70 +7,78 @@ import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import intouchteam.intouch.intouchapi.model.User;
+import intouchteam.intouch.intouchapi.model.Profile;
 
-/**
- * Created by vova on 18-Apr-16.
- */
 public class InTouchServerEvent {
 
-    private static InTouchServerEvent instance = new InTouchServerEvent();
-
-    public static InTouchServerEvent getInstance() {
-        return instance;
-    }
-
-    private InTouchServerEvent() {
-
-    }
-
-    private void get(String method, final Map<String, List<String>> requestParameters, final InTouchCallback callback) {
+    public static void get(final InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("user_id", Collections.singletonList(InTouchApi.getProfile().getId().toString()));
-        requestParameters.put("api_key", Collections.singletonList(InTouchApi.getApiKey()));
         requestParameters.put("method", Collections.singletonList("getEvents"));
-        Ion.with(InTouchApi.getContext())
-                .load(InTouchApi.getGlobalURL())
-                .setBodyParameters(requestParameters)
-                .asJsonObject()
-                .withResponse()
-                .setCallback(new FutureCallback<Response<JsonObject>>() {
-                    @Override
-                    public void onCompleted(Exception exception, final Response<JsonObject> response) {
-                        if (exception == null)
-                            handleResponse(response, callback);
-                        else
-                            callback.onError(exception.getLocalizedMessage());
-                    }
-                });
+        InTouchRequest.get(requestParameters, callback);
     }
 
-    private void handleResponse(Response<JsonObject> response, InTouchCallback callback) {
-        if (response.getHeaders().code() >= 500)
-            callback.onError(response.getHeaders().message());
-        else if (response.getHeaders().code() >= 400)
-            callback.onError(response.getHeaders().message());
-        else catchError(response, callback);
+    public static void get(Long userId, final InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("user_id", Collections.singletonList(userId.toString()));
+        requestParameters.put("method", Collections.singletonList("getEvents"));
+        InTouchRequest.get(requestParameters, callback);
     }
 
-    private void catchError(Response<JsonObject> response, InTouchCallback callback) {
-        if (response.getResult() == null)
-            callback.onError(response.getHeaders().message());
-        else if (response.getResult().has("result")) {
-            switch (response.getResult().get("result").getAsString()) {
-                case "success":
-                    Gson gson = new Gson();
-                    JsonObject jsonObject = gson.fromJson(response.getResult().get("user").getAsString(), JsonObject.class);
-                    User user = gson.fromJson(response.getResult().get("user").getAsString(), User.class);
-                    callback.onSuccess(response.getResult());
-                    break;
-                case "error":
-                    callback.onError(response.getResult().get("error_type").getAsString());
-            }
-        } else callback.onError(response.getResult().getAsString());
+    public static void create(String name, String description, String gps, String dateTime,
+            String address, Long typeId, String city, final InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("CreateEvent"));
+        requestParameters.put("name", Collections.singletonList(name));
+        requestParameters.put("description", Collections.singletonList(description));
+        requestParameters.put("gps", Collections.singletonList(gps));
+        requestParameters.put("date_time", Collections.singletonList(dateTime));
+        requestParameters.put("address", Collections.singletonList(address));
+        requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
+        requestParameters.put("city", Collections.singletonList(city));
+        InTouchRequest.get(requestParameters, callback);
     }
 
+    public static void getTypes(InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("getEventTypes"));
+        InTouchRequest.get(requestParameters, callback);
+    }
 
+    public static void search(String city, String eventName, Long typeId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("searchEvents"));
+        if(city != null)
+            requestParameters.put("city", Collections.singletonList(city));
+        if(eventName != null)
+            requestParameters.put("eventName", Collections.singletonList(eventName));
+        if(typeId != null)
+            requestParameters.put("typeId", Collections.singletonList(typeId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void getCreator(Long eventId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("getEventCreator"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void getFollowers(Long eventId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("getEventFollowers"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void subscribe(Long eventId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("subscribeEvent"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
 }

@@ -10,29 +10,21 @@ import com.koushikdutta.ion.Response;
 import com.koushikdutta.ion.builder.Builders;
 
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 
 public class InTouchRequest {
-    private static InTouchRequest ourInstance = new InTouchRequest();
-
-    public static InTouchRequest getInstance() {
-        return ourInstance;
-    }
-
-    private InTouchRequest() {
-
-    }
 
     public static void get(final Map<String, List<String>> requestParameters, final InTouchCallback callback) {
         Builders.Any.B ion = Ion.with(InTouchApi.getContext())
                 .load("GET", InTouchApi.getGlobalURL());
-        if(InTouchAuthorization.getToken() != null)
-//TODO: add user token ion.addHeader("Authorization", "Token " + InTouchAuthorization.getToken());
         if(requestParameters != null)
             ion.addQueries(requestParameters);
-
+        ion.addQuery("api_key", InTouchApi.getApiKey());
+        if(InTouchAuthorization.isAuthorize())
+            ion.addQuery("token", InTouchAuthorization.getToken());
         ion.asString(Charset.forName("UTF-8"))
                 .withResponse()
                 .setCallback(new FutureCallback<Response<String>>() {
@@ -58,19 +50,15 @@ public class InTouchRequest {
         if (response.getResult() == null)
             callback.onError(response.getHeaders().message() + " no result");
         else {
-            Gson gson = new Gson();
             JsonObject result = new Gson().fromJson(response.getResult(), JsonObject.class);
             if (result.has("result")) {
                 switch (result.get("result").getAsString()) {
                     case "success":
-                        //TODO: say to Vlad do this norm
-//                        JsonObject jsonObject = gson.fromJson(response.getResult().get("user").getAsString(), JsonObject.class);
-//                        setToken(jsonObject.get("token").getAsString());
-//                        User user = gson.fromJson(response.getResult().get("user").getAsString(), User.class);
                         callback.onSuccess(result);
                         break;
                     case "error":
                         callback.onError(result.get("error_type").getAsString());
+                        break;
                 }
             } else callback.onError("No result:" + response.getResult());
         }

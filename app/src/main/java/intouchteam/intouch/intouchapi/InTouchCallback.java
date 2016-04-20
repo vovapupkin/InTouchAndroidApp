@@ -1,8 +1,8 @@
 package intouchteam.intouch.intouchapi;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public interface InTouchCallback {
-    void onSuccess(JsonElement result);
+    void onSuccess(JsonObject result);
     void onError(String error);
 }

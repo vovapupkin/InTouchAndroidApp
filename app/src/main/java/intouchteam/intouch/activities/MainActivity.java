@@ -14,41 +14,41 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.gson.JsonObject;
+
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;
+import intouchteam.intouch.intouchapi.InTouchCallback;
+import intouchteam.intouch.intouchapi.InTouchServerEvent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Toolbar toolbar;
+    FloatingActionButton floatingActionButton;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(floatingActionButtonListener());
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        testEvents();
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -58,48 +58,97 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_bar_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_filters) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_events) {
-            // Handle the camera action
 
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
-            InTouchAuthorization.logOut();
-            Intent intent = new Intent(this, FirstActivity.class);
-            startActivity(intent);
-            finish();
+            navigationLogout();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void navigationLogout() {
+        InTouchAuthorization.logOut();
+        Intent intent = new Intent(this, FirstActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private View.OnClickListener floatingActionButtonListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        };
+    }
+
+    private void testEvents() {
+        InTouchServerEvent.create(
+                "name",
+                "description",
+                "gps",
+                "time",
+                "address",
+                (long)1,
+                "city",
+                new InTouchCallback() {
+                    @Override
+                    public void onSuccess(JsonObject result) {
+                        System.out.println("create:" + result);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        System.out.println("create error:" + error);
+                    }
+                }
+        );
+        InTouchServerEvent.get(new InTouchCallback() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                System.out.println("get:" + result);
+            }
+
+            @Override
+            public void onError(String error) {
+                System.out.println("get error:" + error);
+            }
+        });
+        InTouchServerEvent.get((long) 1, new InTouchCallback() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                System.out.println("get id1:" + result);
+            }
+
+            @Override
+            public void onError(String error) {
+                System.out.println("get id1 error:" + error);
+            }
+        });
     }
 }

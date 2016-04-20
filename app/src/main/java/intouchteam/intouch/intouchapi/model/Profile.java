@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 
 import java.util.Date;
 
-public class User  implements java.io.Serializable {
+public class Profile implements java.io.Serializable {
 
     private Long id;
     private String firstName;
@@ -15,9 +15,9 @@ public class User  implements java.io.Serializable {
     private Date registrationDate;
     private Date lastVisit;
 
-    public User() {}
+    public Profile() {}
 
-    public User(String firstName, String lastName, String login, Date registrationDate, Date lastVisit) {
+    public Profile(String firstName, String lastName, String login, Date registrationDate, Date lastVisit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
@@ -25,7 +25,7 @@ public class User  implements java.io.Serializable {
         this.lastVisit = lastVisit;
     }
 
-    public User(String firstName, String lastName, byte[] userImage, String login, Date registrationDate, Date lastVisit) {
+    public Profile(String firstName, String lastName, byte[] userImage, String login, Date registrationDate, Date lastVisit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userImage = userImage;
@@ -90,9 +90,9 @@ public class User  implements java.io.Serializable {
         this.lastVisit = lastVisit;
     }
 
-    public static User fromJsonObject(JsonObject jsonObject) {
+    public static Profile fromJsonObject(JsonObject jsonObject) {
         Gson gson = new Gson();
-        User user = gson.fromJson(jsonObject, User.class);
-        return user;
+        Profile profile = gson.fromJson(jsonObject, Profile.class);
+        return profile;
     }
 }

@@ -10,13 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.Validation;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;
 import intouchteam.intouch.intouchapi.InTouchCallback;
-import intouchteam.intouch.intouchapi.model.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,11 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private InTouchCallback signInCallback() {
         return new InTouchCallback() {
             @Override
-            public void onSuccess(JsonElement user) {
+            public void onSuccess(JsonObject user) {
                 Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                 Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
+                registrationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(registrationActivity);
-                finish();
             }
 
             @Override

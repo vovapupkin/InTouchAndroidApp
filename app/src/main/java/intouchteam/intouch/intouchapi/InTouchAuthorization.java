@@ -1,22 +1,16 @@
 package intouchteam.intouch.intouchapi;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.android.gms.iid.InstanceID;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.Response;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import intouchteam.intouch.intouchapi.model.User;
+import intouchteam.intouch.intouchapi.model.Profile;
 
 public class InTouchAuthorization {
 
@@ -31,52 +25,25 @@ public class InTouchAuthorization {
         restoreToken();
     }
 
-    private void inTouchServerRequest(String method, final Map<String, List<String>> requestParameters, final InTouchCallback callback) {
-
-        requestParameters.put("api_key", Collections.singletonList(InTouchApi.getApiKey()));
+    private void inTouchAuthorizationRequest(String method, final Map<String, List<String>> requestParameters, final InTouchCallback callback) {
         requestParameters.put("method", Collections.singletonList(method));
         requestParameters.put("applicationId", Collections.singletonList("228"));
         requestParameters.put("deviceId", Collections.singletonList(RegistrationIntentService.TOKEN));
-        Ion.with(InTouchApi.getContext())
-                .load(InTouchApi.getGlobalURL())
-                .setBodyParameters(requestParameters)
-                .asJsonObject()
-                .withResponse()
-                .setCallback(new FutureCallback<Response<JsonObject>>() {
-                    @Override
-                    public void onCompleted(Exception exception, final Response<JsonObject> response) {
-                        if (exception == null)
-                            handleResponse(response, callback);
-                        else
-                            callback.onError(exception.getLocalizedMessage());
-                    }
-                });
-    }
-
-    private void handleResponse(Response<JsonObject> response, InTouchCallback callback) {
-        if (response.getHeaders().code() >= 500)
-            callback.onError(response.getHeaders().message());
-        else if (response.getHeaders().code() >= 400)
-            callback.onError(response.getHeaders().message());
-        else catchError(response, callback);
-    }
-
-    private void catchError(Response<JsonObject> response, InTouchCallback callback) {
-        if (response.getResult() == null)
-            callback.onError(response.getHeaders().message());
-        else if (response.getResult().has("result")) {
-            switch (response.getResult().get("result").getAsString()) {
-                case "success":
-                    Gson gson = new Gson();
-                    JsonObject jsonObject = gson.fromJson(response.getResult().get("user").getAsString(), JsonObject.class);
-                    setToken(jsonObject.get("token").getAsString());
-                    PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().putString("profile", response.getResult().get("user").getAsString()).apply();
-                    callback.onSuccess(response.getResult());
-                    break;
-                case "error":
-                    callback.onError(response.getResult().get("error_type").getAsString());
+        InTouchRequest.get(requestParameters, new InTouchCallback() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                JsonObject jsonObject = result.get("user").getAsJsonObject();
+                setToken(jsonObject.get("token").getAsString());
+                PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().putString("profile", jsonObject.getAsString()).apply();
+                InTouchApi.setProfile(new Gson().fromJson(jsonObject, Profile.class));
+                callback.onSuccess(result);
             }
-        } else callback.onError(response.getResult().getAsString());
+
+            @Override
+            public void onError(String error) {
+                callback.onError(error);
+            }
+        });
     }
 
     public void signUp(String username, String password, String firstName, String lastName, final InTouchCallback callback) {
@@ -85,21 +52,21 @@ public class InTouchAuthorization {
         requestParameters.put("password", Collections.singletonList(password));
         requestParameters.put("first_name", Collections.singletonList(firstName));
         requestParameters.put("last_name", Collections.singletonList(lastName));
-        inTouchServerRequest("registration", requestParameters, callback);
+        inTouchAuthorizationRequest("registration", requestParameters, callback);
     }
 
     public void signIn(String username, String password, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(username));
         requestParameters.put("password", Collections.singletonList(password));
-        inTouchServerRequest("login", requestParameters, callback);
+        inTouchAuthorizationRequest("login", requestParameters, callback);
     }
 
     public void socialSignIn(String id, String social, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("login", Collections.singletonList(id + "_" + social));
         requestParameters.put("password", Collections.singletonList(id));
-        inTouchServerRequest("login", requestParameters, callback);
+        inTouchAuthorizationRequest("login", requestParameters, callback);
     }
 
     public void socialSignUp(String id, String firstName, String lastName, String social, final InTouchCallback callback) {
@@ -108,7 +75,7 @@ public class InTouchAuthorization {
         requestParameters.put("password", Collections.singletonList(id));
         requestParameters.put("first_name", Collections.singletonList("social"));
         requestParameters.put("last_name", Collections.singletonList("social"));
-        inTouchServerRequest("registration", requestParameters, callback);
+        inTouchAuthorizationRequest("registration", requestParameters, callback);
     }
 
     public static void logOut() {
@@ -117,10 +84,14 @@ public class InTouchAuthorization {
     }
 
     public static boolean isAuthorize() {
+        if(token == null)
+            restoreToken();
         return token != null;
     }
 
     public static String getToken() {
+        if(token == null)
+            restoreToken();
         return token;
     }
 
@@ -132,6 +103,4 @@ public class InTouchAuthorization {
     private static void restoreToken() {
         token = PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).getString("token", null);
     }
-
-
 }

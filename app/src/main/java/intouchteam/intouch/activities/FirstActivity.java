@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -36,8 +37,8 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
         InTouchApi.getInstance(getApplicationContext());
         if(InTouchAuthorization.isAuthorize()) {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
         }
         setContentView(R.layout.activity_first);
         ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
@@ -100,22 +101,23 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
                 //Toast.makeText(getApplicationContext(), res.userId, Toast.LENGTH_SHORT).show();
                 InTouchAuthorization.getInstance().socialSignIn(res.userId, "vk", new InTouchCallback() {
                     @Override
-                    public void onSuccess(JsonElement user) {
+                    public void onSuccess(JsonObject user) {
                         Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
                         Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
+                        registrationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(registrationActivity);
-                        finish();
+
                     }
 
                     @Override
                     public void onError(String error) {
                         InTouchAuthorization.getInstance().socialSignUp(res.userId, res.secret, res.email, "vk", new InTouchCallback() {
                             @Override
-                            public void onSuccess(JsonElement user) {
+                            public void onSuccess(JsonObject user) {
                                 Toast.makeText(getApplicationContext(), "VK ok", Toast.LENGTH_SHORT).show();
                                 Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
+                                registrationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(registrationActivity);
-                                finish();
                             }
 
                             @Override
@@ -137,22 +139,22 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
             //Toast.makeText(getApplicationContext(), user.getId(), Toast.LENGTH_SHORT).show();
             InTouchAuthorization.getInstance().socialSignIn(user.getId().substring(0, 10), "google", new InTouchCallback() {
                 @Override
-                public void onSuccess(JsonElement user) {
+                public void onSuccess(JsonObject user) {
                     Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
                     Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
+                    registrationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(registrationActivity);
-                    finish();
                 }
 
                 @Override
                 public void onError(String error) {
                     InTouchAuthorization.getInstance().socialSignUp(user.getId().substring(0, 10), user.getDisplayName(), user.getDisplayName(), "google", new InTouchCallback() {
                         @Override
-                        public void onSuccess(JsonElement user) {
+                        public void onSuccess(JsonObject user) {
                             Toast.makeText(getApplicationContext(), "Google ok", Toast.LENGTH_SHORT).show();
                             Intent registrationActivity = new Intent(getBaseContext(), MainActivity.class);
+                            registrationActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(registrationActivity);
-                            finish();
                         }
 
                         @Override
