@@ -10,7 +10,6 @@ public class Profile implements java.io.Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private byte[] userImage;
     private String login;
     private Date registrationDate;
     private Date lastVisit;
@@ -20,15 +19,6 @@ public class Profile implements java.io.Serializable {
     public Profile(String firstName, String lastName, String login, Date registrationDate, Date lastVisit) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.login = login;
-        this.registrationDate = registrationDate;
-        this.lastVisit = lastVisit;
-    }
-
-    public Profile(String firstName, String lastName, byte[] userImage, String login, Date registrationDate, Date lastVisit) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userImage = userImage;
         this.login = login;
         this.registrationDate = registrationDate;
         this.lastVisit = lastVisit;
@@ -56,14 +46,6 @@ public class Profile implements java.io.Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public byte[] getUserImage() {
-        return this.userImage;
-    }
-
-    public void setUserImage(byte[] userImage) {
-        this.userImage = userImage;
     }
 
     public String getLogin() {

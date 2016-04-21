@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.model.Event;
@@ -43,7 +45,9 @@ public class MainActivityEventsAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mainItem = inflater.inflate(R.layout.main_item, parent, false);
         ((TextView)mainItem.findViewById(R.id.title_text)).setText(events.get(position).getName());
-        ((TextView)mainItem.findViewById(R.id.title_time)).setText(events.get(position).getDateTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        String date = sdf.format(events.get(position).getDateTime());
+        ((TextView)mainItem.findViewById(R.id.title_time)).setText(date);
         ((TextView)mainItem.findViewById(R.id.content_text)).setText(events.get(position).getDescription());
         return mainItem;
     }

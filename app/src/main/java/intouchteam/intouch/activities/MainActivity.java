@@ -112,55 +112,10 @@ public class MainActivity extends AppCompatActivity
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, EventCreate.class);
+                startActivity(intent);
             }
         };
-    }
-
-    private void testEvents() {
-        InTouchServerEvent.create(
-                "name",
-                "description",
-                "gps",
-                "time",
-                "address",
-                (long)1,
-                "city",
-                new InTouchCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-                        System.out.println("create:" + result);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        System.out.println("create error:" + error);
-                    }
-                }
-        );
-        InTouchServerEvent.get(new InTouchCallback() {
-            @Override
-            public void onSuccess(JsonObject result) {
-                System.out.println("get:" + result);
-            }
-
-            @Override
-            public void onError(String error) {
-                System.out.println("get error:" + error);
-            }
-        });
-        InTouchServerEvent.get((long) 1, new InTouchCallback() {
-            @Override
-            public void onSuccess(JsonObject result) {
-                System.out.println("get id1:" + result);
-            }
-
-            @Override
-            public void onError(String error) {
-                System.out.println("get id1 error:" + error);
-            }
-        });
     }
 
     private void setProfileToNavigationBar() {
@@ -180,6 +135,7 @@ public class MainActivity extends AppCompatActivity
                 ArrayList<Event> events = Event.getList(jsonEvents);
                 MainActivityEventsAdapter adapter = new MainActivityEventsAdapter(InTouchApi.getContext(), events);
                 ((ListView)findViewById(R.id.events_layout)).setAdapter(adapter);
+                ((ListView)findViewById(R.id.events_layout)).setDivider(null);
             }
 
             @Override

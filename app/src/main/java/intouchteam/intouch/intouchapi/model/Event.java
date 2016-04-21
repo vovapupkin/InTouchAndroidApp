@@ -4,20 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-/**
- * Created by vova on 19-Apr-16.
- */
 public class Event {
     private Long id;
     private Long creatorId;
     private String name;
     private String description;
     private String gps;
-    private String dateTime;
+    private Date dateTime;
     private String address;
-    private String createDate;
+    private Date createDate;
     private Long typeId;
+    private String city;
 
     Event() {}
 
@@ -33,15 +32,19 @@ public class Event {
         return typeId;
     }
 
+    public String getCity() {
+        return city;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public String getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
@@ -61,11 +64,11 @@ public class Event {
         this.address = address;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -91,6 +94,10 @@ public class Event {
 
     public void setTypeId(Long typeId) {
         this.typeId = typeId;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public static ArrayList<Event> getList(JsonArray jsonArray) {

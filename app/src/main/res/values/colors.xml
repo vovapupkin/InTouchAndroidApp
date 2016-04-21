@@ -5,4 +5,11 @@
     <color name="intouch_white">#ffffff</color>
     <color name="intouch_green_light">#5f9736</color>
     <color name="intouch_green_dark">#436b27</color>
+    <color name="foreground_material_light">#ffffff</color>
+    <color name="black">#ffffff</color>
+    <color name="primary_text_material_light">#ffffff</color>
+    <color name="primary_text_default_material_light">#deffffff</color>
+    <color name="primary_dark_material_dark">#c9c9c9</color>
+    <color name="background_material_dark">#e4e4e4</color>
+    <color name="secondary_text_default_material_light">#8affffff</color>
 </resources>

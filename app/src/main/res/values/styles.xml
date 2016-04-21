@@ -4,6 +4,7 @@
     <style name="InTouch" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="colorAccent">@color/intouch_green_light</item>
+        <item name="colorPrimary">@color/intouch_green_light</item>
     </style>
 
     <style name="InTouchButtonMenu" parent="InTouch">
@@ -52,10 +53,27 @@
         <item name="android:layout_marginLeft">15dp</item>
     </style>
 
-    <style name="InTouch.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:backgroundTint">@color/intouch_green_light</item>
+    <style name="InTouchDarkEditText" parent="InTouch">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="met_baseColor">@android:color/black</item>
+        <item name="met_primaryColor">@color/intouch_green_light</item>
+        <item name="met_floatingLabel">normal</item>
+        <item name="met_floatingLabelTextSize">10sp</item>
+        <item name="met_floatingLabelPadding">5dp</item>
+        <item name="met_bottomTextSize">10sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:ems">10</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
     </style>
 
-    <style name="InTouch.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" >
+    <style name="InTouch.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">@color/intouch_white</item>
+    </style>
+
+    <style name="InTouch.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColor">@color/intouch_white</item>
     </style>
 </resources>
