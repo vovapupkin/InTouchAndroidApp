@@ -32,9 +32,9 @@ public class InTouchAuthorization {
         InTouchRequest.get(requestParameters, new InTouchCallback() {
             @Override
             public void onSuccess(JsonObject result) {
-                JsonObject jsonObject = result.get("user").getAsJsonObject();
+                JsonObject jsonObject = new Gson().fromJson(result.get("user").getAsString(), JsonObject.class);
                 setToken(jsonObject.get("token").getAsString());
-                PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().putString("profile", jsonObject.getAsString()).apply();
+                PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().putString("profile", jsonObject.toString()).apply();
                 InTouchApi.setProfile(new Gson().fromJson(jsonObject, Profile.class));
                 callback.onSuccess(result);
             }

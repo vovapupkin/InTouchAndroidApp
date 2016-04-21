@@ -13,13 +13,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import intouchteam.intouch.R;
+import intouchteam.intouch.adapter.MainActivityEventsAdapter;
+import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
+import intouchteam.intouch.intouchapi.model.Event;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,7 +54,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        testEvents();
+        setProfileToNavigationBar();
+        InTouchServerEvent.get(profileEventsCallback());
     }
 
     @Override
@@ -150,5 +161,31 @@ public class MainActivity extends AppCompatActivity
                 System.out.println("get id1 error:" + error);
             }
         });
+    }
+
+    private void setProfileToNavigationBar() {
+        ((TextView)navigationView.getHeaderView(0)
+                .findViewById(R.id.nav_name))
+                .setText(InTouchApi.getProfile().getFirstName() + " " + InTouchApi.getProfile().getLastName());
+        ((TextView)navigationView.getHeaderView(0)
+                .findViewById(R.id.nav_login))
+                .setText(InTouchApi.getProfile().getLogin());
+    }
+
+    private InTouchCallback profileEventsCallback() {
+        return new InTouchCallback() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                JsonArray jsonEvents = new Gson().fromJson(result.get("events").getAsString(), JsonArray.class);
+                ArrayList<Event> events = Event.getList(jsonEvents);
+                MainActivityEventsAdapter adapter = new MainActivityEventsAdapter(InTouchApi.getContext(), events);
+                ((ListView)findViewById(R.id.events_layout)).setAdapter(adapter);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(InTouchApi.getContext(), "Cant load events:" + error, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

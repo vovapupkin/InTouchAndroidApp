@@ -50,17 +50,17 @@ public class InTouchRequest {
         if (response.getResult() == null)
             callback.onError(response.getHeaders().message() + " no result");
         else {
-            JsonObject result = new Gson().fromJson(response.getResult(), JsonObject.class);
-            if (result.has("result")) {
-                switch (result.get("result").getAsString()) {
-                    case "success":
-                        callback.onSuccess(result);
-                        break;
-                    case "error":
-                        callback.onError(result.get("error_type").getAsString());
-                        break;
-                }
-            } else callback.onError("No result:" + response.getResult());
+                JsonObject result = new Gson().fromJson(response.getResult(), JsonObject.class);
+                if (result.has("result")) {
+                    switch (result.get("result").getAsString()) {
+                        case "success":
+                            callback.onSuccess(result);
+                            break;
+                        case "error":
+                            callback.onError(result.get("error_type").getAsString());
+                            break;
+                    }
+                } else callback.onError("No result:" + response.getResult());
         }
     }
 }

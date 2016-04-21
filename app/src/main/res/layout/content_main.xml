@@ -11,14 +11,11 @@
     tools:showIn="@layout/app_bar_main"
     android:background="@color/common_action_bar_splitter">
 
-    <LinearLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/main_item"/>
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/events_layout"
+        android:dividerHeight="0dp"></ListView>
 
 
 </RelativeLayout>
