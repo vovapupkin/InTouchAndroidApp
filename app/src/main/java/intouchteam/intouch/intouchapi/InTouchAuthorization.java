@@ -80,6 +80,7 @@ public class InTouchAuthorization {
 
     public static void logOut() {
         PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().remove("token").apply();
+        PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().remove("profile").apply();
         token = null;
     }
 

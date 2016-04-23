@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.EventCreate"
+    tools:context=".activities.EventCreateActivity"
     tools:showIn="@layout/activity_event_create">
 
     <LinearLayout
@@ -14,6 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar android:indeterminate="true"
+            android:layout_marginTop="-7dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/marker_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:visibility="invisible"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/event_name"
@@ -49,6 +57,8 @@
             android:singleLine="true"/>
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:focusableInTouchMode="false"
+            android:focusable="false"
             android:id="@+id/event_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +76,9 @@
             android:hint="Date"
             android:singleLine="true"/>
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="400dp"/>
     </LinearLayout>
 
 

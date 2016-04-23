@@ -22,6 +22,7 @@ import com.vk.sdk.api.VKError;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
+import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.RegistrationIntentService;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;
 import intouchteam.intouch.intouchapi.InTouchCallback;
@@ -40,12 +41,13 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        setContentView(R.layout.activity_first);
-        ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
-        googleApi = initializeGoogleApiClient();
-        setOnClickListeners();
-
-        startService(new Intent(this, RegistrationIntentService.class));
+        else {
+            setContentView(R.layout.activity_first);
+            ((TextView) findViewById(R.id.textView_handler)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/nautilus_pompilius_regular.ttf"));
+            googleApi = initializeGoogleApiClient();
+            setOnClickListeners();
+            startService(new Intent(this, RegistrationIntentService.class));
+        }
     }
 
     void setOnClickListeners() {
@@ -166,4 +168,5 @@ public class FirstActivity extends FragmentActivity implements View.OnClickListe
             });
         }
     }
+
 }

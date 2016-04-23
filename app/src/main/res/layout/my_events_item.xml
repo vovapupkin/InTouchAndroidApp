@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/common_action_bar_splitter">
+
+        <RelativeLayout
+            android:background="@color/intouch_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_layout">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ddkach"
+                android:id="@+id/title_img"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:singleLine="true"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Drinking Kvas"
+                android:layout_toRightOf="@id/title_img"
+                android:textSize="20sp"
+                android:textColor="@color/vk_black"
+                android:id="@+id/title_text"/>
+
+            <TextView
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="start at 12.05.1785 18:00"
+                android:layout_toRightOf="@id/title_img"
+                android:textSize="10sp"
+                android:layout_below="@id/title_text"
+                android:textColor="#000000"
+                android:id="@+id/title_time"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:background="@color/intouch_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_layout"
+            android:elevation="3dp">
+
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello! It will be cool! I have 2 liters!"
+                android:textColor="@color/vk_black"
+                android:id="@+id/content_text"/>
+        </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+</LinearLayout>
