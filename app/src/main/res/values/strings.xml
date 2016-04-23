@@ -14,8 +14,9 @@
     <string name="username_error">Invalid username</string>
     <string name="password_error">Invalid password. Password must be more then 6 characters, including numbers</string>
     <string name="title_activity_main">EventsActivity</string>
-    <string name="pref_key_SENT_TOKEN_TO_SERVER">key_sent</string>
-    <string name="intent_name_REGISTRATION_COMPLETE">registration_complete</string>
+    <string name="SENT_TOKEN_TO_SERVER">key_sent</string>
+    <string name="REGISTRATION_COMPLETE">registration_complete</string>
+    <string name="PUSH_NOTIFICATION">push_notification</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

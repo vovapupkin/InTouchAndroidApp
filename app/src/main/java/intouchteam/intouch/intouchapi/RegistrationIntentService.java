@@ -28,9 +28,9 @@ public class RegistrationIntentService extends IntentService {
             synchronized (TAG) {
                 // Initially a network call, to retrieve the token, subsequent calls are local.
                 InstanceID instanceID = InstanceID.getInstance(this);
-//                String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-//                Log.i(TAG, "GCM Registration Token: " + token);
-//                TOKEN = token;
+                String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                Log.i(TAG, "GCM Registration Token: " + token);
+                TOKEN = token;
 
                 // TODO: send any registration to my app's servers, if applicable.
                 // e.g. sendRegistrationToServer(token);
@@ -42,13 +42,15 @@ public class RegistrationIntentService extends IntentService {
                 //          pubSub.subscribe(token, "/topics/" + topic, null);
                 //       }
 
-                sharedPreferences.edit().putBoolean(getString(R.string.pref_key_SENT_TOKEN_TO_SERVER), true).apply();
+                sharedPreferences.edit().putBoolean(getString(R.string.SENT_TOKEN_TO_SERVER), true).apply();
             }
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
-            sharedPreferences.edit().putBoolean(getString(R.string.pref_key_SENT_TOKEN_TO_SERVER), false).apply();
+            sharedPreferences.edit().putBoolean(getString(R.string.SENT_TOKEN_TO_SERVER), false).apply();
         }
         // Notify UI that registration has completed, so the progress indicator can be hidden.
-        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(getString(R.string.intent_name_REGISTRATION_COMPLETE)));
+        Intent registration_complete = new Intent(getString(R.string.REGISTRATION_COMPLETE));
+        registration_complete.putExtra("token", TOKEN);
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(registration_complete);
     }
 }
