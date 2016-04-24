@@ -24,13 +24,16 @@ public class InTouchApi {
 
     private InTouchApi(Context context) {
         InTouchApi.context = context;
-        if(InTouchAuthorization.isAuthorize()) {
+        getProfile();
+    }
+
+    public static Profile getProfile() {
+        if(profile == null && InTouchAuthorization.isAuthorize()) {
             Gson gson = new Gson();
             profile = gson.fromJson(PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).getString("profile", null), Profile.class);
         }
+        return profile;
     }
-
-    public static Profile getProfile() { return profile; }
 
     public static String getGlobalURL() {
         return globalURL;

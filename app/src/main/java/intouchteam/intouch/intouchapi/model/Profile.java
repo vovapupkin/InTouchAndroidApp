@@ -77,4 +77,9 @@ public class Profile implements java.io.Serializable {
         Profile profile = gson.fromJson(jsonObject, Profile.class);
         return profile;
     }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getLastName();
+    }
 }

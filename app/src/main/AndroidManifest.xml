@@ -70,12 +70,16 @@
         <service
             android:name=".intouchapi.RegistrationIntentService"
             android:exported="false" />
+
         <activity
             android:name=".activities.EventCreateActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_event_create"
             android:theme="@style/InTouch" />
-
+        <activity
+            android:name=".activities.FullEventActivity"
+            android:label="@string/title_activity_full_event"
+            android:theme="@style/InTouch"></activity>
     </application>
 
 </manifest>

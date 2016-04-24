@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/common_action_bar_splitter">
+    android:background="@color/intouch_white">
 
         <RelativeLayout
-            android:background="@color/intouch_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_layout">
@@ -19,7 +18,6 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:singleLine="true"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,7 +28,6 @@
                 android:id="@+id/title_text"/>
 
             <TextView
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="start at 12.05.1785 18:00"
@@ -42,7 +39,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:background="@color/intouch_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/content_layout"

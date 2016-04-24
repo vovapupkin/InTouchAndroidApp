@@ -31,10 +31,12 @@ import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
+import intouchteam.intouch.intouchapi.model.Event;
 import intouchteam.intouch.intouchapi.model.EventType;
 
 public class EventCreateActivity extends AppCompatActivity {
 
+    Event event = null;
     Toolbar toolbar;
     ImageView toolbarBackground;
     Calendar calendar = Calendar.getInstance();
@@ -51,6 +53,8 @@ public class EventCreateActivity extends AppCompatActivity {
         toolbarBackground = (ImageView)findViewById(R.id.img_toolbar);
         downloadEventTypes();
         setOnEventTypeClickListener();
+        if(getIntent().getStringExtra("event") != null)
+            setEventFields();
         setOnDateClickListener();
     }
 
@@ -112,26 +116,49 @@ public class EventCreateActivity extends AppCompatActivity {
         MaterialEditText address = ((MaterialEditText) findViewById(R.id.event_address));
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         String dateString = sdf.format(date);
-        InTouchServerEvent.create(name.getText().toString(),
-                description.getText().toString(),
-                "",
-                dateString,
-                address.getText().toString(),
-                selectedEventType.getId(),
-                city.getText().toString(),
-                new InTouchCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-                        Toast.makeText(EventCreateActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+        if(event == null)
+            InTouchServerEvent.create(name.getText().toString(),
+                    description.getText().toString(),
+                    "nogps",
+                    dateString,
+                    address.getText().toString(),
+                    selectedEventType.getId(),
+                    city.getText().toString(),
+                    new InTouchCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            Toast.makeText(EventCreateActivity.this, "Create success", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
 
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(InTouchApi.getContext(), error, Toast.LENGTH_SHORT).show();
-                        findViewById(R.id.marker_progress).setVisibility(View.INVISIBLE);
-                    }
-                });
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(InTouchApi.getContext(), error, Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.marker_progress).setVisibility(View.INVISIBLE);
+                        }
+                    });
+        else
+            InTouchServerEvent.update(event.getId(),
+                    name.getText().toString(),
+                    description.getText().toString(),
+                    "nogps",
+                    dateString,
+                    address.getText().toString(),
+                    selectedEventType.getId(),
+                    city.getText().toString(),
+                    new InTouchCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            Toast.makeText(EventCreateActivity.this, "Update success", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(InTouchApi.getContext(), error, Toast.LENGTH_SHORT).show();
+                            findViewById(R.id.marker_progress).setVisibility(View.INVISIBLE);
+                        }
+                    });
     }
 
     private void showDatePickerDialog() {
@@ -207,8 +234,13 @@ public class EventCreateActivity extends AppCompatActivity {
             public void onSuccess(JsonObject result) {
                 Gson gson = new Gson();
                 JsonArray eventTypesJsonElements = gson.fromJson(result.get("EventTypes").getAsString(), JsonArray.class);
-                for(int i = 0; i < eventTypesJsonElements.size(); i++)
+                for (int i = 0; i < eventTypesJsonElements.size(); i++)
                     eventTypes.add(gson.fromJson(eventTypesJsonElements.get(i).getAsJsonObject(), EventType.class));
+                if(event != null) {
+                    selectedEventType = eventTypes.get(event.getTypeId().intValue() - 1);
+                    MaterialEditText typeEditText = ((MaterialEditText) findViewById(R.id.event_type));
+                    typeEditText.setText(eventTypes.get(event.getTypeId().intValue() - 1).getTypeName());
+                }
             }
 
             @Override
@@ -216,5 +248,17 @@ public class EventCreateActivity extends AppCompatActivity {
                 Toast.makeText(InTouchApi.getContext(), "Cant load event types:" + error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setEventFields() {
+        event = new Gson().fromJson(getIntent().getStringExtra("event"), Event.class);
+        ((MaterialEditText) findViewById(R.id.event_name)).setText(event.getName());
+        ((MaterialEditText) findViewById(R.id.event_description)).setText(event.getDescription());
+        ((MaterialEditText) findViewById(R.id.event_city)).setText(event.getCity());
+        ((MaterialEditText) findViewById(R.id.event_address)).setText(event.getAddress());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm");
+        date = event.getDateTime();
+        String dateStr = sdf.format(date);
+        ((MaterialEditText) findViewById(R.id.event_date)).setText(dateStr);
     }
 }

@@ -5,73 +5,97 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="intouchteam.intouch.activities.SearchActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:scrollbars="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <ProgressBar
+        android:layout_marginTop="-7dp"
+        android:layout_marginBottom="-7dp"
+        android:indeterminate="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/InTouch.AppBarOverlay">
+        android:id="@+id/marker_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:visibility="invisible"/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/InTouch.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        android:background="@color/common_action_bar_splitter">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/search_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/search_button"/>
-
-            <Button
-                android:id="@+id/search_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"/>
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/intouch_white">
 
             <LinearLayout
-                android:id="@+id/additional_parameters"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/search_text">
+                android:orientation="horizontal">
 
-                <EditText
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    style="@style/InTouchDarkEditText"
                     android:layout_weight="1"
-                    android:id="@+id/search_city"
+                    android:id="@+id/event_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/search_button"
+                    android:hint="Search"
+                    app:met_floatingLabel="none"
+                    android:singleLine="true"/>
 
-                <EditText
-                    android:layout_weight="1"
-                    android:id="@+id/search_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:src="@drawable/ic_search_24dp"
+                    android:id="@+id/search_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"/>
 
             </LinearLayout>
 
-            <ListView
-                android:layout_below="@id/additional_parameters"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/intouch_white"
+                android:elevation="3dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    style="@style/InTouchDarkEditText"
+                    android:layout_weight="1"
+                    android:id="@+id/event_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    style="@style/InTouchDarkEditText"
+                    android:layout_weight="1"
+                    android:id="@+id/event_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/common_action_bar_splitter" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/search_result"/>
+                android:orientation="vertical"
+                android:id="@+id/events_layout"
+                android:background="@color/common_action_bar_splitter"/>
 
-        </RelativeLayout>
+        </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

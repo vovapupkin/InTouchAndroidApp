@@ -32,8 +32,23 @@ public class InTouchServerEvent {
     public static void create(String name, String description, String gps, String dateTime,
             String address, Long typeId, String city, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
-        requestParameters.put("method", Collections.singletonList("CreateEvent"));
+        requestParameters.put("method", Collections.singletonList("createEvent"));
         requestParameters.put("name", Collections.singletonList(name));
+        requestParameters.put("description", Collections.singletonList(description));
+        requestParameters.put("gps", Collections.singletonList(gps));
+        requestParameters.put("date_time", Collections.singletonList(dateTime));
+        requestParameters.put("address", Collections.singletonList(address));
+        requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
+        requestParameters.put("city", Collections.singletonList(city));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void update(Long eventId, String name, String description, String gps, String dateTime,
+                              String address, Long typeId, String city, final InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("updateEvent"));
+        requestParameters.put("name", Collections.singletonList(name));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
         requestParameters.put("description", Collections.singletonList(description));
         requestParameters.put("gps", Collections.singletonList(gps));
         requestParameters.put("date_time", Collections.singletonList(dateTime));
@@ -61,13 +76,6 @@ public class InTouchServerEvent {
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void getCreator(Long eventId, InTouchCallback callback) {
-        Map<String, List<String>> requestParameters = new HashMap<>();
-        requestParameters.put("method", Collections.singletonList("getEventCreator"));
-        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
-        InTouchRequest.get(requestParameters, callback);
-    }
-
     public static void getFollowers(Long eventId, InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getEventFollowers"));
@@ -75,9 +83,16 @@ public class InTouchServerEvent {
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void subscribe(Long eventId, InTouchCallback callback) {
+    public static void follow(Long eventId, InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("subscribeEvent"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void unfollow(Long eventId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("unfollowEvent"));
         requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
         InTouchRequest.get(requestParameters, callback);
     }

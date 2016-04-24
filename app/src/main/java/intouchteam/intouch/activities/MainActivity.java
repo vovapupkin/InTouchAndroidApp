@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("My events");
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
-
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, new MyEventsFragment())
@@ -127,12 +127,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .beginTransaction()
                         .replace(R.id.main_container, new SearchEventFragment())
                         .commit();
+                toolbar.setTitle("Search");
                 break;
             case R.id.nav_events:
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_container, new MyEventsFragment())
                         .commit();
+                toolbar.setTitle("My events");
                 break;
             case R.id.nav_friends:
                 break;
