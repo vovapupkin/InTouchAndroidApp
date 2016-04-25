@@ -151,7 +151,6 @@ public class FullEventActivity extends AppCompatActivity {
                 InTouchServerEvent.follow(event.getId(), new InTouchCallback() {
                     @Override
                     public void onSuccess(JsonObject result) {
-                        Toast.makeText(FullEventActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                         changeFollowButton();
                     }
 
@@ -173,7 +172,6 @@ public class FullEventActivity extends AppCompatActivity {
                 InTouchServerEvent.unfollow(event.getId(), new InTouchCallback() {
                     @Override
                     public void onSuccess(JsonObject result) {
-                        Toast.makeText(FullEventActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
                         setFollowButton();
                     }
 

@@ -79,6 +79,10 @@
         <activity
             android:name=".activities.FullEventActivity"
             android:label="@string/title_activity_full_event"
+            android:theme="@style/InTouch" />
+        <activity
+            android:name=".activities.FullProfile"
+            android:label="@string/title_activity_full_profile"
             android:theme="@style/InTouch"></activity>
     </application>
 

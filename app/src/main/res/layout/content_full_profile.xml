@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.FullEventActivity"
-    tools:showIn="@layout/activity_full_event">
+    tools:context=".activities.FullProfile"
+    tools:showIn="@layout/activity_full_profile">
 
     <ImageView
         android:id="@+id/event_logo"
@@ -19,16 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/toolbar_background"/>
-
-    <TextView
-        android:id="@id/event_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Event Title"
-        android:textColor="@color/intouch_white"
-        android:layout_alignBottom="@id/event_logo"
-        android:layout_margin="20dp"
-        android:textSize="20sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -58,7 +48,6 @@
         </LinearLayout>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +55,6 @@
             android:layout_below="@id/buttons"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/event_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +63,6 @@
             android:text="DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,7 +70,6 @@
             android:text="Date:" />
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@id/event_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +78,6 @@
             android:text="12.03.1996 18:27"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,7 +85,6 @@
             android:text="Type:"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/event_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +93,6 @@
             android:text="sport"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,7 +100,6 @@
             android:text="Address:"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/event_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,7 +108,6 @@
             android:text="Minsk Dzerzhinskogo 95 fl1"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -134,7 +115,6 @@
             android:text="Contacts:"/>
 
         <TextView
-            android:layout_margin="5dp"
             android:id="@+id/event_contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,7 +123,5 @@
             android:text="Vasili Sheshka"/>
 
     </RelativeLayout>
-
-
 
 </RelativeLayout>

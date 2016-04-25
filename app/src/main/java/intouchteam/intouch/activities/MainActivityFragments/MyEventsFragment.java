@@ -28,6 +28,7 @@ import intouchteam.intouch.intouchapi.model.Event;
 
 public class MyEventsFragment extends Fragment {
     View rootView;
+    Boolean isCreator = false;
 
     @Nullable
     @Override
@@ -35,7 +36,10 @@ public class MyEventsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.content_my_events, container, false);
         FloatingActionButton createEventActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
         createEventActionButton.setOnClickListener(createEventActionButtonListener(inflater.getContext()));
-        InTouchServerEvent.get(profileEventsCallback());
+        if(isCreator)
+            InTouchServerEvent.getByCreator(InTouchApi.getProfile().getId(), profileEventsCallback());
+        else
+            InTouchServerEvent.getByFollowed(InTouchApi.getProfile().getId(), profileEventsCallback());
         return rootView;
     }
 
@@ -72,7 +76,14 @@ public class MyEventsFragment extends Fragment {
     @Override
     public void onResume() {
         rootView.findViewById(R.id.marker_progress).setVisibility(View.VISIBLE);
-        InTouchServerEvent.get(profileEventsCallback());
+        if(isCreator)
+            InTouchServerEvent.getByCreator(InTouchApi.getProfile().getId(), profileEventsCallback());
+        else
+            InTouchServerEvent.getByFollowed(InTouchApi.getProfile().getId(), profileEventsCallback());
         super.onResume();
+    }
+
+    public void setCreatorFilter(Boolean isCreator) {
+        this.isCreator = isCreator;
     }
 }

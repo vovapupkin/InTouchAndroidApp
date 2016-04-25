@@ -15,17 +15,17 @@ import intouchteam.intouch.intouchapi.model.Profile;
 
 public class InTouchServerEvent {
 
-    public static void get(final InTouchCallback callback) {
+    public static void getByCreator(Long userId, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
-        requestParameters.put("user_id", Collections.singletonList(InTouchApi.getProfile().getId().toString()));
+        requestParameters.put("user_id", Collections.singletonList(userId.toString()));
         requestParameters.put("method", Collections.singletonList("getEvents"));
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void get(Long userId, final InTouchCallback callback) {
+    public static void getByFollowed(Long userId, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("user_id", Collections.singletonList(userId.toString()));
-        requestParameters.put("method", Collections.singletonList("getEvents"));
+        requestParameters.put("method", Collections.singletonList("getFollowedEvents"));
         InTouchRequest.get(requestParameters, callback);
     }
 

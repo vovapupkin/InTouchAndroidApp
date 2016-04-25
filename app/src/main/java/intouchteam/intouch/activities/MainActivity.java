@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,11 +112,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_filters) {
-            //Filter action there
-            return true;
+        MyEventsFragment myEventsFragment = new MyEventsFragment();
+        switch (id) {
+            case R.id.action_followed:
+                myEventsFragment.setCreatorFilter(false);
+                toolbar.setTitle("I follow");
+                break;
+            case R.id.action_manage:
+                myEventsFragment.setCreatorFilter(true);
+                toolbar.setTitle("I create");
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, myEventsFragment)
+                .commit();
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -123,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_search:
+                toolbar.getMenu().clear();
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_container, new SearchEventFragment())
@@ -130,11 +143,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbar.setTitle("Search");
                 break;
             case R.id.nav_events:
+                toolbar.getMenu().clear();
+                getMenuInflater().inflate(R.menu.nav_bar_menu, toolbar.getMenu());
+                MyEventsFragment myEventsFragment = new MyEventsFragment();
+                myEventsFragment.setCreatorFilter(false);
                 getFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.main_container, new MyEventsFragment())
+                        .replace(R.id.main_container, myEventsFragment)
                         .commit();
-                toolbar.setTitle("My events");
+                toolbar.setTitle("I follow");
                 break;
             case R.id.nav_friends:
                 break;

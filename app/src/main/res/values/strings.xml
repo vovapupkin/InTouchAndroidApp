@@ -114,4 +114,5 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_full_event">FullEventActivity</string>
+    <string name="title_activity_full_profile">FullProfile</string>
 </resources>

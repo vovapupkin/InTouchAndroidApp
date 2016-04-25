@@ -75,5 +75,6 @@
 
     <style name="InTouch.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:textColor">@color/intouch_white</item>
+        <item name="android:background">@color/intouch_green_light</item>
     </style>
 </resources>
