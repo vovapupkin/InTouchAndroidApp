@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.FullProfile"
+    tools:context=".activities.FullEventActivity"
     tools:showIn="@layout/activity_full_profile">
 
     <ImageView
-        android:id="@+id/event_logo"
+        android:id="@+id/profile_logo"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:src="@drawable/ddkach"
@@ -20,108 +20,252 @@
         android:layout_height="150dp"
         android:src="@drawable/toolbar_background"/>
 
-    <RelativeLayout
+    <TextView
+        android:id="@id/event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vasili Sheshka"
+        android:textColor="@color/intouch_white"
+        android:layout_alignBottom="@id/event_logo"
+        android:layout_margin="20dp"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/event_logo">
+        android:orientation="vertical"
+        android:layout_below="@id/profile_logo">
 
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_alarm_24dp"
+            android:layout_margin="10dp"
+            android:id="@+id/alarm_icon"/>
+
+        <TextView
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/profile_last_seen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/alarm_icon"
+            android:text="15.04.2013 18:27"
+            android:singleLine="true"/>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Seen"
+            android:layout_below="@id/profile_last_seen"
+            android:layout_toRightOf="@id/alarm_icon"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/buttons">
+            android:layout_marginTop="20dp">
 
-            <Button
-                android:layout_weight="1"
-                android:id="@+id/follow_button"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_call_24dp"
+                android:layout_margin="10dp"
+                android:id="@+id/phone_icon"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/edit_text_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Follow"/>
+                android:layout_toRightOf="@id/phone_icon"
+                android:layout_toLeftOf="@+id/button_done_phone"
+                android:text="+375298276648"
+                android:singleLine="true"
+                android:visibility="gone"/>
 
-            <Button
-                android:id="@+id/members_button"
-                android:layout_weight="1"
+            <ImageView
+                android:id="@+id/button_done_phone"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_done_black_24dp1"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/profile_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Members"/>
+                android:layout_toRightOf="@id/phone_icon"
+                android:layout_toLeftOf="@+id/button_edit_phone"
+                android:singleLine="true"
+                android:text="+375298276648"/>
 
-        </LinearLayout>
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:layout_below="@id/profile_phone"
+                android:layout_toRightOf="@id/phone_icon"/>
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/button_edit_phone"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description:"
-            android:layout_below="@id/buttons"/>
+            android:layout_marginTop="20dp">
 
-        <TextView
-            android:id="@+id/event_description"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_email_24dp"
+                android:layout_margin="10dp"
+                android:id="@+id/email_icon"/>
+
+            <EditText
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/edit_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/email_icon"
+                android:layout_toLeftOf="@+id/button_done_email"
+                android:text="bsuir@live.ru"
+                android:singleLine="true"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/button_done_email"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_done_black_24dp1"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/email_icon"
+                android:layout_toLeftOf="@id/button_edit_email"
+                android:text="bsuir@live.ru"
+                android:singleLine="true"/>
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_below="@id/profile_email"
+                android:layout_toRightOf="@id/email_icon"/>
+
+            <ImageView
+                android:id="@+id/button_edit_email"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/description"
-            android:layout_below="@+id/buttons"
-            android:text="DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"/>
+            android:layout_marginTop="20dp">
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_description"
-            android:text="Date:" />
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_person_24dp"
+                android:layout_margin="10dp"
+                android:id="@+id/skype_icon"/>
 
-        <TextView
-            android:id="@id/event_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_description"
-            android:layout_toRightOf="@id/description"
-            android:text="12.03.1996 18:27"/>
+            <EditText
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/edit_text_skype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/skype_icon"
+                android:layout_toLeftOf="@+id/button_done_skype"
+                android:text="pupkinvov"
+                android:singleLine="true"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_date"
-            android:text="Type:"/>
+            <ImageView
+                android:id="@+id/button_done_skype"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_done_black_24dp1"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/event_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_date"
-            android:layout_toRightOf="@id/description"
-            android:text="sport"/>
+            <TextView
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/profile_skype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/skype_icon"
+                android:layout_toLeftOf="@id/button_edit_skype"
+                android:text="pupkinvov"
+                android:singleLine="true"/>
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_type"
-            android:text="Address:"/>
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skype"
+                android:layout_below="@id/profile_skype"
+                android:layout_toRightOf="@id/skype_icon"/>
 
-        <TextView
-            android:id="@+id/event_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_type"
-            android:layout_toRightOf="@id/description"
-            android:text="Minsk Dzerzhinskogo 95 fl1"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:id="@+id/button_edit_skype"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"/>
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/contacts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_address"
-            android:text="Contacts:"/>
-
-        <TextView
-            android:id="@+id/event_contacts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_address"
-            android:layout_toRightOf="@id/description"
-            android:text="Vasili Sheshka"/>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
