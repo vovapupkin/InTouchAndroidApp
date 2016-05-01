@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="Vasili Sheshka"
         android:textColor="@color/intouch_white"
-        android:layout_alignBottom="@id/event_logo"
+        android:layout_alignBottom="@id/profile_logo"
         android:layout_margin="20dp"
         android:textSize="30sp"
         android:layout_centerHorizontal="true"
@@ -95,7 +95,8 @@
                 android:layout_toLeftOf="@+id/button_done_phone"
                 android:text="+375298276648"
                 android:singleLine="true"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:inputType="phone"/>
 
             <ImageView
                 android:id="@+id/button_done_phone"
@@ -160,7 +161,8 @@
                 android:layout_toLeftOf="@+id/button_done_email"
                 android:text="bsuir@live.ru"
                 android:singleLine="true"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:inputType="textEmailAddress"/>
 
             <ImageView
                 android:id="@+id/button_done_email"
@@ -225,7 +227,8 @@
                 android:layout_toLeftOf="@+id/button_done_skype"
                 android:text="pupkinvov"
                 android:singleLine="true"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:inputType="textPersonName"/>
 
             <ImageView
                 android:id="@+id/button_done_skype"
