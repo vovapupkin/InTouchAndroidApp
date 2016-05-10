@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,23 +35,9 @@ public class MyEventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.content_my_events, container, false);
-        FloatingActionButton createEventActionButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        createEventActionButton.setOnClickListener(createEventActionButtonListener(inflater.getContext()));
-        if(isCreator)
-            InTouchServerEvent.getByCreator(InTouchApi.getProfile().getId(), profileEventsCallback());
-        else
-            InTouchServerEvent.getByFollowed(InTouchApi.getProfile().getId(), profileEventsCallback());
+        refreshEvent();
+        ((SwipeRefreshLayout)rootView.findViewById(R.id.events_refresh_layout)).setOnRefreshListener(onRefreshEvent());
         return rootView;
-    }
-
-    private View.OnClickListener createEventActionButtonListener(final Context context) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, EventCreateActivity.class);
-                startActivity(intent);
-            }
-        };
     }
 
     private InTouchCallback profileEventsCallback() {
@@ -62,28 +49,41 @@ public class MyEventsFragment extends Fragment {
                 MainActivityEventsAdapter adapter = new MainActivityEventsAdapter(InTouchApi.getContext(), events);
                 ((ListView)rootView.findViewById(R.id.events_layout)).setAdapter(adapter);
                 ((ListView)rootView.findViewById(R.id.events_layout)).setDivider(null);
-                rootView.findViewById(R.id.marker_progress).setVisibility(View.GONE);
+                ((SwipeRefreshLayout)rootView.findViewById(R.id.events_refresh_layout)).setRefreshing(false);
             }
 
             @Override
             public void onError(String error) {
                 Toast.makeText(InTouchApi.getContext(), "Cant load events:" + error, Toast.LENGTH_SHORT).show();
-                rootView.findViewById(R.id.marker_progress).setVisibility(View.GONE);
+                ((SwipeRefreshLayout)rootView.findViewById(R.id.events_refresh_layout)).setRefreshing(false);
             }
         };
     }
 
     @Override
     public void onResume() {
-        rootView.findViewById(R.id.marker_progress).setVisibility(View.VISIBLE);
-        if(isCreator)
-            InTouchServerEvent.getByCreator(InTouchApi.getProfile().getId(), profileEventsCallback());
-        else
-            InTouchServerEvent.getByFollowed(InTouchApi.getProfile().getId(), profileEventsCallback());
+        ((SwipeRefreshLayout)rootView.findViewById(R.id.events_refresh_layout)).setRefreshing(true);
+        refreshEvent();
         super.onResume();
     }
 
     public void setCreatorFilter(Boolean isCreator) {
         this.isCreator = isCreator;
+    }
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshEvent() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshEvent();
+            }
+        };
+    }
+
+    public void refreshEvent() {
+        if(isCreator)
+            InTouchServerEvent.getByCreator(InTouchApi.getProfile().getId(), profileEventsCallback());
+        else
+            InTouchServerEvent.getByFollowed(InTouchApi.getProfile().getId(), profileEventsCallback());
     }
 }

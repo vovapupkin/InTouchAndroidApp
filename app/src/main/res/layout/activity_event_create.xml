@@ -10,31 +10,8 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
+        android:layout_height="?attr/actionBarSize"
         android:theme="@style/InTouch.AppBarOverlay">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="true"
-            app:title="New Event">
-
-            <ImageView
-                android:id="@+id/img_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ddkach"
-                android:scaleType="centerCrop"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/toolbar_background"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -43,14 +20,8 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/InTouch.PopupOverlay"/>
 
-
-
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_event_create" />
-
 
 </android.support.design.widget.CoordinatorLayout>

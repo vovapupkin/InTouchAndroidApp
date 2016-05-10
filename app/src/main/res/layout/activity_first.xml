@@ -3,16 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FirstActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/background"
-        android:scaleType="centerCrop"/>
+    tools:context=".activities.FirstActivity"
+    android:background="@drawable/background">
 
     <TextView
-        style="@style/InTouchHeader"
         android:id="@+id/textView_handler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,27 +23,23 @@
             android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
             android:text="@string/login"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
             android:text="@string/registration"
             android:id="@+id/button_registration" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
             android:text="@string/sign_up_with_vk"
             android:id="@+id/button_vk"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/InTouchButtonMenu"
             android:text="@string/sign_up_with_google"
             android:id="@+id/button_google"/>
     </LinearLayout>

@@ -9,34 +9,31 @@
     tools:showIn="@layout/activity_full_profile">
 
     <ImageView
-        android:id="@+id/profile_logo"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/ddkach"
+        android:layout_height="@dimen/event_item_image_height"
+        android:src="@drawable/profile_background"
         android:scaleType="centerCrop"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:src="@drawable/toolbar_background"/>
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ddkach"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
-    <TextView
-        android:id="@id/event_name"
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_marginRight="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vasili Sheshka"
-        android:textColor="@color/intouch_white"
-        android:layout_alignBottom="@id/profile_logo"
-        android:layout_margin="20dp"
-        android:textSize="30sp"
-        android:layout_centerHorizontal="true"
-        android:singleLine="true"/>
+        android:layout_marginTop="-20dp"
+        android:layout_alignParentRight="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/profile_logo">
+        android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -182,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/email_icon"
-                android:layout_toLeftOf="@id/button_edit_email"
+                android:layout_toLeftOf="@+id/button_edit_email"
                 android:text="bsuir@live.ru"
                 android:singleLine="true"/>
 
@@ -248,7 +245,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/skype_icon"
-                android:layout_toLeftOf="@id/button_edit_skype"
+                android:layout_toLeftOf="@+id/button_edit_skype"
                 android:text="pupkinvov"
                 android:singleLine="true"/>
 

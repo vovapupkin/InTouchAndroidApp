@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="intouch_white_alpha20">#20ffffff</color>
-    <color name="intouch_white_alpha70">#70ffffff</color>
-    <color name="intouch_white">#ffffff</color>
-    <color name="intouch_green_light">#5f9736</color>
-    <color name="intouch_green_dark">#436b27</color>
-    <color name="foreground_material_light">#ffffff</color>
-    <color name="black">#ffffff</color>
-    <color name="primary_text_material_light">#ffffff</color>
-    <color name="primary_text_default_material_light">#deffffff</color>
-    <color name="primary_dark_material_dark">#c9c9c9</color>
-    <color name="background_material_dark">#e4e4e4</color>
-    <color name="secondary_text_default_material_light">#8affffff</color>
+    <color name="it_blue">#1972b9</color>
+    <color name="it_light_blue">#2196f3</color>
+    <color name="it_light_gray">#fafafa</color>
+    <color name="it_gray">#ededed</color>
+    <color name="it_dark_gray">#bebebe</color>
+    <color name="it_orange">#f44336</color>
+    <color name="it_text_transparent_grey">#8A000000</color>
+    <color name="it_cards_background_gray">#DFDFDF</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
 </resources>

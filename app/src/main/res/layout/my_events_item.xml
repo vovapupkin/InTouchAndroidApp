@@ -3,62 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/common_action_bar_splitter">
+    android:background="@color/it_cards_background_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="7dp"
+        android:background="@drawable/card_item_background"
+        android:elevation="3dp">
 
         <RelativeLayout
-            android:background="@color/intouch_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/title_layout">
 
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ddkach"
-                android:id="@+id/title_img"
-                android:layout_marginRight="10dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_item_image_height"
+                android:src="@drawable/ic_party_mode_200dp"
+                android:background="@color/it_gray"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_item_image_height"
+                android:scaleType="centerCrop"
+                android:id="@+id/title_img"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_item_image_height"
+                android:src="@drawable/toolbar_background"
+                android:layout_alignBottom="@id/title_img"/>
 
             <TextView
+                android:layout_alignBottom="@id/title_img"
+                android:layout_margin="20dp"
                 android:singleLine="true"
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Drinking Kvas"
-                android:layout_toRightOf="@id/title_img"
-                android:textSize="20sp"
-                android:textColor="@color/vk_black"
+                android:text="Coldplay"
+                android:textSize="34sp"
+                android:textColor="@color/white"
                 android:id="@+id/title_text"/>
-
-            <TextView
-                android:singleLine="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="start at 12.05.1785 18:00"
-                android:layout_toRightOf="@id/title_img"
-                android:textSize="10sp"
-                android:layout_below="@id/title_text"
-                android:textColor="#000000"
-                android:id="@+id/title_time"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:background="@color/intouch_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/content_layout"
-            android:elevation="3dp">
+            android:layout_margin="20dp">
 
             <TextView
-                android:maxLines="3"
-                android:layout_margin="10dp"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hello! It will be cool! I have 2 liters!"
-                android:textColor="@color/vk_black"
-                android:id="@+id/content_text"/>
+                android:text="12.05.1785 18:00"
+                android:textSize="16sp"
+                android:id="@+id/title_time"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/it_text_transparent_grey"/>
+
+            <TextView
+                android:layout_below="@id/title_time"
+                android:maxLines="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="‘Turn your magic on’ and get ready to experience Coldplay’s ‘A Head Full of Dreams’ live! One of the best-selling bands in the history of music, Coldplay are known to put on the most spectacular live shows that one can experience. Comprising of crooner and front man Chris Martin, lead guitarist Jonny Buckland, multi-instrumentalist and drummer Will Champion and bassist Guy Berryman, Coldplay have the backing of 6 previous world tours that were completely sold out. So if you want to see Coldplay live in concert, don’t miss the chance to buy your Coldplay tour tickets on viagogo, the world’s largest source of live entertainment tickets. If you happen to have some spare Coldplay tickets, you can also list for them for sale for free! Every Coldplay tickets is protected by the viagogo guarantee, so you can find a wide selection of prices, seats and Coldplay tour dates from around the world with convenience on viagogo! "
+                android:textColor="@color/black"
+                android:id="@+id/content_text"
+                android:textSize="16sp"/>
         </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+    </LinearLayout>
+
 </LinearLayout>

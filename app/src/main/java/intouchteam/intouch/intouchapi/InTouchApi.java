@@ -9,7 +9,7 @@ import intouchteam.intouch.intouchapi.model.Profile;
 
 public class InTouchApi {
 
-    private static final String globalURL = "http://intouch2.mycloud.by/RequestServlet";
+    private static final String globalURL = "http://intouch3.mycloud.by/RequestServlet";
     private static final String apiKey = "SHEMODED";
     private static Context context;
     private static InTouchApi instance;

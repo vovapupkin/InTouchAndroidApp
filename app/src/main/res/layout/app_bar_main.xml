@@ -17,8 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/InTouch.PopupOverlay"
-            android:title="My Events"/>
+            app:popupTheme="@style/InTouch.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -26,7 +25,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_container"
-        android:layout_marginTop="56dp"/>
+        android:layout_marginTop="?attr/actionBarSize"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/floating_button_margin"
+        android:src="@drawable/ic_add_24dp"
+        app:layout_anchor="@id/main_container"
+        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

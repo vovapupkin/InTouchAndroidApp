@@ -109,7 +109,6 @@ public class EventCreateActivity extends AppCompatActivity {
     }
 
     private void createEvent() {
-        findViewById(R.id.marker_progress).setVisibility(View.VISIBLE);
         MaterialEditText name = ((MaterialEditText) findViewById(R.id.event_name));
         MaterialEditText description = ((MaterialEditText) findViewById(R.id.event_description));
         MaterialEditText city = ((MaterialEditText) findViewById(R.id.event_city));
@@ -134,7 +133,6 @@ public class EventCreateActivity extends AppCompatActivity {
                         @Override
                         public void onError(String error) {
                             Toast.makeText(InTouchApi.getContext(), error, Toast.LENGTH_SHORT).show();
-                            findViewById(R.id.marker_progress).setVisibility(View.INVISIBLE);
                         }
                     });
         else
@@ -156,7 +154,6 @@ public class EventCreateActivity extends AppCompatActivity {
                         @Override
                         public void onError(String error) {
                             Toast.makeText(InTouchApi.getContext(), error, Toast.LENGTH_SHORT).show();
-                            findViewById(R.id.marker_progress).setVisibility(View.INVISIBLE);
                         }
                     });
     }

@@ -3,12 +3,15 @@ package intouchteam.intouch.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +20,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
@@ -39,19 +44,22 @@ public class FullEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_full_event);
         Intent intent = getIntent();
         event = new Gson().fromJson(intent.getStringExtra("event"), Event.class);
-        setToolbar();
         setEditTextValue();
         setEventTypeName();
         setCreatorName();
         editButtonForCreator();
         setMembersButton();
         setFollowButton();
+        setBackButtonListener();
     }
 
     private void setEditTextValue() {
         ((TextView) findViewById(R.id.event_name)).setText(event.getName());
         ((TextView) findViewById(R.id.event_description)).setText(event.getDescription());
-        ((TextView) findViewById(R.id.event_date)).setText(event.getDateTime().toString());
+        ((TextView) findViewById(R.id.event_city)).setText(event.getCity());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
+        String dateStr = sdf.format(event.getDateTime());
+        ((TextView) findViewById(R.id.event_date)).setText(dateStr);
         ((TextView) findViewById(R.id.event_address)).setText(event.getCity() + " " + event.getAddress());
         ((TextView) findViewById(R.id.event_type)).setText("id:" + event.getTypeId().toString());
         ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
@@ -63,8 +71,9 @@ public class FullEventActivity extends AppCompatActivity {
             public void onSuccess(JsonObject result) {
                 Gson gson = new Gson();
                 JsonArray eventTypesJsonElements = gson.fromJson(result.get("EventTypes").getAsString(), JsonArray.class);
-                ((TextView) findViewById(R.id.event_type))
-                        .setText(gson.fromJson(eventTypesJsonElements
+                TextView eventType = ((TextView) findViewById(R.id.event_type));
+                if(eventType != null)
+                eventType.setText(gson.fromJson(eventTypesJsonElements
                                 .get(event.getTypeId().intValue() - 1)
                                 .getAsJsonObject(), EventType.class)
                                 .getTypeName());
@@ -82,7 +91,9 @@ public class FullEventActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 Profile profile = new Gson().fromJson(result.get("User").getAsString(), Profile.class);
-                ((TextView) findViewById(R.id.event_contacts)).setText(profile.getFirstName() + " " + profile.getLastName());
+                TextView contacts = ((TextView) findViewById(R.id.event_contacts));
+                if (contacts != null)
+                    contacts.setText(profile.getFirstName() + " " + profile.getLastName());
             }
 
             @Override
@@ -94,94 +105,92 @@ public class FullEventActivity extends AppCompatActivity {
 
     private void editButtonForCreator() {
         if(InTouchApi.getProfile().getId() == event.getCreatorId()) {
-            findViewById(R.id.edit_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.edit_button).setOnClickListener(new View.OnClickListener() {
+            ImageButton button = (ImageButton) findViewById(R.id.edit_button);
+            if (button != null) {
+                button.setVisibility(View.VISIBLE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(FullEventActivity.this, EventCreateActivity.class);
+                        intent.putExtra("event", new Gson().toJson(event, Event.class));
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+        }
+    }
+
+
+    private void setMembersButton() {
+        View view = findViewById(R.id.members_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(FullEventActivity.this, EventCreateActivity.class);
-                    intent.putExtra("event", new Gson().toJson(event, Event.class));
-                    startActivity(intent);
-                    finish();
+                    if (followers.size() != 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FullEventActivity.this);
+                        ArrayAdapter<Profile> arrayAdapter = new ArrayAdapter<>(FullEventActivity.this, R.layout.event_type_dialog_item, followers);
+                        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Open profile;
+                            }
+                        });
+                        builder.show();
+                    } else {
+                        Toast.makeText(FullEventActivity.this, "No members", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+
+    private void setFollowButton() {
+        getFollowers();
+        FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow_button));
+        if(floatingActionButton != null) {
+            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_outline_30dp));
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InTouchServerEvent.follow(event.getId(), new InTouchCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            changeFollowButton();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(FullEventActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
         }
     }
 
-    private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24dp);
-        toolbar.setTitle(event.getName());
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        toolbar.setTitle(event.getName());
-    }
-
-    private void setMembersButton() {
-         findViewById(R.id.members_button).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 if (followers.size() != 0) {
-                     AlertDialog.Builder builder = new AlertDialog.Builder(FullEventActivity.this);
-                     ArrayAdapter<Profile> arrayAdapter = new ArrayAdapter<>(FullEventActivity.this, R.layout.event_type_dialog_item, followers);
-                     builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                         @Override
-                         public void onClick(DialogInterface dialog, int which) {
-                             //Open profile;
-                         }
-                     });
-                     builder.show();
-                 } else {
-                     Toast.makeText(FullEventActivity.this, "No members", Toast.LENGTH_SHORT).show();
-                 }
-             }
-         });
-    }
-
-    private void setFollowButton() {
-        getFollowers();
-        ((Button)findViewById(R.id.follow_button)).setText("Follow");
-        findViewById(R.id.follow_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InTouchServerEvent.follow(event.getId(), new InTouchCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-                        changeFollowButton();
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(FullEventActivity.this, error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-    }
-
     private void changeFollowButton() {
         getFollowers();
-        ((Button)findViewById(R.id.follow_button)).setText("Unfollow");
-        findViewById(R.id.follow_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InTouchServerEvent.unfollow(event.getId(), new InTouchCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-                        setFollowButton();
-                    }
+        FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow_button));
+        if(floatingActionButton != null) {
+            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_30dp));
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InTouchServerEvent.unfollow(event.getId(), new InTouchCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            setFollowButton();
+                        }
 
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(FullEventActivity.this, error, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(FullEventActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
     }
 
     private void getFollowers() {
@@ -191,12 +200,15 @@ public class FullEventActivity extends AppCompatActivity {
             public void onSuccess(JsonObject result) {
                 Gson gson = new Gson();
                 JsonArray users = gson.fromJson(result.get("users").getAsString(), JsonArray.class);
-                for(int i = 0; i < users.size(); i++) {
+                for (int i = 0; i < users.size(); i++) {
                     Profile follower = gson.fromJson(users.get(i), Profile.class);
-                    if(InTouchApi.getProfile().getId() == follower.getId())
+                    if (InTouchApi.getProfile().getId() == follower.getId())
                         changeFollowButton();
                     followers.add(follower);
                 }
+                TextView eventFollowers = ((TextView) findViewById(R.id.event_followers));
+                if(eventFollowers != null)
+                    eventFollowers.setText(String.valueOf(users.size()));
             }
 
             @Override
@@ -204,5 +216,16 @@ public class FullEventActivity extends AppCompatActivity {
                 Toast.makeText(FullEventActivity.this, "Cant load followers:" + error, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setBackButtonListener() {
+        View view = findViewById(R.id.back_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
     }
 }

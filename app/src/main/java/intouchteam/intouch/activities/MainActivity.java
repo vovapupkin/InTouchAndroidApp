@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,17 +29,20 @@ import intouchteam.intouch.intouchapi.InTouchAuthorization;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    Toolbar toolbar;
-    DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
-    NavigationView navigationView;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private NavigationView navigationView;
+    private FloatingActionButton floatingActionButton;
     private BroadcastReceiver broadcastReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_button);
         toolbar.setTitle("My events");
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         setProfileToNavigationBar();
-
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -68,20 +72,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         };
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, new MyEventsFragment())
-                .commit();
+        onMyEventClick();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         // register GCM registration complete receiver
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(broadcastReceiver,
                 new IntentFilter(getString(R.string.REGISTRATION_COMPLETE)));
-
         // register new push message receiver
         // by doing this, the activity will be notified each time a new message arrives
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(broadcastReceiver,
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.nav_bar_menu, menu);
+        getMenuInflater().inflate(R.menu.nav_bar_my_event_menu, menu);
         return true;
     }
 
@@ -135,23 +134,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_search:
-                toolbar.getMenu().clear();
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_container, new SearchEventFragment())
-                        .commit();
-                toolbar.setTitle("Search");
+                onSearchClick();
                 break;
             case R.id.nav_events:
-                toolbar.getMenu().clear();
-                getMenuInflater().inflate(R.menu.nav_bar_menu, toolbar.getMenu());
-                MyEventsFragment myEventsFragment = new MyEventsFragment();
-                myEventsFragment.setCreatorFilter(false);
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.main_container, myEventsFragment)
-                        .commit();
-                toolbar.setTitle("I follow");
+                onMyEventClick();
                 break;
             case R.id.nav_friends:
                 break;
@@ -167,6 +153,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void onSearchClick() {
+        toolbar.getMenu().clear();
+        getMenuInflater().inflate(R.menu.nav_bar_search_menu, toolbar.getMenu());
+        SearchEventFragment searchEventFragment = new SearchEventFragment();
+        searchEventFragment.setSearchView((SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView());
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, searchEventFragment)
+                .commit();
+        toolbar.setTitle("Search");
+        floatingActionButton.setVisibility(View.GONE);
+        floatingActionButton.setOnClickListener(null);
+    }
+
+    private void onMyEventClick() {
+        toolbar.getMenu().clear();
+        getMenuInflater().inflate(R.menu.nav_bar_my_event_menu, toolbar.getMenu());
+        MyEventsFragment myEventsFragment = new MyEventsFragment();
+        myEventsFragment.setCreatorFilter(false);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, myEventsFragment)
+                .commit();
+        toolbar.setTitle("I follow");
+        floatingActionButton.setVisibility(View.VISIBLE);
+        floatingActionButton.setOnClickListener(createEventActionButtonListener());
+    }
+
+    private View.OnClickListener createEventActionButtonListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EventCreateActivity.class);
+                startActivity(intent);
+            }
+        };
     }
 
     private void navigationLogout() {
