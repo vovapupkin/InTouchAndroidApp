@@ -17,7 +17,6 @@ public class InTouchServerProfile {
     public static void getUser(Long eventId, InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getUserById"));
-        //GetUserInfoById
         requestParameters.put("user_id", Collections.singletonList(InTouchApi.getProfile().getId().toString()));
         InTouchRequest.get(requestParameters, callback);
     }
