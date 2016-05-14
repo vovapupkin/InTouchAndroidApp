@@ -1,271 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.FullEventActivity"
     tools:showIn="@layout/activity_full_profile">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/event_item_image_height"
-        android:src="@drawable/profile_background"
-        android:scaleType="centerCrop"/>
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ddkach"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_marginRight="16dp"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-20dp"
-        android:layout_alignParentRight="true"/>
+        android:orientation="vertical"
+        android:background="@color/it_cards_background_gray">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="3dp">
+
+            <ImageView
+                android:id="@+id/profile_image_background"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/event_item_image_height"
+                android:src="@drawable/profile_background"
+                android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ddkach"
+                android:layout_marginTop="50dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/profile_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Vasili Sheshka"
+                android:textColor="@color/white"
+                android:layout_alignBottom="@+id/profile_image_background"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textSize="32sp"/>
+
+        </RelativeLayout>
 
     <LinearLayout
+        android:layout_below="@id/profile_image_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
+       <LinearLayout
+           android:elevation="3dp"
+           android:background="@color/it_light_gray"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal">
+
+           <LinearLayout
+               android:layout_margin="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:gravity="center"
+               android:layout_weight="1"
+               android:orientation="vertical">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Following"
+                   android:textColor="@color/black"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="23"
+                   android:textSize="20dp"
+                   android:textColor="@color/it_blue"/>
+
+           </LinearLayout>
+
+
+           <LinearLayout
+               android:layout_margin="10dp"
+               android:gravity="center"
+               android:layout_weight="1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Followers"
+                   android:textColor="@color/black"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="132"
+                   android:textSize="20dp"
+                   android:textColor="@color/it_blue"/>
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_margin="10dp"
+               android:gravity="center"
+               android:layout_weight="1"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Events"
+                   android:textColor="@color/black"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="7"
+                   android:textSize="20dp"
+                   android:textColor="@color/it_blue"/>
+
+           </LinearLayout>
+
+       </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical"
+        android:background="@color/it_light_gray"
+        android:elevation="3dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:padding="16dp">
 
-        <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_alarm_24dp"
-            android:layout_margin="10dp"
-            android:id="@+id/alarm_icon"/>
+        <RelativeLayout
+            android:background="@color/it_light_gray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:textColor="#000000"
-            android:textSize="20sp"
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_alarm_24dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/alarm_icon"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/profile_last_seen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/alarm_icon"
+                android:text="15.04.2013 18:27"
+                android:singleLine="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Seen"
+                android:layout_below="@id/profile_last_seen"
+                android:layout_toRightOf="@id/alarm_icon"/>
+
+            </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/it_dark_gray"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/profile_last_seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/alarm_icon"
-            android:text="15.04.2013 18:27"
-            android:singleLine="true"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="54dp"/>
 
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Last Seen"
-            android:layout_below="@id/profile_last_seen"
-            android:layout_toRightOf="@id/alarm_icon"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_call_24dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/phone_icon"/>
 
-        <RelativeLayout
+                <TextView
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:id="@+id/profile_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/phone_icon"
+                    android:singleLine="true"
+                    android:text="+375298276648"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"
+                    android:layout_below="@id/profile_phone"
+                    android:layout_toRightOf="@id/phone_icon"/>
+
+            </RelativeLayout>
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="1dp"
+            android:background="@color/it_dark_gray"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="54dp"/>
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_call_24dp"
-                android:layout_margin="10dp"
-                android:id="@+id/phone_icon"/>
-
-            <EditText
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/edit_text_phone"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/phone_icon"
-                android:layout_toLeftOf="@+id/button_done_phone"
-                android:text="+375298276648"
-                android:singleLine="true"
-                android:visibility="gone"
-                android:inputType="phone"/>
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/button_done_phone"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_done_black_24dp1"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:visibility="gone"/>
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_email_24dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/email_icon"/>
 
-            <TextView
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/profile_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/phone_icon"
-                android:layout_toLeftOf="@+id/button_edit_phone"
-                android:singleLine="true"
-                android:text="+375298276648"/>
 
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phone"
-                android:layout_below="@id/profile_phone"
-                android:layout_toRightOf="@id/phone_icon"/>
+                <TextView
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:id="@+id/profile_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/email_icon"
+                    android:text="bsuir@live.ru"
+                    android:singleLine="true"/>
 
-            <ImageView
-                android:id="@+id/button_edit_phone"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_edit_black_24dp"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:layout_below="@id/profile_email"
+                    android:layout_toRightOf="@id/email_icon"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_height="1dp"
+            android:background="@color/it_dark_gray"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="54dp"/>
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_email_24dp"
-                android:layout_margin="10dp"
-                android:id="@+id/email_icon"/>
-
-            <EditText
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/edit_text_email"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/email_icon"
-                android:layout_toLeftOf="@+id/button_done_email"
-                android:text="bsuir@live.ru"
-                android:singleLine="true"
-                android:visibility="gone"
-                android:inputType="textEmailAddress"/>
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/button_done_email"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_done_black_24dp1"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:visibility="gone"/>
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_person_24dp"
+                    android:layout_marginRight="20dp"
+                    android:id="@+id/skype_icon"/>
 
-            <TextView
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/email_icon"
-                android:layout_toLeftOf="@+id/button_edit_email"
-                android:text="bsuir@live.ru"
-                android:singleLine="true"/>
 
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:layout_below="@id/profile_email"
-                android:layout_toRightOf="@id/email_icon"/>
+                <TextView
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:id="@+id/profile_skype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/skype_icon"
+                    android:text="pupkinvov"
+                    android:singleLine="true"/>
 
-            <ImageView
-                android:id="@+id/button_edit_email"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_edit_black_24dp"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Skype"
+                    android:layout_below="@id/profile_skype"
+                    android:layout_toRightOf="@id/skype_icon"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_person_24dp"
-                android:layout_margin="10dp"
-                android:id="@+id/skype_icon"/>
-
-            <EditText
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/edit_text_skype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/skype_icon"
-                android:layout_toLeftOf="@+id/button_done_skype"
-                android:text="pupkinvov"
-                android:singleLine="true"
-                android:visibility="gone"
-                android:inputType="textPersonName"/>
-
-            <ImageView
-                android:id="@+id/button_done_skype"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_done_black_24dp1"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:visibility="gone"/>
-
-            <TextView
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/profile_skype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/skype_icon"
-                android:layout_toLeftOf="@+id/button_edit_skype"
-                android:text="pupkinvov"
-                android:singleLine="true"/>
-
-            <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Skype"
-                android:layout_below="@id/profile_skype"
-                android:layout_toRightOf="@id/skype_icon"/>
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_edit_black_24dp"
-                android:id="@+id/button_edit_skype"
-                android:layout_alignParentRight="true"
-                android:layout_margin="10dp"/>
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>
