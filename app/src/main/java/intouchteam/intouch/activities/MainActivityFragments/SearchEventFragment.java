@@ -117,7 +117,6 @@ public class SearchEventFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                search();
                 return false;
             }
         });

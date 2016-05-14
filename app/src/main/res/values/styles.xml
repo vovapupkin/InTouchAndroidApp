@@ -22,4 +22,8 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
     </style>
+
+    <style name="InTouchLight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="InTouchLight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -208,6 +208,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ((TextView) navigationView.getHeaderView(0)
                     .findViewById(R.id.nav_login))
                     .setText(InTouchApi.getProfile().getLogin());
+            navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this, ProfileEditActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
 }
