@@ -138,6 +138,8 @@
                 android:layout_centerVertical="true"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
+                android:focusableInTouchMode="false"
+                android:focusable="false"
                 android:singleLine="true"
                 android:maxLength="50"
                 android:id="@+id/event_address"
@@ -150,15 +152,6 @@
 
         </RelativeLayout>
 
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Find in map"
-            android:id="@+id/button_show_map"
-            android:layout_gravity="right"
-            android:layout_alignTop="@+id/address_icon"
-            android:layout_alignParentEnd="true" />
 
         <RelativeLayout
             android:layout_marginBottom="5dp"

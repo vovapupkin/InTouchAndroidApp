@@ -18,7 +18,8 @@
             android:id="@+id/profile_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="3dp">
+            android:elevation="3dp"
+            android:background="@color/it_light_gray">
 
             <ImageView
                 android:id="@+id/profile_image_background"
@@ -55,6 +56,7 @@
             android:background="@color/it_light_gray">
 
             <RelativeLayout
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
