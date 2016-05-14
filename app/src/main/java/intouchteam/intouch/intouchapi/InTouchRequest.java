@@ -10,7 +10,6 @@ import com.koushikdutta.ion.Response;
 import com.koushikdutta.ion.builder.Builders;
 
 import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class InTouchRequest {
                         if (exception == null)
                             handleResponse(response, callback);
                         else {
-                            Toast.makeText(InTouchApi.getContext(), "HTTP:get request exception:" + exception.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InTouchApi.getContext(), "HTTP:getAddress request exception:" + exception.toString(), Toast.LENGTH_SHORT).show();
                             callback.onError(exception.getLocalizedMessage());
                         }
                     }

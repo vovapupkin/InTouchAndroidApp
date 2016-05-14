@@ -17,6 +17,9 @@
     <string name="SENT_TOKEN_TO_SERVER">key_sent</string>
     <string name="REGISTRATION_COMPLETE">registration_complete</string>
     <string name="PUSH_NOTIFICATION">push_notification</string>
+    <string name="ADDRESS_TAKEN">address_taken</string>
+    <string name="maps_api_key">AIzaSyBVOACFFUBU5mwBYLmN0_FyH3qImEEgd7o</string>
+    <string name="address">address</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -26,4 +29,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_full_event">FullEventActivity</string>
     <string name="title_activity_full_profile">FullProfile</string>
+    <string name="title_activity_map">Map</string>
+    <string name="map_marker_title">Event starts here</string>
 </resources>

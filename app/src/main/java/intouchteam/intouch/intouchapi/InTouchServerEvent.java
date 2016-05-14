@@ -37,7 +37,7 @@ public class InTouchServerEvent {
         requestParameters.put("description", Collections.singletonList(description));
         requestParameters.put("gps", Collections.singletonList(gps));
         requestParameters.put("date_time", Collections.singletonList(dateTime));
-        requestParameters.put("address", Collections.singletonList(address));
+        requestParameters.put("materialEditTextAddress", Collections.singletonList(address));
         requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
         requestParameters.put("city", Collections.singletonList(city));
         InTouchRequest.get(requestParameters, callback);
@@ -52,7 +52,7 @@ public class InTouchServerEvent {
         requestParameters.put("description", Collections.singletonList(description));
         requestParameters.put("gps", Collections.singletonList(gps));
         requestParameters.put("date_time", Collections.singletonList(dateTime));
-        requestParameters.put("address", Collections.singletonList(address));
+        requestParameters.put("materialEditTextAddress", Collections.singletonList(address));
         requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
         requestParameters.put("city", Collections.singletonList(city));
         InTouchRequest.get(requestParameters, callback);
