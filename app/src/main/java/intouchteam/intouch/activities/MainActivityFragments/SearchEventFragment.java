@@ -172,7 +172,7 @@ public class SearchEventFragment extends Fragment {
         Long id = null;
         if (selectedEventType != null)
             id = selectedEventType.getId();
-        InTouchServerEvent.search(checkSearchAdditionalField(R.id.event_city),
+        InTouchServerEvent.search(checkSearchAdditionalField(R.id.profile_skype),
                 checkSearchField(), id, onSearchInTouchCallback());
         ((SwipeRefreshLayout)rootView.findViewById(R.id.events_refresh_layout)).setRefreshing(true);
     }

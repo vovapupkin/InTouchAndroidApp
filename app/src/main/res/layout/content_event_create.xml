@@ -114,7 +114,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:singleLine="true"
                 android:maxLength="50"
-                android:id="@+id/event_city"
+                android:id="@+id/profile_skype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/it_blue"

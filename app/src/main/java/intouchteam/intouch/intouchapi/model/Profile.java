@@ -14,6 +14,11 @@ public class Profile implements java.io.Serializable {
     private Date registrationDate;
     private Date lastVisit;
 
+    private String skype;
+    private String email;
+    private String phone;
+    private String image_url;
+
     public Profile() {}
 
     public Profile(String firstName, String lastName, String login, Date registrationDate, Date lastVisit) {
