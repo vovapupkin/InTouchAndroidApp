@@ -61,7 +61,7 @@ public class EventCreateActivity extends AppCompatActivity {
             setEventFields();
         setOnDateClickListener();
         materialEditTextAddress = ((MaterialEditText) findViewById(R.id.event_address));
-        ((Button) findViewById(R.id.button_show_map)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.event_address).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MapActivity.class);
