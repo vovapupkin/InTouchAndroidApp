@@ -96,4 +96,19 @@ public class InTouchServerEvent {
         requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
         InTouchRequest.get(requestParameters, callback);
     }
+
+    public static void getMarks(Long eventId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("getEventMarks"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void setMarks(Long eventId, Long mark, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("markEvent"));
+        requestParameters.put("event_id", Collections.singletonList(eventId.toString()));
+        requestParameters.put("mark", Collections.singletonList(mark.toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
 }

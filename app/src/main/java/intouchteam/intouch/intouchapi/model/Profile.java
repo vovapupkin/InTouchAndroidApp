@@ -11,13 +11,14 @@ public class Profile implements java.io.Serializable {
     private String firstName;
     private String lastName;
     private String login;
+    private String userImage;
     private Date registrationDate;
     private Date lastVisit;
 
     private String skype;
     private String email;
     private String phone;
-    private String image_url;
+
 
     public Profile() {}
 
@@ -27,6 +28,16 @@ public class Profile implements java.io.Serializable {
         this.login = login;
         this.registrationDate = registrationDate;
         this.lastVisit = lastVisit;
+    }
+
+    public Profile(String firstName, String lastName, String userImage, String login, Date registrationDate, Date lastVisit, String skype) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userImage = userImage;
+        this.login = login;
+        this.registrationDate = registrationDate;
+        this.lastVisit = lastVisit;
+        this.skype = skype;
     }
 
     public Long getId() {
@@ -77,37 +88,42 @@ public class Profile implements java.io.Serializable {
         this.lastVisit = lastVisit;
     }
 
-
-    public String getEmail() {
-        return email;
+    public String getUserImage() {
+        return this.userImage;
     }
 
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public String getPhone() {
-        return phone;
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 
     public String getSkype() {
-        return skype;
+        return this.skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
+    }
+    public String getEmail() {
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public String getPhone() {
+        return this.phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public void setSkype(String skype) {
-        this.skype = skype;
+
+    public static Profile fromJsonObject(JsonObject jsonObject) {
+        Gson gson = new Gson();
+        Profile profile = gson.fromJson(jsonObject, Profile.class);
+        return profile;
     }
 
     @Override
