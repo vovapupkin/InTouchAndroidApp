@@ -10,25 +10,36 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_outline_blue_24dp"/>
+        android:src="@drawable/ic_star_outline_blue_24dp"
+        android:id="@+id/star1" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_outline_blue_24dp"/>
+        android:src="@drawable/ic_star_outline_blue_24dp"
+        android:id="@+id/star2" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_outline_blue_24dp"/>
+        android:src="@drawable/ic_star_outline_blue_24dp"
+        android:id="@+id/star3" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_outline_blue_24dp"/>
+        android:src="@drawable/ic_star_outline_blue_24dp"
+        android:id="@+id/star4" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_star_outline_blue_24dp"/>
+        android:src="@drawable/ic_star_outline_blue_24dp"
+        android:id="@+id/star5" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/apply_button" />
 </LinearLayout>

@@ -1,21 +1,26 @@
 package intouchteam.intouch.activities;
 
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.AndroidCharacter;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,9 +33,10 @@ import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.InTouchServerProfile;
 import intouchteam.intouch.intouchapi.model.Event;
 import intouchteam.intouch.intouchapi.model.EventType;
+import intouchteam.intouch.intouchapi.model.Mark;
 import intouchteam.intouch.intouchapi.model.Profile;
 
-public class FullEventActivity extends AppCompatActivity {
+public class FullEventActivity extends AppCompatActivity implements View.OnClickListener{
 
     Event event;
     ArrayList<Profile> followers = new ArrayList<>();
@@ -40,15 +46,40 @@ public class FullEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_event);
         Intent intent = getIntent();
+
+        (findViewById(R.id.event_rating)).setOnClickListener(this);
+
         event = new Gson().fromJson(intent.getStringExtra("event"), Event.class);
+
         setEditTextValue();
+        setRatingField();
         setEventTypeName();
         setCreatorName();
         editButtonForCreator();
         setMembersButton();
         setFollowButton();
         setBackButtonListener();
+
+
     }
+    private double getAverageRating(ArrayList<Mark> ratingList){
+        int summa = 0;
+        for (Mark item: ratingList){
+            summa += item.getMark();
+        };
+        return (double)summa/ratingList.size();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.event_rating){
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            RatingDialog ratingDialog = new RatingDialog();
+            ratingDialog.setEvent(event);
+            ratingDialog.show(ft, "dialog");
+        }
+    }
+
 
     private void setEditTextValue() {
         ((TextView) findViewById(R.id.event_name)).setText(event.getName());
@@ -60,6 +91,32 @@ public class FullEventActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.event_address)).setText(event.getCity() + " " + event.getAddress());
         ((TextView) findViewById(R.id.event_type)).setText("id:" + event.getTypeId().toString());
         ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
+
+        //((TextView) findViewById(R.id.event_rating)).setText("id:" + event.getCreatorId().toString());
+
+    }
+    private void setRatingField(){
+        InTouchServerEvent.getMarks(event.getId(),
+                new InTouchCallback() {
+                    @Override
+                    public void onSuccess(JsonObject result) {
+                        Gson gson = new Gson();
+                        ArrayList<Mark> ratingList = new ArrayList<Mark>();
+                        JsonArray JSONratingList = gson.fromJson(result.get("marks").getAsString(), JsonArray.class);
+                        for (int i = 0; i < JSONratingList.size(); i++){
+                            Mark m = gson.fromJson(JSONratingList.get(i), Mark.class);
+                            ratingList.add(m);
+                        }
+
+                        ((TextView) findViewById(R.id.event_rating)).setText(Double.toString(getAverageRating(ratingList)));
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(InTouchApi.getContext(), "Cant load marks:" + error, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
     private void setEventTypeName() {
