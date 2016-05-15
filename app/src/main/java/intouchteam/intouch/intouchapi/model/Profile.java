@@ -77,10 +77,37 @@ public class Profile implements java.io.Serializable {
         this.lastVisit = lastVisit;
     }
 
-    public static Profile fromJsonObject(JsonObject jsonObject) {
-        Gson gson = new Gson();
-        Profile profile = gson.fromJson(jsonObject, Profile.class);
-        return profile;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
     }
 
     @Override

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/it_cards_background_gray">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp">
+
+        <ImageView
+            android:layout_marginRight="-3dp"
+            android:layout_marginTop="-3dp"
+            android:scaleY="-1"
+            android:id="@+id/triangle"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_signal_cellular_4_bar_24dp" />
+
+        <TextView
+            android:layout_toRightOf="@id/triangle"
+            android:id="@+id/comment_text"
+            android:padding="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello! my name is Vasia. "
+            android:textSize="16dp"
+            android:background="@color/it_light_gray"/>
+
+        <TextView
+            android:layout_margin="6dp"
+            android:id="@+id/comment_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vasili Sheshka"
+            android:layout_below="@id/comment_text"
+            android:layout_toRightOf="@id/triangle"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>
