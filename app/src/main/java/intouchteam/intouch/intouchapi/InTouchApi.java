@@ -49,5 +49,6 @@ public class InTouchApi {
 
     public static void setProfile(Profile profile) {
         InTouchApi.profile = profile;
+        PreferenceManager.getDefaultSharedPreferences(InTouchApi.getContext()).edit().putString("profile", new Gson().toJson(profile, Profile.class)).apply();
     }
 }
