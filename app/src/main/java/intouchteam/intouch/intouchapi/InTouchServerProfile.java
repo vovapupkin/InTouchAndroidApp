@@ -21,13 +21,14 @@ public class InTouchServerProfile {
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void update(String phone, String email, String skype, String image_url, final InTouchCallback callback){
+    public static void update(String phone, String email, String skype, String image_url,String background, final InTouchCallback callback){
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("updateUser"));
         requestParameters.put("phone", Collections.singletonList(phone));
         requestParameters.put("email", Collections.singletonList(email));
         requestParameters.put("skype", Collections.singletonList(skype));
         requestParameters.put("image_url", Collections.singletonList(image_url));
+        requestParameters.put("background", Collections.singletonList(background));
         InTouchRequest.get(requestParameters, callback);
     }
 }

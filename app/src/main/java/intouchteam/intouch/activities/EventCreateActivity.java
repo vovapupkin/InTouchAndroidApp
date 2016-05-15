@@ -1,10 +1,16 @@
 package intouchteam.intouch.activities;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,24 +18,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import intouchteam.intouch.R;
+import intouchteam.intouch.intouchapi.CloudinaryAPI;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
@@ -41,12 +56,18 @@ public class EventCreateActivity extends AppCompatActivity {
     Event event = null;
     Toolbar toolbar;
     ImageView toolbarBackground;
+    FloatingActionButton addPhotoButton;
     Calendar calendar = Calendar.getInstance();
     Date date = new Date();
     EventType selectedEventType = null;
     volatile ArrayList<EventType> eventTypes = new ArrayList<>();
-    final static int GET_LAT_LNG = 0;
     public static MaterialEditText materialEditTextAddress;
+    final static int GET_LAT_LNG = 0;
+    final static int GET_PHOTO_FROM_GALLERY = 1;
+
+    CloudinaryAPI cloudinaryAPI;
+    Cloudinary cloudinary;
+    Map cloudinaryResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +81,9 @@ public class EventCreateActivity extends AppCompatActivity {
         if (getIntent().getStringExtra("event") != null)
             setEventFields();
         setOnDateClickListener();
+        setOnFloatingActionButtonClickListener();
         materialEditTextAddress = ((MaterialEditText) findViewById(R.id.event_address));
+
         findViewById(R.id.event_address).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,13 +92,67 @@ public class EventCreateActivity extends AppCompatActivity {
                 startActivityForResult(intent, GET_LAT_LNG);
             }
         });
+        cloudinaryAPI = new CloudinaryAPI();
+        cloudinary = cloudinaryAPI.getCloudinary();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GET_LAT_LNG && resultCode == RESULT_OK) {
-            materialEditTextAddress.setText(data.getStringExtra(getString(R.string.address)));
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case GET_LAT_LNG: {
+                    materialEditTextAddress.setText(data.getStringExtra(getString(R.string.address)));
+                    break;
+                }
+                case GET_PHOTO_FROM_GALLERY: {
+                    Uri selectedImageUri = data.getData();
+                    toolbarBackground.setImageURI(selectedImageUri);
+                    startUpload(getAbsolutePath(selectedImageUri));
+                    break;
+                }
+            }
         }
+    }
+
+    private String getAbsolutePath(Uri uri) {
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String filePath = cursor.getString(columnIndex);
+        cursor.close();
+        return filePath;
+    }
+
+    private void startUpload(String filePath) {
+        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
+            protected String doInBackground(String... paths) {
+                File file = new File(paths[0]);
+                cloudinaryResult = null;
+                try {
+                    cloudinaryResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+            protected void onPostExecute(String error) {
+                Toast.makeText(InTouchApi.getContext(), cloudinaryResult.get("url").toString(), Toast.LENGTH_SHORT).show();
+            }
+        };
+        task.execute(filePath);
+    }
+
+    private void setOnFloatingActionButtonClickListener() {
+        addPhotoButton = (FloatingActionButton) findViewById(R.id.add_photo_button);
+        addPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GET_PHOTO_FROM_GALLERY);
+            }
+        });
     }
 
     @Override

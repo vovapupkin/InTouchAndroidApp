@@ -11,14 +11,14 @@ public class Profile implements java.io.Serializable {
     private String firstName;
     private String lastName;
     private String login;
-    private String userImage;
     private Date registrationDate;
     private Date lastVisit;
 
     private String skype;
     private String email;
     private String phone;
-
+    private String userImage;
+    private String backGround;
 
     public Profile() {}
 
@@ -56,6 +56,22 @@ public class Profile implements java.io.Serializable {
         this.firstName = firstName;
     }
 
+    public String getUserImageURL() {
+        return this.userImage;
+    }
+
+    public void setUserImageURL(String image_url) {
+        this.userImage = image_url;
+    }
+
+    public String getBackgroundURL() {
+        return this.backGround;
+    }
+
+    public void setBackgroundURL(String image_url) {
+        this.backGround = image_url;
+    }
+
     public String getLastName() {
         return this.lastName;
     }
@@ -88,23 +104,9 @@ public class Profile implements java.io.Serializable {
         this.lastVisit = lastVisit;
     }
 
-    public String getUserImage() {
-        return this.userImage;
-    }
 
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
-
-    public String getSkype() {
-        return this.skype;
-    }
-
-    public void setSkype(String skype) {
-        this.skype = skype;
-    }
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
@@ -112,11 +114,19 @@ public class Profile implements java.io.Serializable {
     }
 
     public String getPhone() {
-        return this.phone;
+        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getSkype() {
+        return skype;
+    }
+
+    public void setSkype(String skype) {
+        this.skype = skype;
     }
 
 
