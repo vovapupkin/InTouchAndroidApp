@@ -105,7 +105,7 @@ public class EventCreateActivity extends AppCompatActivity {
             isAllCorrect = false;
             name.setError("Name require");
         }
-        MaterialEditText city = ((MaterialEditText) findViewById(R.id.profile_skype));
+        MaterialEditText city = ((MaterialEditText) findViewById(R.id.event_city));
         if (city.getText().toString().equals("")) {
             isAllCorrect = false;
             city.setError("City require");
@@ -131,7 +131,7 @@ public class EventCreateActivity extends AppCompatActivity {
     private void createEvent() {
         MaterialEditText name = ((MaterialEditText) findViewById(R.id.event_name));
         MaterialEditText description = ((MaterialEditText) findViewById(R.id.event_description));
-        MaterialEditText city = ((MaterialEditText) findViewById(R.id.profile_skype));
+        MaterialEditText city = ((MaterialEditText) findViewById(R.id.event_city));
         MaterialEditText address = ((MaterialEditText) findViewById(R.id.event_address));
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         String dateString = sdf.format(date);
@@ -270,7 +270,7 @@ public class EventCreateActivity extends AppCompatActivity {
         event = new Gson().fromJson(getIntent().getStringExtra("event"), Event.class);
         ((MaterialEditText) findViewById(R.id.event_name)).setText(event.getName());
         ((MaterialEditText) findViewById(R.id.event_description)).setText(event.getDescription());
-        ((MaterialEditText) findViewById(R.id.profile_skype)).setText(event.getCity());
+        ((MaterialEditText) findViewById(R.id.event_city)).setText(event.getCity());
         ((MaterialEditText) findViewById(R.id.event_address)).setText(event.getAddress());
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm");
         date = event.getDateTime();

@@ -101,6 +101,10 @@
         <activity
             android:name=".activities.ProfileEditActivity"
             android:label="@string/title_activity_profile_edit"
+            android:theme="@style/InTouchLight" />
+        <activity
+            android:name=".CommentsActivity"
+            android:label="@string/title_activity_comments"
             android:theme="@style/InTouchLight"></activity>
     </application>
 

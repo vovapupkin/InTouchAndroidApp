@@ -57,14 +57,14 @@
     <ImageView
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_toStartOf="@+id/profile_skype"
+        android:layout_toStartOf="@+id/event_city"
         android:layout_alignBottom="@id/event_logo"
         android:src="@drawable/ic_place_24dp"
         android:layout_marginBottom="17dp"/>
 
     <TextView
         android:singleLine="true"
-        android:id="@+id/profile_skype"
+        android:id="@+id/event_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Minsk"
@@ -152,7 +152,7 @@
         android:elevation="3dp"
         android:padding="20dp">
 
-
+        
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -165,12 +165,14 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:text="‘Turn your magic on’ and get ready to experience Coldplay’s ‘A Head Full of Dreams’ live! One of the best-selling bands in the history of music, Coldplay are known to put on the most spectacular live shows that one can experience. Comprising of crooner and front man Chris Martin, lead guitarist Jonny Buckland, multi-instrumentalist and drummer Will Champion and bassist Guy Berryman, Coldplay have the backing of 6 previous world tours that were completely sold out. So if you want to see Coldplay live in concert, don’t miss the chance to buy your Coldplay tour tickets on viagogo, the world’s largest source of live entertainment tickets. If you happen to have some spare Coldplay tickets, you can also list for them for sale for free! Every Coldplay tickets is protected by the viagogo guarantee, so you can find a wide selection of prices, seats and Coldplay tour dates from around the world with convenience on viagogo! "/>
+            android:text="loading"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/it_blue"
             android:text="more..."/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -201,7 +203,7 @@
                 android:id="@+id/event_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Allianz Parque, São Paulo, Brazil"
+                android:text="loading"
                 android:textColor="@color/it_blue"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/map_icon"/>
@@ -241,7 +243,7 @@
                 android:id="@+id/event_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18.03.1996 18:20"
+                android:text="loading"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/date_icon"/>
@@ -280,7 +282,7 @@
                 android:id="@+id/event_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Concert"
+                android:text="loading"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/type_icon"/>
@@ -330,6 +332,84 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contacts"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/it_dark_gray"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="54dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/rating_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_insert_chart_32dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/event_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.4"
+                android:textColor="@color/it_blue"
+                android:textSize="16sp"
+                android:layout_toRightOf="@+id/rating_icon"/>
+
+            <TextView
+                android:layout_below="@id/event_rating"
+                android:layout_toEndOf="@id/rating_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/it_dark_gray"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="54dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/comments_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_sms_32dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/event_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="28"
+                android:textColor="@color/it_blue"
+                android:textSize="16sp"
+                android:layout_toRightOf="@id/comments_icon"/>
+
+            <TextView
+                android:layout_below="@id/event_comments"
+                android:layout_toEndOf="@id/comments_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comments"/>
 
         </RelativeLayout>
 

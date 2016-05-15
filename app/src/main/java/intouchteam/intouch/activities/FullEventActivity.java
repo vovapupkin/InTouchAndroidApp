@@ -53,7 +53,7 @@ public class FullEventActivity extends AppCompatActivity {
     private void setEditTextValue() {
         ((TextView) findViewById(R.id.event_name)).setText(event.getName());
         ((TextView) findViewById(R.id.event_description)).setText(event.getDescription());
-        ((TextView) findViewById(R.id.profile_skype)).setText(event.getCity());
+        ((TextView) findViewById(R.id.event_city)).setText(event.getCity());
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
         String dateStr = sdf.format(event.getDateTime());
         ((TextView) findViewById(R.id.event_date)).setText(dateStr);
