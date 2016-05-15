@@ -27,7 +27,7 @@ public class InTouchServerProfile {
         requestParameters.put("phone", Collections.singletonList(phone));
         requestParameters.put("email", Collections.singletonList(email));
         requestParameters.put("skype", Collections.singletonList(skype));
-        requestParameters.put("image_url", Collections.singletonList("image_url"));
+        requestParameters.put("image_url", Collections.singletonList(image_url));
         InTouchRequest.get(requestParameters, callback);
     }
 }
