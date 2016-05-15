@@ -47,7 +47,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_full_event);
         Intent intent = getIntent();
 
-        (findViewById(R.id.event_rating)).setOnClickListener(this);
+        (findViewById(R.id.rating_button)).setOnClickListener(this);
 
         event = new Gson().fromJson(intent.getStringExtra("event"), Event.class);
 
@@ -59,9 +59,9 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         setMembersButton();
         setFollowButton();
         setBackButtonListener();
-
-
+        setCommentButtonListener();
     }
+
     private double getAverageRating(ArrayList<Mark> ratingList){
         int summa = 0;
         for (Mark item: ratingList){
@@ -72,7 +72,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.event_rating){
+        if(v.getId() == R.id.rating_button){
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             RatingDialog ratingDialog = new RatingDialog();
             ratingDialog.setEvent(event);
@@ -107,7 +107,10 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                             Mark m = gson.fromJson(JSONratingList.get(i), Mark.class);
                             ratingList.add(m);
                         }
-
+                        if(JSONratingList.size() == 0){
+                            ((TextView) findViewById(R.id.event_rating)).setText("No rating");
+                            return;
+                        }
                         ((TextView) findViewById(R.id.event_rating)).setText(Double.toString(getAverageRating(ratingList)));
                     }
 
@@ -126,11 +129,11 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                 Gson gson = new Gson();
                 JsonArray eventTypesJsonElements = gson.fromJson(result.get("EventTypes").getAsString(), JsonArray.class);
                 TextView eventType = ((TextView) findViewById(R.id.event_type));
-                if(eventType != null)
-                eventType.setText(gson.fromJson(eventTypesJsonElements
-                                .get(event.getTypeId().intValue() - 1)
-                                .getAsJsonObject(), EventType.class)
-                                .getTypeName());
+                if (eventType != null)
+                    eventType.setText(gson.fromJson(eventTypesJsonElements
+                            .get(event.getTypeId().intValue() - 1)
+                            .getAsJsonObject(), EventType.class)
+                            .getTypeName());
             }
 
             @Override
@@ -279,6 +282,19 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onClick(View v) {
                     finish();
+                }
+            });
+    }
+
+    private void setCommentButtonListener() {
+        View view = findViewById(R.id.comment_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(FullEventActivity.this, CommentsActivity.class);
+                    intent.putExtra("event", new Gson().toJson(event));
+                    startActivity(intent);
                 }
             });
     }

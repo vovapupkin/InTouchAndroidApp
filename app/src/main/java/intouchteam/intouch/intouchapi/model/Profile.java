@@ -126,6 +126,11 @@ public class Profile implements java.io.Serializable {
         return profile;
     }
 
+    public static Profile getFromJson(JsonObject result) {
+        Profile profile = new Gson().fromJson(result.get("user").getAsString(), Profile.class);
+        return profile;
+    }
+
     @Override
     public String toString() {
         return getFirstName() + " " + getLastName();

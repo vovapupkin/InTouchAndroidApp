@@ -42,6 +42,7 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
         getDialog().setTitle("Set rating");
 
         return rootView;
+
     }
 
     private void setLastMark() {

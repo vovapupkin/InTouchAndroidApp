@@ -99,7 +99,7 @@
             android:label="@string/title_activity_profile_edit"
             android:theme="@style/InTouchLight" />
         <activity
-            android:name=".CommentsActivity"
+            android:name=".activities.CommentsActivity"
             android:label="@string/title_activity_comments"
             android:theme="@style/InTouchLight"></activity>
     </application>

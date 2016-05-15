@@ -25,4 +25,5 @@ public class FullProfile extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+
 }
