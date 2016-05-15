@@ -13,6 +13,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.vk.sdk.VKAccessToken;
@@ -22,6 +24,7 @@ import com.vk.sdk.api.VKError;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
+import intouchteam.intouch.intouchapi.InTouchServerComment;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.RegistrationIntentService;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;

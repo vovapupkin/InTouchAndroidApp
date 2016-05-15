@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="intouchteam.intouch.CommentsActivity"
+    tools:context=".activities.CommentsActivity"
     tools:showIn="@layout/activity_comments">
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ListView
+            android:id="@+id/comments_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -26,6 +28,7 @@
         android:elevation="3dp">
 
         <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/comment_text"
             android:maxLines="4"
             android:maxLength="400"
             android:layout_width="match_parent"

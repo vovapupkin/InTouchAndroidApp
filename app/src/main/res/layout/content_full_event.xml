@@ -344,6 +344,7 @@
             android:layout_marginLeft="54dp"/>
 
         <RelativeLayout
+            android:id="@+id/rating_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -383,6 +384,7 @@
             android:layout_marginLeft="54dp"/>
 
         <RelativeLayout
+            android:id="@+id/comment_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
