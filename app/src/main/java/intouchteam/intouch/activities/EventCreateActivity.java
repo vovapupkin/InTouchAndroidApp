@@ -105,7 +105,7 @@ public class EventCreateActivity extends AppCompatActivity {
             isAllCorrect = false;
             name.setError("Name require");
         }
-        MaterialEditText city = ((MaterialEditText) findViewById(R.id.profile_skype));
+        MaterialEditText city = ((MaterialEditText) findViewById(R.id.event_city));
         if (city.getText().toString().equals("")) {
             isAllCorrect = false;
             city.setError("City require");
