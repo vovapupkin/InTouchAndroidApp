@@ -7,10 +7,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class FullEventActivity extends AppCompatActivity {
     private void setEditTextValue() {
         ((TextView) findViewById(R.id.event_name)).setText(event.getName());
         ((TextView) findViewById(R.id.event_description)).setText(event.getDescription());
-        ((TextView) findViewById(R.id.event_city)).setText(event.getCity());
+        ((TextView) findViewById(R.id.profile_skype)).setText(event.getCity());
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
         String dateStr = sdf.format(event.getDateTime());
         ((TextView) findViewById(R.id.event_date)).setText(dateStr);

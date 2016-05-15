@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "intouchteam.intouch"
         minSdkVersion 19
-        targetSdkVersion 21
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -28,12 +28,12 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':vksdk_library')
-    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.google.android.gms:play-services-auth:8.4.0'
-    compile 'com.android.support:design:23.+'
+    compile 'com.android.support:design:23.3.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-base:8.4.0'
     compile 'com.google.android.gms:play-services-location:8.4.0'

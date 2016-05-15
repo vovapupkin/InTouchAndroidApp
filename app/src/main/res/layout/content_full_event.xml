@@ -57,14 +57,14 @@
     <ImageView
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_toStartOf="@+id/event_city"
+        android:layout_toStartOf="@+id/profile_skype"
         android:layout_alignBottom="@id/event_logo"
         android:src="@drawable/ic_place_24dp"
         android:layout_marginBottom="17dp"/>
 
     <TextView
         android:singleLine="true"
-        android:id="@+id/event_city"
+        android:id="@+id/profile_skype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Minsk"
