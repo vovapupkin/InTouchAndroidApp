@@ -270,7 +270,7 @@ public class EventCreateActivity extends AppCompatActivity {
         event = new Gson().fromJson(getIntent().getStringExtra("event"), Event.class);
         ((MaterialEditText) findViewById(R.id.event_name)).setText(event.getName());
         ((MaterialEditText) findViewById(R.id.event_description)).setText(event.getDescription());
-        ((MaterialEditText) findViewById(R.id.profile_skype)).setText(event.getCity());
+        ((MaterialEditText) findViewById(R.id.event_city)).setText(event.getCity());
         ((MaterialEditText) findViewById(R.id.event_address)).setText(event.getAddress());
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy HH:mm");
         date = event.getDateTime();
