@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setProfileToNavigationBar() {
-        if(InTouchApi.getProfile() != null) {
+        if (InTouchApi.getProfile() != null) {
             ((TextView) navigationView.getHeaderView(0)
                     .findViewById(R.id.nav_name))
                     .setText(InTouchApi.getProfile().getFirstName() + " " + InTouchApi.getProfile().getLastName());
@@ -218,4 +218,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
     }
+
 }

@@ -66,7 +66,6 @@ public class ProfileEditActivity extends AppCompatActivity {
                 });
             }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_event_create, menu);
