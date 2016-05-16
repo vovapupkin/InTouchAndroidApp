@@ -29,8 +29,10 @@ import java.util.Locale;
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
+import intouchteam.intouch.intouchapi.InTouchServerComment;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.InTouchServerProfile;
+import intouchteam.intouch.intouchapi.model.Comment;
 import intouchteam.intouch.intouchapi.model.Event;
 import intouchteam.intouch.intouchapi.model.EventType;
 import intouchteam.intouch.intouchapi.model.Mark;
@@ -70,6 +72,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         setFollowButton();
         setBackButtonListener();
         setCommentButtonListener();
+        setCommentsText();
     }
 
     private double getAverageRating(ArrayList<Mark> ratingList){
@@ -114,11 +117,11 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                         Gson gson = new Gson();
                         ArrayList<Mark> ratingList = new ArrayList<Mark>();
                         JsonArray JSONratingList = gson.fromJson(result.get("marks").getAsString(), JsonArray.class);
-                        for (int i = 0; i < JSONratingList.size(); i++){
+                        for (int i = 0; i < JSONratingList.size(); i++) {
                             Mark m = gson.fromJson(JSONratingList.get(i), Mark.class);
                             ratingList.add(m);
                         }
-                        if(JSONratingList.size() == 0){
+                        if (JSONratingList.size() == 0) {
                             ((TextView) findViewById(R.id.event_rating)).setText("No rating");
                             return;
                         }
@@ -277,7 +280,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                     followers.add(follower);
                 }
                 TextView eventFollowers = ((TextView) findViewById(R.id.event_followers));
-                if(eventFollowers != null)
+                if (eventFollowers != null)
                     eventFollowers.setText(String.valueOf(users.size()));
             }
 
@@ -310,5 +313,20 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                     startActivity(intent);
                 }
             });
+    }
+
+    private void setCommentsText() {
+        InTouchServerComment.get(event.getId(), new InTouchCallback() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                ArrayList<Comment> comments = Comment.getArrayFromJson(result);
+                ((TextView)findViewById(R.id.event_comments)).setText(String.valueOf(comments.size()));
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 }
