@@ -5,8 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activities.FullProfile">
+    tools:context=".activities.FullProfile"
+    android:background="@color/it_cards_background_gray">
 
     <include layout="@layout/content_full_profile" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/follow_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/floating_button_margin"/>
 
 </RelativeLayout>
