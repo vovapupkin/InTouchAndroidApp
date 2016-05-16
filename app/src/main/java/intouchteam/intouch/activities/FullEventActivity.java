@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import intouchteam.intouch.R;
+import intouchteam.intouch.intouchapi.ImageDownloader;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerComment;
@@ -72,6 +73,9 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         setFollowButton();
         setBackButtonListener();
         setCommentButtonListener();
+        if(event.getImage_url() != null) {
+            new ImageDownloader((ImageView)findViewById(R.id.event_logo)).execute(event.getImage_url());
+        }
         setCommentsText();
     }
 

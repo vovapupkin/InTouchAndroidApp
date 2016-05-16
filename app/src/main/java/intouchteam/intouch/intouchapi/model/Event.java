@@ -17,6 +17,7 @@ public class Event {
     private Date createDate;
     private Long typeId;
     private String city;
+    private String eventImage;
 
     Event() {}
 
@@ -98,6 +99,14 @@ public class Event {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getImage_url() {
+        return eventImage;
+    }
+
+    public void setImage_url(String image_url) {
+        this.eventImage = image_url;
     }
 
     public static ArrayList<Event> getList(JsonArray jsonArray) {

@@ -24,6 +24,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -45,6 +46,7 @@ import java.util.Map;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.CloudinaryAPI;
+import intouchteam.intouch.intouchapi.ImageDownloader;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
@@ -64,10 +66,12 @@ public class EventCreateActivity extends AppCompatActivity {
     public static MaterialEditText materialEditTextAddress;
     final static int GET_LAT_LNG = 0;
     final static int GET_PHOTO_FROM_GALLERY = 1;
+    int UPLOADING = 1;
 
     CloudinaryAPI cloudinaryAPI;
     Cloudinary cloudinary;
     Map cloudinaryResult;
+    String background_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +111,6 @@ public class EventCreateActivity extends AppCompatActivity {
                 }
                 case GET_PHOTO_FROM_GALLERY: {
                     Uri selectedImageUri = data.getData();
-                    toolbarBackground.setImageURI(selectedImageUri);
                     startUpload(getAbsolutePath(selectedImageUri));
                     break;
                 }
@@ -126,6 +129,8 @@ public class EventCreateActivity extends AppCompatActivity {
     }
 
     private void startUpload(String filePath) {
+        UPLOADING = 0;
+        //findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
             protected String doInBackground(String... paths) {
                 File file = new File(paths[0]);
@@ -138,7 +143,15 @@ public class EventCreateActivity extends AppCompatActivity {
                 return null;
             }
             protected void onPostExecute(String error) {
-                Toast.makeText(InTouchApi.getContext(), cloudinaryResult.get("url").toString(), Toast.LENGTH_SHORT).show();
+                //findViewById(R.id.progressBar).setVisibility(View.GONE);
+                UPLOADING = 1;
+                if (cloudinaryResult == null) {
+                    Toast.makeText(InTouchApi.getContext(), "No Internet connection", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    background_url = cloudinaryResult.get("url").toString();
+                    new ImageDownloader(toolbarBackground).execute(background_url);
+                }
             }
         };
         task.execute(filePath);
@@ -160,8 +173,9 @@ public class EventCreateActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_done) {
-            if (isAllFieldCorrect())
-                createEvent();
+            if(UPLOADING == 1)
+                if (isAllFieldCorrect())
+                    createEvent();
             return true;
         } else if (id == R.id.action_clear) {
             finish();
@@ -213,7 +227,6 @@ public class EventCreateActivity extends AppCompatActivity {
         MaterialEditText address = ((MaterialEditText) findViewById(R.id.event_address));
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         String dateString = sdf.format(date);
-        String image_url = "some_url";
         if (event == null)
             InTouchServerEvent.create(name.getText().toString(),
                     description.getText().toString(),
@@ -222,7 +235,7 @@ public class EventCreateActivity extends AppCompatActivity {
                     address.getText().toString(),
                     selectedEventType.getId(),
                     city.getText().toString(),
-                    image_url,
+                    background_url,
                     new InTouchCallback() {
                         @Override
                         public void onSuccess(JsonObject result) {
@@ -244,7 +257,7 @@ public class EventCreateActivity extends AppCompatActivity {
                     address.getText().toString(),
                     selectedEventType.getId(),
                     city.getText().toString(),
-                    image_url,
+                    background_url,
                     new InTouchCallback() {
                         @Override
                         public void onSuccess(JsonObject result) {
@@ -357,5 +370,9 @@ public class EventCreateActivity extends AppCompatActivity {
         date = event.getDateTime();
         String dateStr = sdf.format(date);
         ((MaterialEditText) findViewById(R.id.event_date)).setText(dateStr);
+        background_url = event.getImage_url();
+        if(event.getImage_url() != null) {
+            new ImageDownloader(toolbarBackground).execute(event.getImage_url());
+        }
     }
 }
