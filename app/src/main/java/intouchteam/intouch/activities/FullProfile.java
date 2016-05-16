@@ -1,18 +1,25 @@
 package intouchteam.intouch.activities;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.ImageDownloader;
@@ -20,11 +27,16 @@ import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.InTouchServerProfile;
+import intouchteam.intouch.intouchapi.model.Event;
+import intouchteam.intouch.intouchapi.model.Mark;
 import intouchteam.intouch.intouchapi.model.Profile;
 
 public class FullProfile extends AppCompatActivity {
 
     Long id;
+    ArrayList<Event> eventList = new ArrayList<Event>();
+    ArrayList<Profile> followersList = new ArrayList<Profile>();
+    ArrayList<Profile> followingList = new ArrayList<Profile>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +55,20 @@ public class FullProfile extends AppCompatActivity {
             public void onSuccess(JsonObject result) {
                 Profile profile = new Gson().fromJson(result.get("user").getAsString(), Profile.class);
 
-                InTouchServerEvent.GetFollowing(profile.getId(),
+                InTouchServerEvent.getFollowingUsers(profile.getId(),
                         new InTouchCallback() {
                             @Override
                             public void onSuccess(JsonObject result) {
                                 JsonArray jsonArray = new Gson().fromJson(result.get("users").getAsString(), JsonArray.class);
+                                for (int i = 0; i < jsonArray.size(); i++){
+                                    Gson gson = new Gson();
+                                    Profile p = gson.fromJson(jsonArray.get(i), Profile.class);
+                                    followingList.add(p);
+
+                                }
                                 TextView following = (TextView) findViewById(R.id.following);
                                 following.setText(String.valueOf(jsonArray.size()));
+                                setFollowingButton();
                             }
 
                             @Override
@@ -58,13 +77,19 @@ public class FullProfile extends AppCompatActivity {
                             }
                         });
 
-                InTouchServerEvent.GetFollowers(profile.getId(),
+                InTouchServerEvent.getFollowersUsers(profile.getId(),
                         new InTouchCallback() {
                             @Override
                             public void onSuccess(JsonObject result) {
                                 JsonArray jsonArray = new Gson().fromJson(result.get("users").getAsString(), JsonArray.class);
+                                for (int i = 0; i < jsonArray.size(); i++){
+                                    Gson gson = new Gson();
+                                    Profile p = gson.fromJson(jsonArray.get(i), Profile.class);
+                                    followersList.add(p);
+                                }
                                 TextView followers = (TextView) findViewById(R.id.followers);
                                 followers.setText(String.valueOf(jsonArray.size()));
+                                setFollowersButton();
                             }
 
                             @Override
@@ -76,9 +101,15 @@ public class FullProfile extends AppCompatActivity {
                 InTouchServerEvent.getByCreator(profile.getId(), new InTouchCallback() {
                     @Override
                     public void onSuccess(JsonObject result) {
-                        JsonArray jsonEvents = new Gson().fromJson(result.get("events").getAsString(), JsonArray.class);
+                        JsonArray jsonArray = new Gson().fromJson(result.get("events").getAsString(), JsonArray.class);
+                        for (int i = 0; i < jsonArray.size(); i++){
+                            Gson gson = new Gson();
+                            Event e = gson.fromJson(jsonArray.get(i), Event.class);
+                            eventList.add(e);
+                        }
                         TextView events = (TextView)findViewById(R.id.events);
-                        events.setText(String.valueOf(jsonEvents.size()));
+                        events.setText(String.valueOf(jsonArray.size()));
+                        setEventsButton();
                     }
 
                     @Override
@@ -131,5 +162,76 @@ public class FullProfile extends AppCompatActivity {
             }
         });
     }
-
+    private void setEventsButton() {
+        View view = findViewById(R.id.events_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (eventList.size() != 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FullProfile.this);
+                        ArrayAdapter<Event> arrayAdapter = new ArrayAdapter<>(FullProfile.this, R.layout.event_type_dialog_item, eventList);
+                        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(FullProfile.this, FullEventActivity.class);
+                                intent.putExtra("event", new Gson().toJson(eventList.get(which), Event.class));
+                                startActivity(intent);
+                            }
+                        });
+                        builder.show();
+                    } else {
+                        Toast.makeText(FullProfile.this, "No events", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+    private void setFollowersButton() {
+        View view = findViewById(R.id.followers_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (followersList.size() != 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FullProfile.this);
+                        ArrayAdapter<Profile> arrayAdapter = new ArrayAdapter<>(FullProfile.this, R.layout.event_type_dialog_item, followersList);
+                        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(FullProfile.this, FullProfile.class);
+                                intent.putExtra("userId", followersList.get(which).getId());
+                                startActivity(intent);
+                            }
+                        });
+                        builder.show();
+                    } else {
+                        Toast.makeText(FullProfile.this, "No followers", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
+    private void setFollowingButton() {
+        View view = findViewById(R.id.following_button);
+        if(view != null)
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (followingList.size() != 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(FullProfile.this);
+                        ArrayAdapter<Profile> arrayAdapter = new ArrayAdapter<>(FullProfile.this, R.layout.event_type_dialog_item, followingList);
+                        builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(FullProfile.this, FullProfile.class);
+                                intent.putExtra("userId", followingList.get(which).getId());
+                                startActivity(intent);
+                            }
+                        });
+                        builder.show();
+                    } else {
+                        Toast.makeText(FullProfile.this, "No following users", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+    }
 }

@@ -107,4 +107,9 @@ public class Event {
             events.add(gson.fromJson(jsonArray.get(i).getAsJsonObject(), Event.class));
         return events;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

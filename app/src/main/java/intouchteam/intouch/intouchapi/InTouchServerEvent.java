@@ -114,14 +114,14 @@ public class InTouchServerEvent {
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void GetFollowers(Long userId, InTouchCallback callback) {
+    public static void getFollowersUsers(Long userId, InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getUsersThatFollow"));
         requestParameters.put("user_id", Collections.singletonList(userId.toString()));
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void GetFollowing(Long userId, InTouchCallback callback) {
+    public static void getFollowingUsers(Long userId, InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getUserFollowers"));
         requestParameters.put("user_id", Collections.singletonList(userId.toString()));

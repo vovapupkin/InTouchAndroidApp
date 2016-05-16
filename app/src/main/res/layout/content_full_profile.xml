@@ -71,6 +71,7 @@
            android:orientation="horizontal">
 
            <LinearLayout
+               android:id="@+id/following_button"
                android:layout_margin="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -96,6 +97,7 @@
 
 
            <LinearLayout
+               android:id="@+id/followers_button"
                android:layout_margin="10dp"
                android:gravity="center"
                android:layout_weight="1"
@@ -119,6 +121,7 @@
            </LinearLayout>
 
            <LinearLayout
+               android:id="@+id/events_button"
                android:layout_margin="10dp"
                android:gravity="center"
                android:layout_weight="1"
