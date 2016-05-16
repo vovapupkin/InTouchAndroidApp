@@ -44,8 +44,8 @@ public class FullProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_profile);
-        setFollowButton();
         id = getIntent().getLongExtra("userId", 0);
+        setFollowButton();
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,12 +238,12 @@ public class FullProfile extends AppCompatActivity {
             });
     }
     private void setFollowButton() {
-        //getFollowers();
-        Toast.makeText(FullProfile.this, "before", Toast.LENGTH_SHORT).show();
         FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow));
         if(floatingActionButton != null) {
-            Toast.makeText(FullProfile.this, "miu", Toast.LENGTH_SHORT).show();
-            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_outline_30dp));
+            if(id.intValue() ==  InTouchApi.getProfile().getId().intValue()){
+                floatingActionButton.setVisibility(View.GONE);
+                return;
+            }
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
