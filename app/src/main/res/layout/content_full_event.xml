@@ -305,6 +305,7 @@
             android:layout_marginLeft="54dp"/>
 
         <RelativeLayout
+            android:id="@+id/creator_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

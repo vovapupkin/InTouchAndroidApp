@@ -75,6 +75,7 @@
                    android:textColor="@color/black"/>
 
                <TextView
+                   android:id="@+id/following"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="23"
@@ -99,6 +100,7 @@
                    android:textColor="@color/black"/>
 
                <TextView
+                   android:id="@+id/followers"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="132"
@@ -121,6 +123,7 @@
                    android:textColor="@color/black"/>
 
                <TextView
+                   android:id="@+id/events"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="7"

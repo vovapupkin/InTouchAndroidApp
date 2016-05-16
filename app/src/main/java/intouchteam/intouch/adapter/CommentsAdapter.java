@@ -42,7 +42,6 @@ public class CommentsAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mainItem = inflater.inflate(R.layout.comment_item, parent, false);
-        Toast.makeText(context, comments.get(position).getComment(), Toast.LENGTH_SHORT).show();
         ((TextView) mainItem.findViewById(R.id.comment_text)).setText(comments.get(position).getComment());
         ((TextView)mainItem.findViewById(R.id.comment_writer)).setText(profiles.get(position).getFirstName() + " " + (profiles.get(position).getLastName()));
         return mainItem;

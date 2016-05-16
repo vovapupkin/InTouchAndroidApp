@@ -48,6 +48,16 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         Intent intent = getIntent();
 
         (findViewById(R.id.rating_button)).setOnClickListener(this);
+        (findViewById(R.id.creator_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FullEventActivity.this, FullProfile.class);
+                intent.putExtra("userId", event.getCreatorId());
+                startActivity(intent);
+
+            }
+        });
+
 
         event = new Gson().fromJson(intent.getStringExtra("event"), Event.class);
 
