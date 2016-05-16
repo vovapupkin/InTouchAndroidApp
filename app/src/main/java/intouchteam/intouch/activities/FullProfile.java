@@ -95,16 +95,25 @@ public class FullProfile extends AppCompatActivity {
 
                 if(profile.getPhone() == null)
                     phone.setText("Empty");
+                else if (profile.getPhone().isEmpty())
+                    phone.setText("Empty");
                 else
                     phone.setText(profile.getPhone());
+
                 if(profile.getEmail() == null)
+                    email.setText("Empty");
+                else if(profile.getEmail().isEmpty())
                     email.setText("Empty");
                 else
                     email.setText(profile.getEmail());
-                if(profile.getSkype() == null)
+
+                if (profile.getSkype() == null)
+                    skype.setText("Empty");
+                else if(profile.getSkype().isEmpty())
                     skype.setText("Empty");
                 else
                     skype.setText(profile.getSkype());
+
                 last_seen.setText(profile.getLastVisit().toString());
                 name.setText(profile.getFirstName() + " " + profile.getLastName());
 
