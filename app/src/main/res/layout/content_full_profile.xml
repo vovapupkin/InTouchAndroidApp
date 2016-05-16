@@ -27,9 +27,10 @@
                 android:scaleType="centerCrop"/>
 
             <ImageView
+                android:id="@+id/profile_image_photo"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ddkach"
+                android:src="@drawable/ic_person_white_100dp"
                 android:layout_marginTop="50dp"
                 android:layout_centerHorizontal="true"/>
 

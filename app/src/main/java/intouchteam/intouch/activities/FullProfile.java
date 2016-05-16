@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -14,6 +15,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import intouchteam.intouch.R;
+import intouchteam.intouch.intouchapi.ImageDownloader;
+import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerEvent;
 import intouchteam.intouch.intouchapi.InTouchServerProfile;
@@ -22,7 +25,6 @@ import intouchteam.intouch.intouchapi.model.Profile;
 public class FullProfile extends AppCompatActivity {
 
     Long id;
-    Profile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,13 @@ public class FullProfile extends AppCompatActivity {
                     skype.setText(profile.getSkype());
                 last_seen.setText(profile.getLastVisit().toString());
                 name.setText(profile.getFirstName() + " " + profile.getLastName());
+
+                if(profile.getUserImageURL() != null) {
+                    new ImageDownloader((ImageView)findViewById(R.id.profile_image_photo)).execute(profile.getUserImageURL());
+                }
+                if(profile.getBackgroundURL() != null) {
+                    new ImageDownloader((ImageView)findViewById(R.id.profile_image_background)).execute(profile.getBackgroundURL());
+                }
             }
 
             @Override

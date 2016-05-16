@@ -1,5 +1,6 @@
 package intouchteam.intouch.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,6 +40,7 @@ import intouchteam.intouch.R;
 import intouchteam.intouch.intouchapi.CloudinaryAPI;
 import intouchteam.intouch.adapter.MainActivityEventsAdapter;
 import intouchteam.intouch.intouchapi.ImageDownloader;
+import intouchteam.intouch.intouchapi.ImageUploader;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchCallback;
 import intouchteam.intouch.intouchapi.InTouchServerProfile;
@@ -57,7 +59,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     Map cloudinaryResult;
     String image_url;
     String background_url;
-    ImageDownloader imageDownloader;
+    int UPLOADING = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,12 +114,10 @@ public class ProfileEditActivity extends AppCompatActivity {
             Uri uri = data.getData();
             switch (requestCode) {
                 case GET_PHOTO_FROM_GALLERY_BACKGROUND: {
-                    background.setImageURI(uri);
                     startUpload(getAbsolutePath(uri), 1);
                     break;
                 }
                 case GET_PHOTO_FROM_GALLERY_PROFILE: {
-                    profile.setImageURI(uri);
                     startUpload(getAbsolutePath(uri), 0);
                     break;
                 }
@@ -135,17 +135,25 @@ public class ProfileEditActivity extends AppCompatActivity {
         return filePath;
     }
 
-    private void startUpload(String filePath, final int url) {
+    private void startUpload(String filePath, final int type) {
+        UPLOADING = 0;
+        findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
         AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
             protected String doInBackground(String... paths) {
                 File file = new File(paths[0]);
                 cloudinaryResult = null;
                 try {
                     Map options;
-                    if(url == 0) {
-                        options = ObjectUtils.asMap("transformation", new Transformation().radius("max"));
+                    switch (type) {
+                        case 0:
+                            options = ObjectUtils.asMap("transformation", new Transformation().radius("max").crop("crop").chain());
+                            break;
+                        case 1:
+                            options = ObjectUtils.emptyMap();
+                            break;
+                        default:
+                            options = ObjectUtils.emptyMap();
                     }
-                    else options = ObjectUtils.emptyMap();
                     cloudinaryResult = cloudinary.uploader().upload(file, options);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -153,11 +161,22 @@ public class ProfileEditActivity extends AppCompatActivity {
                 return null;
             }
             protected void onPostExecute(String error) {
-                Toast.makeText(InTouchApi.getContext(), cloudinaryResult.get("url").toString(), Toast.LENGTH_SHORT).show();
-                switch (url) {
-                    //TODO: refactor here
-                    case 0: image_url = cloudinaryResult.get("url").toString(); break;
-                    case 1: background_url = cloudinaryResult.get("url").toString(); break;
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
+                UPLOADING = 1;
+                if (cloudinaryResult == null) {
+                    Toast.makeText(InTouchApi.getContext(), "No Internet connection", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    switch (type) {
+                        case 0:
+                            image_url = cloudinaryResult.get("url").toString();
+                            new ImageDownloader(profile).execute(image_url);
+                            break;
+                        case 1:
+                            background_url = cloudinaryResult.get("url").toString();
+                            new ImageDownloader(background).execute(background_url);
+                            break;
+                    }
                 }
             }
         };
@@ -168,7 +187,8 @@ public class ProfileEditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_done) {
-            UpdateProfile();
+            if (UPLOADING == 1)
+                UpdateProfile();
             return true;
         } else if(id == R.id.action_clear) {
             finish();
@@ -219,12 +239,10 @@ public class ProfileEditActivity extends AppCompatActivity {
         skype.setText(InTouchApi.getProfile().getSkype());
         background = (ImageView) findViewById(R.id.profile_image_background);
         if(InTouchApi.getProfile().getUserImageURL() != null) {
-            imageDownloader = new ImageDownloader(profile);
-            imageDownloader.execute(InTouchApi.getProfile().getUserImageURL());
+            new ImageDownloader(profile).execute(InTouchApi.getProfile().getUserImageURL());
         }
         if(InTouchApi.getProfile().getBackgroundURL() != null) {
-            imageDownloader = new ImageDownloader(background);
-            imageDownloader.execute(InTouchApi.getProfile().getBackgroundURL());
+            new ImageDownloader(background).execute(InTouchApi.getProfile().getBackgroundURL());
         }
     }
 }

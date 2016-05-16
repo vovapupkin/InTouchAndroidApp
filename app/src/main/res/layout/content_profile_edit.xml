@@ -14,6 +14,8 @@
         android:orientation="vertical"
         android:background="@color/it_cards_background_gray">
 
+
+
         <RelativeLayout
             android:id="@+id/profile_header"
             android:layout_width="match_parent"
@@ -32,7 +34,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/ddkach"
+                android:src="@drawable/ic_person_white_100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"/>
 
@@ -48,7 +50,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_below="@id/profile_header"
+            android:layout_below="@+id/profile_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -136,6 +138,14 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:indeterminate="true"
+            android:elevation="5dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
