@@ -103,7 +103,7 @@
             android:id="@+id/member_1"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ddkach"
+            android:src="@drawable/ic_person_24dp"
             android:layout_toLeftOf="@+id/member_2"
             android:layout_centerVertical="true"/>
 
@@ -112,7 +112,7 @@
             android:id="@+id/member_2"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ddkach"
+            android:src="@drawable/ic_person_24dp"
             android:layout_toLeftOf="@+id/member_3"
             android:layout_centerVertical="true"
             android:layout_marginLeft="1dp"/>
@@ -122,12 +122,11 @@
             android:id="@+id/member_3"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ddkach"
+            android:src="@drawable/ic_person_24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="70dp"
             android:layout_marginLeft="1dp"/>
-
 
     </RelativeLayout>
 

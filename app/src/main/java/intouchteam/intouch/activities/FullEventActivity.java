@@ -39,7 +39,7 @@ import intouchteam.intouch.intouchapi.model.EventType;
 import intouchteam.intouch.intouchapi.model.Mark;
 import intouchteam.intouch.intouchapi.model.Profile;
 
-public class FullEventActivity extends AppCompatActivity implements View.OnClickListener{
+public class FullEventActivity extends AppCompatActivity implements View.OnClickListener {
 
     Event event;
     ArrayList<Profile> followers = new ArrayList<>();
@@ -61,7 +61,6 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-
         event = new Gson().fromJson(intent.getStringExtra("event"), Event.class);
 
         setEditTextValue();
@@ -73,23 +72,24 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         setFollowButton();
         setBackButtonListener();
         setCommentButtonListener();
-        if(event.getImage_url() != null) {
-            new ImageDownloader((ImageView)findViewById(R.id.event_logo)).execute(event.getImage_url());
+        if (event.getImage_url() != null) {
+            new ImageDownloader((ImageView) findViewById(R.id.event_logo)).execute(event.getImage_url());
         }
         setCommentsText();
     }
 
-    private double getAverageRating(ArrayList<Mark> ratingList){
+    private double getAverageRating(ArrayList<Mark> ratingList) {
         int summa = 0;
-        for (Mark item: ratingList){
+        for (Mark item : ratingList) {
             summa += item.getMark();
-        };
-        return (double)summa/ratingList.size();
+        }
+        ;
+        return (double) summa / ratingList.size();
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.rating_button){
+        if (v.getId() == R.id.rating_button) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             RatingDialog ratingDialog = new RatingDialog();
             ratingDialog.setParentActivity(this);
@@ -109,11 +109,10 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         ((TextView) findViewById(R.id.event_address)).setText(event.getCity() + " " + event.getAddress());
         ((TextView) findViewById(R.id.event_type)).setText("id:" + event.getTypeId().toString());
         ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
-        ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
-        //((TextView) findViewById(R.id.event_rating)).setText("id:" + event.getCreatorId().toString());
 
     }
-    public void setRatingField(){
+
+    public void setRatingField() {
         InTouchServerEvent.getMarks(event.getId(),
                 new InTouchCallback() {
                     @Override
@@ -179,7 +178,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void editButtonForCreator() {
-        if(InTouchApi.getProfile().getId() == event.getCreatorId()) {
+        if (InTouchApi.getProfile().getId() == event.getCreatorId()) {
             ImageButton button = (ImageButton) findViewById(R.id.edit_button);
             if (button != null) {
                 button.setVisibility(View.VISIBLE);
@@ -196,10 +195,9 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-
     private void setMembersButton() {
         View view = findViewById(R.id.members_button);
-        if(view != null)
+        if (view != null)
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -224,8 +222,8 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
 
     private void setFollowButton() {
         getFollowers();
-        FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow_button));
-        if(floatingActionButton != null) {
+        FloatingActionButton floatingActionButton = ((FloatingActionButton) findViewById(R.id.follow_button));
+        if (floatingActionButton != null) {
             floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_outline_30dp));
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -248,8 +246,8 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
 
     private void changeFollowButton() {
         getFollowers();
-        FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow_button));
-        if(floatingActionButton != null) {
+        FloatingActionButton floatingActionButton = ((FloatingActionButton) findViewById(R.id.follow_button));
+        if (floatingActionButton != null) {
             floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_30dp));
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -286,6 +284,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                 TextView eventFollowers = ((TextView) findViewById(R.id.event_followers));
                 if (eventFollowers != null)
                     eventFollowers.setText(String.valueOf(users.size()));
+                //setFollowersAvatars();
             }
 
             @Override
@@ -295,9 +294,36 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
+    private void setFollowersAvatars() {
+        if(followers.size() == 1) {
+            if (followers.get(0).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_1)).execute(followers.get(0).getUserImageURL());
+            }
+        }
+        if(followers.size() == 2) {
+            if (followers.get(0).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_1)).execute(followers.get(0).getUserImageURL());
+            }
+            if (followers.get(1).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_2)).execute(followers.get(1).getUserImageURL());
+            }
+        }
+        if(followers.size() >= 3) {
+            if (followers.get(0).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_1)).execute(followers.get(0).getUserImageURL());
+            }
+            if (followers.get(1).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_2)).execute(followers.get(1).getUserImageURL());
+            }
+            if (followers.get(2).getUserImageURL() != null) {
+                new ImageDownloader((ImageView) findViewById(R.id.member_3)).execute(followers.get(2).getUserImageURL());
+            }
+        }
+    }
+
     private void setBackButtonListener() {
         View view = findViewById(R.id.back_button);
-        if(view != null)
+        if (view != null)
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -308,7 +334,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
 
     private void setCommentButtonListener() {
         View view = findViewById(R.id.comment_button);
-        if(view != null)
+        if (view != null)
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -324,7 +350,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onSuccess(JsonObject result) {
                 ArrayList<Comment> comments = Comment.getArrayFromJson(result);
-                ((TextView)findViewById(R.id.event_comments)).setText(String.valueOf(comments.size()));
+                ((TextView) findViewById(R.id.event_comments)).setText(String.valueOf(comments.size()));
             }
 
             @Override

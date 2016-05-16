@@ -136,7 +136,8 @@ public class EventCreateActivity extends AppCompatActivity {
                 File file = new File(paths[0]);
                 cloudinaryResult = null;
                 try {
-                    cloudinaryResult = cloudinary.uploader().upload(file, ObjectUtils.emptyMap());
+                    Map options = ObjectUtils.asMap("transformation", new Transformation());
+                    cloudinaryResult = cloudinary.uploader().upload(file, options);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

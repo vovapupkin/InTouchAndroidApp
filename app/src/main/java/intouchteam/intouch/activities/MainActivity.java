@@ -17,12 +17,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.activities.MainActivityFragments.MyEventsFragment;
 import intouchteam.intouch.activities.MainActivityFragments.SearchEventFragment;
+import intouchteam.intouch.intouchapi.ImageDownloader;
 import intouchteam.intouch.intouchapi.InTouchApi;
 import intouchteam.intouch.intouchapi.InTouchAuthorization;
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private FloatingActionButton floatingActionButton;
     private BroadcastReceiver broadcastReceiver;
+    private ImageView ava;
+    private ImageView background;
 
 
     @Override
@@ -74,6 +79,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         onMyEventClick();
+        ava = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_image);
+        background = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.background);
+        if(InTouchApi.getProfile().getUserImageURL() != null) {
+            new ImageDownloader(ava).execute(InTouchApi.getProfile().getUserImageURL());
+        }
+        if(InTouchApi.getProfile().getBackgroundURL() != null) {
+            new ImageDownloader(background).execute(InTouchApi.getProfile().getBackgroundURL());
+        }
     }
 
     @Override
@@ -222,7 +235,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 999 && resultCode == 666) {
-
+            new ImageDownloader(ava).execute(InTouchApi.getProfile().getUserImageURL());
+            new ImageDownloader(background).execute(InTouchApi.getProfile().getBackgroundURL());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

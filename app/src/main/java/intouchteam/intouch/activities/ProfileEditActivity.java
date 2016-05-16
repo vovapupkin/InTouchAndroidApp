@@ -149,7 +149,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                             options = ObjectUtils.asMap("transformation", new Transformation().fetchFormat("png").radius("max").crop("crop").chain());
                             break;
                         case 1:
-                            options = ObjectUtils.emptyMap();
+                            options = ObjectUtils.asMap("transformation", new Transformation());
                             break;
                         default:
                             options = ObjectUtils.emptyMap();
