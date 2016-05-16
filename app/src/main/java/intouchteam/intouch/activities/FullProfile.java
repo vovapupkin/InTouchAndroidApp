@@ -1,5 +1,6 @@
 package intouchteam.intouch.activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -22,8 +23,8 @@ public class FullProfile extends AppCompatActivity {
         setContentView(R.layout.activity_full_profile);
         profile = new Gson().fromJson(getIntent().getStringExtra("profile"), Profile.class);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(profile.getFirstName() + " " + profile.getLastName());
         setSupportActionBar(toolbar);
     }
-
 
 }

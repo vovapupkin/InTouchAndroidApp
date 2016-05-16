@@ -28,6 +28,7 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
     View rootView;
     ImageView star[];
     Long mark;
+    FullEventActivity parentActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,6 +133,7 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
                     @Override
                     public void onSuccess(JsonObject result) {
                         Toast.makeText(InTouchApi.getContext(), "Success", Toast.LENGTH_SHORT).show();
+                        parentActivity.setRatingField();
                         getDialog().cancel();
                     }
 
@@ -146,5 +148,7 @@ public class RatingDialog extends DialogFragment implements View.OnClickListener
         this.event = event;
     }
 
-
+    public void setParentActivity(FullEventActivity parentActivity) {
+        this.parentActivity = parentActivity;
+    }
 }

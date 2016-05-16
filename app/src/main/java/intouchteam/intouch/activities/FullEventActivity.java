@@ -75,6 +75,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         if(v.getId() == R.id.rating_button){
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             RatingDialog ratingDialog = new RatingDialog();
+            ratingDialog.setParentActivity(this);
             ratingDialog.setEvent(event);
             ratingDialog.show(ft, "dialog");
         }
@@ -95,7 +96,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         //((TextView) findViewById(R.id.event_rating)).setText("id:" + event.getCreatorId().toString());
 
     }
-    private void setRatingField(){
+    public void setRatingField(){
         InTouchServerEvent.getMarks(event.getId(),
                 new InTouchCallback() {
                     @Override

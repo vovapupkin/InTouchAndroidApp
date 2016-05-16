@@ -74,6 +74,7 @@ public class EventCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_create);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Create Event");
         setSupportActionBar(toolbar);
         toolbarBackground = (ImageView) findViewById(R.id.img_toolbar);
         downloadEventTypes();
