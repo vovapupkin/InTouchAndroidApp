@@ -212,6 +212,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                     public void onSuccess(JsonObject result) {
                         Profile profile = new Gson().fromJson(result.get("user").getAsString(), Profile.class);
                         InTouchApi.setProfile(profile);
+                        setResult(666);
                         finish();
                     }
 
