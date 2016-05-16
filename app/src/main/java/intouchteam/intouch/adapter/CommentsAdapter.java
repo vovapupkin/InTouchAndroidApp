@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -41,9 +42,10 @@ public class CommentsAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View mainItem = inflater.inflate(R.layout.comment_item, parent, false);
-        ((TextView)mainItem.findViewById(R.id.comment_text)).setText(comments.get(position).getComment());
-        ((TextView)mainItem.findViewById(R.id.comment_text)).setText(profiles.get(position).getFirstName() + " " + (profiles.get(position).getLastName()));
-        return null;
+        Toast.makeText(context, comments.get(position).getComment(), Toast.LENGTH_SHORT).show();
+        ((TextView) mainItem.findViewById(R.id.comment_text)).setText(comments.get(position).getComment());
+        ((TextView)mainItem.findViewById(R.id.comment_writer)).setText(profiles.get(position).getFirstName() + " " + (profiles.get(position).getLastName()));
+        return mainItem;
     }
 
     public void setComments(ArrayList<Comment> comments) {

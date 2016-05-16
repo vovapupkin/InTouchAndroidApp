@@ -6,29 +6,43 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.CommentsActivity"
-    tools:showIn="@layout/activity_comments">
+    tools:showIn="@layout/activity_comments"
+    android:background="@color/it_cards_background_gray">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sending">
 
         <ListView
             android:id="@+id/comments_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:transcriptMode="alwaysScroll"
+            android:stackFromBottom="true"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <TextView
+        android:id="@+id/sending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sending..."
+        android:layout_above="@+id/holder"
+        android:layout_margin="5dp"
+        android:visibility="gone"/>
 
     <RelativeLayout
+        android:id="@+id/holder"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="3dp">
+        android:elevation="3dp"
+        android:background="@color/it_light_gray">
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/comment_text"
+            android:id="@+id/send_comment_text"
             android:maxLines="4"
             android:maxLength="400"
             android:layout_width="match_parent"

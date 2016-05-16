@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -53,8 +54,10 @@ public class CommentsActivity extends AppCompatActivity {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    InTouchServerComment.create(event.getId(),
-                            ((MaterialEditText) findViewById(R.id.comment_text)).getText().toString(),
+                    String s = ((EditText) findViewById(R.id.send_comment_text)).getText().toString();
+                    ((EditText) findViewById(R.id.send_comment_text)).setText(null);
+                    findViewById(R.id.sending).setVisibility(View.VISIBLE);
+                    InTouchServerComment.create(event.getId(), s,
                             new InTouchCallback() {
                                 @Override
                                 public void onSuccess(JsonObject result) {
@@ -90,9 +93,12 @@ public class CommentsActivity extends AppCompatActivity {
     private void getCommentCreator(final int i) {
         if(i == comments.size()) {
             CommentsAdapter commentsAdapter = new CommentsAdapter();
+            commentsAdapter.setContext(this);
             commentsAdapter.setComments(comments);
             commentsAdapter.setProfiles(profiles);
             ((ListView) findViewById(R.id.comments_list)).setAdapter(commentsAdapter);
+            ((ListView) findViewById(R.id.comments_list)).setDivider(null);
+            findViewById(R.id.sending).setVisibility(View.GONE);
             return;
         }
         InTouchServerProfile.getUser(comments.get(i).getUserId(), new InTouchCallback() {

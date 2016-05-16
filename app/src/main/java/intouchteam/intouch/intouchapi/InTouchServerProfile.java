@@ -14,10 +14,17 @@ public class InTouchServerProfile {
         InTouchRequest.get(requestParameters, callback);
     }
 
-    public static void getUser(Long eventId, InTouchCallback callback) {
+    public static void getUser(InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getUserById"));
         requestParameters.put("user_id", Collections.singletonList(InTouchApi.getProfile().getId().toString()));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
+    public static void getUser(Long userId, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("getUserById"));
+        requestParameters.put("user_id", Collections.singletonList(userId.toString()));
         InTouchRequest.get(requestParameters, callback);
     }
 
