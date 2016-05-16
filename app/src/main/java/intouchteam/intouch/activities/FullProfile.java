@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,7 @@ import intouchteam.intouch.intouchapi.model.Profile;
 public class FullProfile extends AppCompatActivity {
 
     Long id;
+    Profile profile;
     ArrayList<Event> eventList = new ArrayList<Event>();
     ArrayList<Profile> followersList = new ArrayList<Profile>();
     ArrayList<Profile> followingList = new ArrayList<Profile>();
@@ -42,6 +44,7 @@ public class FullProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_profile);
+        setFollowButton();
         id = getIntent().getLongExtra("userId", 0);
         findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +56,7 @@ public class FullProfile extends AppCompatActivity {
             new InTouchCallback() {
             @Override
             public void onSuccess(JsonObject result) {
-                Profile profile = new Gson().fromJson(result.get("user").getAsString(), Profile.class);
+                profile = new Gson().fromJson(result.get("user").getAsString(), Profile.class);
 
                 InTouchServerEvent.getFollowingUsers(profile.getId(),
                         new InTouchCallback() {
@@ -234,4 +237,30 @@ public class FullProfile extends AppCompatActivity {
                 }
             });
     }
+    private void setFollowButton() {
+        //getFollowers();
+        Toast.makeText(FullProfile.this, "before", Toast.LENGTH_SHORT).show();
+        FloatingActionButton floatingActionButton = ((FloatingActionButton)findViewById(R.id.follow));
+        if(floatingActionButton != null) {
+            Toast.makeText(FullProfile.this, "miu", Toast.LENGTH_SHORT).show();
+            floatingActionButton.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_outline_30dp));
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InTouchServerProfile.follow(profile.getLogin(), new InTouchCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            Toast.makeText(FullProfile.this, "Follow success", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(FullProfile.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
 }

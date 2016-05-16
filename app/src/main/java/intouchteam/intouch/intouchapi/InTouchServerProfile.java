@@ -14,6 +14,13 @@ public class InTouchServerProfile {
         InTouchRequest.get(requestParameters, callback);
     }
 
+    public static void follow(String followed_login, InTouchCallback callback) {
+        Map<String, List<String>> requestParameters = new HashMap<>();
+        requestParameters.put("method", Collections.singletonList("follow"));
+        requestParameters.put("followed_login", Collections.singletonList(followed_login));
+        InTouchRequest.get(requestParameters, callback);
+    }
+
     public static void getUser(InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("getUserById"));
