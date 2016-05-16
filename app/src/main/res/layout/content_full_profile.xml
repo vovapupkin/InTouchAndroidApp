@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:elevation="3dp">
 
+
             <ImageView
                 android:id="@+id/profile_image_background"
                 android:layout_width="match_parent"
@@ -39,12 +40,20 @@
                 android:id="@+id/profile_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Vasili Sheshka"
+                android:text="Name"
                 android:textColor="@color/white"
                 android:layout_alignBottom="@+id/profile_image_background"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:textSize="32sp"/>
+
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_back_24dp"
+                android:layout_margin="15dp"/>
 
         </RelativeLayout>
 
@@ -79,7 +88,7 @@
                    android:id="@+id/following"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="23"
+                   android:text="0"
                    android:textSize="20dp"
                    android:textColor="@color/it_blue"/>
 
@@ -104,7 +113,7 @@
                    android:id="@+id/followers"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="132"
+                   android:text="0"
                    android:textSize="20dp"
                    android:textColor="@color/it_blue"/>
            </LinearLayout>
@@ -127,7 +136,7 @@
                    android:id="@+id/events"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="7"
+                   android:text="0"
                    android:textSize="20dp"
                    android:textColor="@color/it_blue"/>
 
@@ -205,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/phone_icon"
                     android:singleLine="true"
-                    android:text="+375298276648"/>
+                    android:text="Empty"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -243,7 +252,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/email_icon"
-                    android:text="bsuir@live.ru"
+                    android:text="Empty"
                     android:singleLine="true"/>
 
                 <TextView
@@ -282,7 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/skype_icon"
-                    android:text="pupkinvov"
+                    android:text="Empty"
                     android:singleLine="true"/>
 
                 <TextView

@@ -102,7 +102,7 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
         ((TextView) findViewById(R.id.event_address)).setText(event.getCity() + " " + event.getAddress());
         ((TextView) findViewById(R.id.event_type)).setText("id:" + event.getTypeId().toString());
         ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
-
+        ((TextView) findViewById(R.id.event_contacts)).setText("id:" + event.getCreatorId().toString());
         //((TextView) findViewById(R.id.event_rating)).setText("id:" + event.getCreatorId().toString());
 
     }
@@ -202,7 +202,9 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
                         builder.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //Open profile;
+                                Intent intent = new Intent(FullEventActivity.this, FullProfile.class);
+                                intent.putExtra("userId", followers.get(which).getId());
+                                startActivity(intent);
                             }
                         });
                         builder.show();
@@ -262,12 +264,12 @@ public class FullEventActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void getFollowers() {
-        followers = new ArrayList<>();
         InTouchServerEvent.getFollowers(event.getId(), new InTouchCallback() {
             @Override
             public void onSuccess(JsonObject result) {
                 Gson gson = new Gson();
                 JsonArray users = gson.fromJson(result.get("users").getAsString(), JsonArray.class);
+                followers = new ArrayList<>();
                 for (int i = 0; i < users.size(); i++) {
                     Profile follower = gson.fromJson(users.get(i), Profile.class);
                     if (InTouchApi.getProfile().getId() == follower.getId())

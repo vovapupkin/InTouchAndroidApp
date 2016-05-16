@@ -47,7 +47,7 @@
         android:id="@id/event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coldplay"
+        android:text="Name"
         android:textColor="@color/white"
         android:layout_alignBottom="@id/event_logo"
         android:layout_margin="30dp"
@@ -67,7 +67,7 @@
         android:id="@+id/event_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Minsk"
+        android:text="Town"
         android:textColor="@color/white"
         android:layout_alignBottom="@id/event_logo"
         android:layout_centerHorizontal="true"
@@ -322,7 +322,7 @@
                 android:id="@+id/event_contacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vasili Sheshka"
+                android:text="loading"
                 android:textColor="@color/it_blue"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/contacts_icon"/>
@@ -358,11 +358,12 @@
                 android:layout_centerVertical="true"/>
 
             <TextView
+                android:maxLength="3"
                 android:singleLine="true"
                 android:id="@+id/event_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7.4"
+                android:text="0"
                 android:textColor="@color/it_blue"
                 android:textSize="16sp"
                 android:layout_toRightOf="@+id/rating_icon"/>
@@ -402,7 +403,7 @@
                 android:id="@+id/event_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="28"
+                android:text="0"
                 android:textColor="@color/it_blue"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/comments_icon"/>

@@ -31,6 +31,12 @@ public class FullProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_profile);
         id = getIntent().getLongExtra("userId", 0);
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         InTouchServerProfile.getUser(id,
             new InTouchCallback() {
             @Override
