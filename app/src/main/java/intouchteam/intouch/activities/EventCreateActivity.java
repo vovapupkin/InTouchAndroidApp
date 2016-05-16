@@ -213,6 +213,7 @@ public class EventCreateActivity extends AppCompatActivity {
         MaterialEditText address = ((MaterialEditText) findViewById(R.id.event_address));
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
         String dateString = sdf.format(date);
+        String image_url = "some_url";
         if (event == null)
             InTouchServerEvent.create(name.getText().toString(),
                     description.getText().toString(),
@@ -221,6 +222,7 @@ public class EventCreateActivity extends AppCompatActivity {
                     address.getText().toString(),
                     selectedEventType.getId(),
                     city.getText().toString(),
+                    image_url,
                     new InTouchCallback() {
                         @Override
                         public void onSuccess(JsonObject result) {
@@ -242,6 +244,7 @@ public class EventCreateActivity extends AppCompatActivity {
                     address.getText().toString(),
                     selectedEventType.getId(),
                     city.getText().toString(),
+                    image_url,
                     new InTouchCallback() {
                         @Override
                         public void onSuccess(JsonObject result) {
