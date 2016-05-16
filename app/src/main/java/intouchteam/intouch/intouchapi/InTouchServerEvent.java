@@ -30,7 +30,7 @@ public class InTouchServerEvent {
     }
 
     public static void create(String name, String description, String gps, String dateTime,
-            String address, Long typeId, String city, final InTouchCallback callback) {
+            String address, Long typeId, String city, String image_url, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("createEvent"));
         requestParameters.put("name", Collections.singletonList(name));
@@ -40,11 +40,12 @@ public class InTouchServerEvent {
         requestParameters.put("address", Collections.singletonList(address));
         requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
         requestParameters.put("city", Collections.singletonList(city));
+        requestParameters.put("image_url", Collections.singletonList(image_url));
         InTouchRequest.get(requestParameters, callback);
     }
 
     public static void update(Long eventId, String name, String description, String gps, String dateTime,
-                              String address, Long typeId, String city, final InTouchCallback callback) {
+                              String address, Long typeId, String city, String image_url, final InTouchCallback callback) {
         Map<String, List<String>> requestParameters = new HashMap<>();
         requestParameters.put("method", Collections.singletonList("updateEvent"));
         requestParameters.put("name", Collections.singletonList(name));
@@ -55,6 +56,7 @@ public class InTouchServerEvent {
         requestParameters.put("address", Collections.singletonList(address));
         requestParameters.put("type_id", Collections.singletonList(typeId.toString()));
         requestParameters.put("city", Collections.singletonList(city));
+        requestParameters.put("image_url", Collections.singletonList(image_url));
         InTouchRequest.get(requestParameters, callback);
     }
 
