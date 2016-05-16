@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import intouchteam.intouch.R;
 import intouchteam.intouch.activities.FullEventActivity;
+import intouchteam.intouch.intouchapi.ImageDownloader;
 import intouchteam.intouch.intouchapi.model.Event;
 
 
@@ -62,6 +64,9 @@ public class MainActivityEventsAdapter extends BaseAdapter {
                 v.getContext().startActivity(intent);
             }
         });
+        if(event.getImage_url() != null) {
+            new ImageDownloader((ImageView)mainItem.findViewById(R.id.title_img)).execute(event.getImage_url());
+        }
         return mainItem;
     }
 }
