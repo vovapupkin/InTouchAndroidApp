@@ -213,10 +213,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, ProfileEditActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, 999);
                 }
             });
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 999 && resultCode == 666) {
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
